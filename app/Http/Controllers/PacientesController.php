@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Paciente;
 use App\Models\Medico;
+use App\Models\Visita;
 
 class PacientesController extends Controller
 {
@@ -21,6 +22,7 @@ class PacientesController extends Controller
        //Obtenemos primero el medico autenticado como usuario
        $medico=User::find(auth()->id())->medico;     
        //Llenamos el array de pacientes que le pasamos a la vista y paginamos de 20 en 20
+    
         $pacientes=$medico->pacientes()->paginate(20);
         
         return view ("pacientes.index",compact("pacientes"));
@@ -74,7 +76,12 @@ class PacientesController extends Controller
     public function edit($id)
     {
         $paciente=Paciente::findOrFail($id);
-        return view ('pacientes/edit',compact('paciente'));
+
+       //$visitas = Visita::All()->where('paciente_id', $paciente->id);
+        $visitas=Paciente::find(10)->visitas;
+      
+
+        return view ('pacientes/edit',compact('paciente','visitas'));
     }
 
     /**

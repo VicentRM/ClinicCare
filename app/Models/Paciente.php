@@ -26,6 +26,10 @@ class Paciente extends Model
     use HasFactory;
 
     public function medicos() {
-        return $this->belongsToMany("App\Models\Medico");
+        return $this->belongsToMany(Medico::class);
+    }
+    public function visitas(){
+        return $this->hasMany(Visita::class);
+      
     }
 }

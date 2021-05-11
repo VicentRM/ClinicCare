@@ -66,4 +66,9 @@
             <button type="submit" class="btn btn-primary">Guardar cambios</button>
             
           </form>
+
+          @foreach($visitas as $visita)
+          {{$visita->fecha}}
+          @endforeach
+       
 @endsection

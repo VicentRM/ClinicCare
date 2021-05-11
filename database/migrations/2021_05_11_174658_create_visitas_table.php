@@ -15,7 +15,14 @@ class CreateVisitasTable extends Migration
     {
         Schema::create('visitas', function (Blueprint $table) {
             $table->id();
+            $table->integer("paciente_id");
+            $table->date('fecha');    
+            $table->time('hora');               
+            $table->integer('tipovisita_id');
+            $table->text('comentarios');
+            $table->text('observaciones');
             $table->timestamps();
+
         });
     }
 

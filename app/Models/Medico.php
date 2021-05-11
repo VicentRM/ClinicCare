@@ -14,6 +14,6 @@ class Medico extends Model
         return $this->belongsTo(User::class);
     }
     public function pacientes() {
-        return $this->belongsToMany("App\Models\Paciente");
+        return $this->belongsToMany(Paciente::class);
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\PacientesController;
 use App\Models\Paciente;
 use App\Models\Medico;
+use App\Models\Visita;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,3 +45,12 @@ Route::get('/medico/{id}/paciente', function($id) {
 Route::middleware("auth")
 ->get("/pacientes2",  [App\Http\Controllers\PacientesCotroller::class, 'pacientesMedico'])
 ->name("pacientes_medico");
+
+
+Route::get('/visitas',function(){
+    $visitas=Paciente::find(10)->visitas;
+    foreach($visitas as $visita) {
+        echo $visita->fecha;
+    }
+
+});
