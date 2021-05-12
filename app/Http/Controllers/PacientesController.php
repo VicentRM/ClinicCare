@@ -17,14 +17,11 @@ class PacientesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
- 
+    { 
        //Obtenemos primero el medico autenticado como usuario
        $medico=User::find(auth()->id())->medico;     
-       //Llenamos el array de pacientes que le pasamos a la vista y paginamos de 20 en 20
-    
-        $pacientes=$medico->pacientes()->paginate(20);
-        
+       //Llenamos el array de pacientes que le pasamos a la vista y paginamos de 20 en 20    
+        $pacientes=$medico->pacientes()->paginate(20);        
         return view ("pacientes.index",compact("pacientes"));
     }
 
@@ -76,11 +73,7 @@ class PacientesController extends Controller
     public function edit($id)
     {
         $paciente=Paciente::findOrFail($id);
-
-       //$visitas = Visita::All()->where('paciente_id', $paciente->id);
-        $visitas=Paciente::find(10)->visitas;
-      
-
+        $visitas=Paciente::find($paciente->id)->visitas;     
         return view ('pacientes/edit',compact('paciente','visitas'));
     }
 
@@ -93,9 +86,13 @@ class PacientesController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $paciente=Paciente::findOrFail($id);
-        $entrada=$request->all();        
-        $paciente->update($entrada);
+        $request->validate([
+            'nombre' => 'required',
+            'apellidos' => 'required'
+        ]);       
+        $paciente->update($request->all());
         return redirect('/pacientes');
     }
 
@@ -112,9 +109,10 @@ class PacientesController extends Controller
         return redirect('/pacientes');
     }
     public function pacientesMedico(){
-        error_log('Some message here.');
+        //echo 'Some message here.';
         $medico=User::find(auth()->id())->medico;   
-        $pacientes=$medico->pacientes();
-        return $pacientes;
+        $pacientes=$medico->pacientes;
+        $visitas=Paciente::find(10)->visitas()->paginate(1);
+        return response()->json($visitas,200);
     }
 }

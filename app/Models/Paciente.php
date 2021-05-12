@@ -29,7 +29,9 @@ class Paciente extends Model
         return $this->belongsToMany(Medico::class);
     }
     public function visitas(){
-        return $this->hasMany(Visita::class);
-      
+
+        return $this->hasMany(Visita::class);    
+          
     }
+
 }

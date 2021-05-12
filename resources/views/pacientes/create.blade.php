@@ -44,8 +44,8 @@
                                 <input type="text" class="form-control" id="CP" name="CP" placeholder="">
                         </div> 
                         <div class="mb-3">
-                                <label for="CP" class="form-label">Poblacion</label>
-                                <input type="text" class="form-control" id="CP" name="CP" placeholder="" value="{{ $paciente->poblacion }}">
+                                <label for="poblacion" class="form-label">Poblacion</label>
+                                <input type="text" class="form-control" id="poblacion" name="poblacion" placeholder="">
                         </div> 
                         <div class="mb-3">
                                 <label for="telefono1" class="form-label">Teléfono</label>

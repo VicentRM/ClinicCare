@@ -1,13 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\Visita;
-use App\Models\TipoVisita;
-use App\Models\MotivoVisita;
-use App\Models\Paciente;
-class VisitaController extends Controller
+use Illuminate\Http\Request;
+use App\Models\DatosVisita;
+
+class DatosVisitaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -60,13 +58,6 @@ class VisitaController extends Controller
     public function edit($id)
     {
         //
-        $visita=Visita::findOrFail($id);       
-        $tiposVisita=TipoVisita::All();
-        $motivosVisita=MotivoVisita::All();
-
-        $datosVisita=$visita->datosVisita;
-        return view ('visitas/edit',compact('visita','tiposVisita','motivosVisita','datosVisita'));
-        
     }
 
     /**
@@ -78,16 +69,15 @@ class VisitaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //
         //Realizamos update
-        $visita=Visita::findOrFail($id);     
-        $visita->update($request->all()); 
+        $datosvisita=DatosVisita::findOrFail($id);     
+        $datosvisita->update($request->all()); 
         //Rellenamos variables paciente y visitas para abrir vista de edicion paciente
-        $paciente=$visita->paciente;
-        $visitas=Paciente::find($paciente->id)->visitas;   
+       // $paciente=$visita->paciente;
+      //  $visitas=Paciente::find($paciente->id)->visitas;   
 
-        return view ('pacientes/edit',compact('paciente','visitas'));
-       
-        
+      return redirect('/pacientes');
     }
 
     /**
@@ -99,5 +89,12 @@ class VisitaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function datosVisita($visitaId){
+        
+        $visita=Visita::findOrFail($visitaId);  
+        $datosVisita=$visita->datosVisita;   
+        return response()->json($datosVisita,200);
     }
 }
