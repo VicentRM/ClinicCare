@@ -7,6 +7,7 @@ use App\Models\Visita;
 use App\Models\TipoVisita;
 use App\Models\MotivoVisita;
 use App\Models\Paciente;
+use App\Models\Calendario;
 class VisitaController extends Controller
 {
     /**
@@ -26,7 +27,8 @@ class VisitaController extends Controller
      */
     public function create()
     {
-        //
+        
+        
     }
 
     /**
@@ -37,7 +39,13 @@ class VisitaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $entrada=$request->all();
+        $visita=Visita::create($entrada); 
+        $pId=$entrada['paciente_id'];
+        $visitas=Paciente::find($pId)->visitas;  
+        $paciente=Paciente::find($entrada['paciente_id']);
+        //Rederigimos a la pagina del paciente mediante el motodo edit paciente.
+        return redirect()->action([PacientesController::class, 'edit'],$pId);
     }
 
     /**
@@ -60,12 +68,14 @@ class VisitaController extends Controller
     public function edit($id)
     {
         //
+      
         $visita=Visita::findOrFail($id);       
-        $tiposVisita=TipoVisita::All();
-        $motivosVisita=MotivoVisita::All();
+        $tiposvisita=TipoVisita::All();
+        $motivosvisita=MotivoVisita::All();
+        $visita=Visita::with('paciente','calendario')->get()->whereIn('paciente_id',$visita->paciente->id)->whereIn('id',$id);
+        //return view ('visitas/edit',compact('visita','tiposVisita','motivosVisita'));
 
-        $datosVisita=$visita->datosVisita;
-        return view ('visitas/edit',compact('visita','tiposVisita','motivosVisita','datosVisita'));
+        return view ('visitas/edit',['visita'=>$visita,'tiposvisita'=>$tiposvisita,'motivosvisita'=>$motivosvisita]);
         
     }
 
@@ -76,7 +86,7 @@ class VisitaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id,Request $request)
     {
         //Realizamos update
         $visita=Visita::findOrFail($id);     
@@ -84,10 +94,9 @@ class VisitaController extends Controller
         //Rellenamos variables paciente y visitas para abrir vista de edicion paciente
         $paciente=$visita->paciente;
         $visitas=Paciente::find($paciente->id)->visitas;   
-
-        return view ('pacientes/edit',compact('paciente','visitas'));
-       
-        
+        //Nos quedamos en la misma vista con redirect back
+       // return  redirect()->back();
+       return view ('pacientes.index');    
     }
 
     /**
@@ -99,5 +108,16 @@ class VisitaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function crearVisitaPaciente($idPaciente){
+        $paciente=Paciente::find($idPaciente);
+        $tiposVisita=TipoVisita::All();
+        $motivosVisita=MotivoVisita::All();
+        return view ("visitas.create",compact('paciente','tiposVisita','motivosVisita'));
+       // return view ("visitas.create",compact('$paciente'));
+    }
+    public function nuevaVisita(Request $request){
+        return $request;
     }
 }

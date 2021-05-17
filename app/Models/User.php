@@ -69,4 +69,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Medico::class);
     }
+
+    public function calendario(){
+        return $this->hasOne(Calendario::class);
+    }
 }

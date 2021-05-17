@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -22,11 +22,10 @@
     
     <link rel="stylesheet" href="{{ asset('css/plantilla.css') }}">
 </head>
-<body class="fixed-nav sticky-footer bg-dark">
-  
+<body class="fixed-nav sticky-footer bg-dark">  
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index.html">WebClinic</a>
+        <a class="navbar-brand" href="{{route('home')}}">WebClinic</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -86,8 +85,8 @@
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 
-                            {{ Auth::user()->rolUsuario() }} 
-                   
+                          
+                        {{ Auth::user()->rolUsuario() }}
                         
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -105,8 +104,9 @@
         </div>
         </nav>
         <div class="content-wrapper">  
-            <div id="app">
-            @yield("contenido")
+            <div id="app" class="content">
+                @yield("contenido")
+                
             </div>
         </div>
         <!-- /.content-wrapper-->

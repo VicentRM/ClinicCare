@@ -11,10 +11,21 @@ class Visita extends Model
     protected $fillable = [        
         'fecha',
         'hora',
+        'paciente_id',
         'tipo_visita_id',
+        'motivo_visita_id',
         'comentarios',
         'observaciones',
-        'paciente_id'
+        'paciente_id',
+        'anamnesis',
+        'exploracion',
+        'peso',
+        'altura',
+        'IMC',
+        'tension_arterial',
+        'evolucion',
+        'tratamiento',
+        'prueba_medica_id',
     ];
 
     public function tipoVisita()
@@ -32,9 +43,10 @@ class Visita extends Model
         return $this->belongsTo(Paciente::class);
 
     }
-    public function datosVisita(){
-        return $this->hasOne(DatosVisita::class);
+    public function calendario(){
+        return $this->belongsTo(Calendario::Class);
     }
+ 
  
  
 

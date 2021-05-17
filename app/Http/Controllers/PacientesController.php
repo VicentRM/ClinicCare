@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Paciente;
 use App\Models\Medico;
 use App\Models\Visita;
-
+use DataTables;
 class PacientesController extends Controller
 {
     /**
@@ -17,12 +17,15 @@ class PacientesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
-       //Obtenemos primero el medico autenticado como usuario
+    {             
+        return view ('pacientes.index');    
+    }
+    public function obtenerPacientesMedico(){
+        //Obtenemos primero el medico autenticado como usuario
        $medico=User::find(auth()->id())->medico;     
        //Llenamos el array de pacientes que le pasamos a la vista y paginamos de 20 en 20    
-        $pacientes=$medico->pacientes()->paginate(20);        
-        return view ("pacientes.index",compact("pacientes"));
+        $pacientes=$medico->pacientes()->paginate(20);   
+        return $pacientes;
     }
 
     /**
@@ -33,6 +36,7 @@ class PacientesController extends Controller
     public function create()
     {
         return view ("pacientes.create");
+        
     }
 
     /**
@@ -73,8 +77,11 @@ class PacientesController extends Controller
     public function edit($id)
     {
         $paciente=Paciente::findOrFail($id);
-        $visitas=Paciente::find($paciente->id)->visitas;     
-        return view ('pacientes/edit',compact('paciente','visitas'));
+        $visitas=Paciente::find($paciente->id)->visitas;
+
+        $visitas =Visita::with('calendario','tipoVisita','motivoVisita')->get()->whereIn('paciente_id', $paciente->id);
+
+       return view ('pacientes/edit',['paciente'=>$paciente,'visitas'=>$visitas]);
     }
 
     /**
@@ -84,7 +91,7 @@ class PacientesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id,Request $request)
     {
 
         $paciente=Paciente::findOrFail($id);
@@ -93,7 +100,8 @@ class PacientesController extends Controller
             'apellidos' => 'required'
         ]);       
         $paciente->update($request->all());
-        return redirect('/pacientes');
+        return view ('pacientes.index');    
+       // return redirect('/pacientes');
     }
 
     /**
@@ -106,13 +114,7 @@ class PacientesController extends Controller
     {
         $paciente=Paciente::findOrFail($id);
         $paciente->delete();
-        return redirect('/pacientes');
+       // return redirect('/pacientes');
     }
-    public function pacientesMedico(){
-        //echo 'Some message here.';
-        $medico=User::find(auth()->id())->medico;   
-        $pacientes=$medico->pacientes;
-        $visitas=Paciente::find(10)->visitas()->paginate(1);
-        return response()->json($visitas,200);
-    }
+   
 }

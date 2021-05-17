@@ -22,6 +22,12 @@ window.Vue = require('vue').default;
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('pacientes-component', require('./components/PacientesComponent.vue').default);
 Vue.component('datosvisita-component', require('./components/DatosVisitaComponent.vue').default);
+Vue.component('agenda-component', require('./components/AgendaComponent.vue').default);
+Vue.component('calendario-component', require('./components/CalendarioComponent.vue').default);
+Vue.component('modalcalendario-component', require('./components/ModalCalendarioComponent.vue').default);
+Vue.component('paciente-component', require('./components/PacienteComponent.vue').default);
+Vue.component('visita-component', require('./components/VisitaComponent.vue').default);
+Vue.component('visitas-component', require('./components/VisitasComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
