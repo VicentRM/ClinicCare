@@ -1,6 +1,6 @@
 <template>
   <div>
-       <FullCalendar :options="calendarOptions"/>
+    <FullCalendar :options="calendarOptions" />
   </div>
 </template>
 
@@ -11,74 +11,75 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGrid from "@fullcalendar/timegrid";
 export default {
   name: "calendario-component",
-  components: {    
-    FullCalendar
+  components: {
+    FullCalendar,
   },
   props: {
-    nuevoEventoCalendario:{ required: false, type: Boolean },
+    nuevoEventoCalendario: { required: false, type: Boolean },
   },
   data() {
     return {
-      
       calendarOptions: {
         plugins: [dayGridPlugin, interactionPlugin, timeGrid],
-        events:"",
+        events: "",
         initialView: "timeGridWeek",
-        firstDay:1,
-        locale:'es',
+        firstDay: 1,
+        locale: "es",
         headerToolbar: {
           left: "prev,next,today",
           center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay"        
+          right: "dayGridMonth,timeGridWeek,timeGridDay",
         },
-        height:"auto",
+        height: "auto",
         allDaySlot: false,
         //horario inicio y fin
-        slotMinTime: '09:00:00',
-        slotMaxTime: '15:00:00',
+        slotMinTime: "09:00:00",
+        slotMaxTime: "15:00:00",
         dateClick: this.handleDateClick,
         buttonText: {
-          today:    'hoy',
-          month:    'mes',
-          week:     'semana',
-          day:      'dia',
-          list:     'lista'
+          today: "hoy",
+          month: "mes",
+          week: "semana",
+          day: "dia",
+          list: "lista",
         },
         eventClick: this.clickEvento,
       },
-
+      datosEvento: {
+        event_name: "",
+        start_date: "",
+        end_date: "",
+      },
     };
   },
-watch: {
-  nuevoEventoCalendario: function(){
-    this.obtenerEventos();
-  }
-},
+  watch: {
+    nuevoEventoCalendario: function () {
+      this.obtenerEventos();
+    },
+  },
   created() {
     this.obtenerEventos();
   },
 
   methods: {
-      handleDateClick(clickInfo) {
-          this.$emit('dateClick',clickInfo);
-      },
-      clickEvento(eventInfo){
-       
-          this.$emit('clickEvento',eventInfo);
-      },
-      obtenerEventos(){
-         const promise = axios.get("/calendario");
-        promise
-          .then((response) => {
-            console.log("Eventos:", response.data);            
-            this.$data.calendarOptions.events= response.data;
-          })
-          .catch((error) => {
-            console.log("ERROR: " + error);
-          });
+    handleDateClick(clickInfo) {
+      this.$emit("dateClick", clickInfo);
+    },
+    clickEvento(arg) {
+      this.$emit("clickEvento", arg);
+    },
 
-      }
-  }
+    obtenerEventos() {
+      const promise = axios.get("/calendario");
+      promise
+        .then((response) => {
+          this.$data.calendarOptions.events = response.data;
+        })
+        .catch((error) => {
+          console.log("ERROR: " + error);
+        });
+    },
+  },
 };
 </script>
 

@@ -1,90 +1,102 @@
-<template>  
-<div>
-<h2>Visitas</h2>
-        <!--<button type="button" class="btn btn-dark" onclick="location.href='/visitas/crearVisitaPaciente/{{ $paciente->id }}'">Nueva</button>-->
-        <button type="button" class="btn btn-dark" onclick="location.href='/'">Nueva</button>
-        <hr>
-        <table class="table table-sm table-striped table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th></th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Hora</th>
-                    <th scope="col">Tipo Visita</th>
-                    <th scope="col">Motivo Visita</th>
-                </tr>
-            </thead>
-            <tbody>
-             
-                    <tr v-for="visita in visitas" :key="visita.id">
-                        <td @click="abrirVisita(visita.id)"><i class="fa fa-sign-in" aria-hidden="true"></i></td>
-                        <td>{{ visita.calendario.inicio | formatFecha }}</td>                      
-                        <td>{{ visita.calendario.inicio | formatHora }}</td>
-                        <td>{{ visita.tipo_visita.descripcion }}</td>
-                        <td>{{ visita.motivo_visita.descripcion }}</td>
-                    </tr>
-              
-            </tbody>
-        </table>
-    </div>
+<template>
+  <div>
+    <h2>Visitas</h2>
+    <!--<button type="button" class="btn btn-dark" onclick="location.href='/visitas/crearVisitaPaciente/{{ $paciente->id }}'">Nueva</button>-->
+    <button type="button" class="btn btn-dark" @click="nuevavisita=!nuevavisita">Nueva</button>
+    <hr />
+    <table class="table table-sm table-striped table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th></th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Hora</th>
+          <th scope="col">Tipo Visita</th>
+          <th scope="col">Motivo Visita</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="visita in visitas" :key="visita.id">
+          <td @click="abrirVisita(visita.id)">
+            <i class="fa fa-sign-in" aria-hidden="true"></i>
+          </td>
+          <td>{{ visita.calendario.inicio | formatFecha }}</td>
+          <td>{{ visita.calendario.inicio | formatHora }}</td>
+          <td>{{ visita.tipo_visita.descripcion }}</td>
+          <td>{{ visita.motivo_visita.descripcion }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <agenda-component v-if="nuevavisita" :paciente_id_prop="paciente.id"></agenda-component>
+  </div>
 </template>
 
 <script>
-import moment from 'moment';
-
+import moment from "moment";
+import { bus } from "../app";
 export default {
- 
-    name: "visitas-component",
-    components: {       
-        
+  name: "visitas-component",
+  components: {},
+  props: {
+    // visitas: {required:true, type:Object},
+    paciente: { required: true, type: Object },
+  },
+  data: () => ({
+    nuevavisita: false,
+    visitas: [],
+  }),
+  filters: {
+    formatFecha: function (value) {
+      if (!value) return "";
+      let fecha = moment(value);
+      fecha = fecha.format("DD-MM-YYYY");
+      return fecha;
     },
-    props: {       
-       visitas: {required:true, type:Object}
+    formatHora: function (value) {
+      if (!value) return "";
+      let hora = moment(value);
+      hora = hora.format("HH:mm");
+      return hora;
     },
-    filters: {
-      formatFecha: function (value) {
-        if (!value) return ''
-        let fecha=moment(value);
-        fecha=fecha.format('DD-MM-YYYY'); 
-        return fecha;
-      },
-      formatHora: function (value) {
-        if (!value) return ''
-        let hora=moment(value);
-        hora=hora.format('HH:mm'); 
-        return hora;
-      }
-    },
-    data: () => ({
-     
-        
-        
-    }),
-   
-    methods:{
-        abrirVisita(idVisita) {
-      //accede a partida con ID
-      
-      const promise = axios.get("/visitas/"+idVisita+"/edit" );
+  },
+  created() {
+    console.log("Paciente:" + this.paciente.id);
+    this.obtenerVisitas();
+    bus.$on("actualizarvisitas", this.obtenerVisitas); // 3.Listening
+  },
+  methods: {
+    obtenerVisitas() {
+      const promise = axios.get("/visitas/obtenervisitas/" + this.paciente.id);
       promise
         .then((response) => {
-          console.log("Acceso a visita confirmado", response.statusText);
-          let url =
-          location.protocol +
-          "//" +
-          location.hostname +
-          (location.port ? ":" + location.port : "");
-          window.location.href = "/visitas/"+idVisita+"/edit";
+          console.log("Visitas paciente:", response.data.visitas);
+          this.visitas = response.data.visitas;
         })
         .catch((error) => {
           console.log("ERROR: " + error);
         });
-        },
-       
-    }
-}
+    },
+    abrirVisita(idVisita) {
+      //accede a partida con ID
+
+      const promise = axios.get("/visitas/" + idVisita + "/edit");
+      promise
+        .then((response) => {
+          console.log("Acceso a visita confirmado", response.statusText);
+          let url =
+            location.protocol +
+            "//" +
+            location.hostname +
+            (location.port ? ":" + location.port : "");
+          window.location.href = "/visitas/" + idVisita + "/edit";
+        })
+        .catch((error) => {
+          console.log("ERROR: " + error);
+        });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
 </style>

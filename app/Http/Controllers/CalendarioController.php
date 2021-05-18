@@ -20,8 +20,9 @@ class CalendarioController extends Controller
      */
     public function index()
 
-    {
-        return response()->json(CalendarioResource::collection(Calendario::all()));
+    {    
+        $calendario=User::find(auth()->id())->calendario; 
+        return response()->json(CalendarioResource::collection($calendario));
     }
 
     /**
@@ -57,17 +58,20 @@ class CalendarioController extends Controller
 
         $calendarioId = $nuevoEvento->id;
         //Creamos un nuevo objeto visita
-        $nuevaVisita=new Visita;
+        $nuevaVisita=new Visita;        
         $nuevaVisita->paciente_id=$entrada['paciente_id'];
+        $nuevaVisita->fechahora=$entrada['inicio'];
         $nuevaVisita->calendario_id=$calendarioId;
         $nuevaVisita->tipo_visita_id=$entrada['tipo_visita_id'];
         $nuevaVisita->motivo_visita_id=$entrada['motivo_visita_id'];
         $nuevaVisita->fecha=$entrada['inicio'];
         //Creamos la nueva visita en base de datos
         $nuevaVisita->save();
+ 
 
         return $entrada;
   
+
     
     }
 
@@ -100,9 +104,22 @@ class CalendarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id,Request $request)
     {
-        //
+        //Realizamos update
+        $calendario=Calendario::findOrFail($id);  
+        $entrada=$request->all();
+        //Creamos un nuevo objeto calendario   
+        $paciente=Paciente::find($entrada['paciente_id']);
+        $calendario->nombre_evento=$paciente->apellidos.', '.$paciente->nombre;
+        $calendario->inicio=$entrada['inicio'];
+        $calendario->fin=$entrada['fin'];
+        $calendario->duracion=$entrada['duracion'];
+        $calendario->user_id=auth()->user()->id;   
+        //Actualizamos
+        $calendario->save();     
+        //$calendario->update($calendario->all());
+        return view ('pacientes.index');
     }
 
     /**
@@ -113,7 +130,7 @@ class CalendarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Calendario::destroy($id);
     }
 
     public function datosModalEvento(){

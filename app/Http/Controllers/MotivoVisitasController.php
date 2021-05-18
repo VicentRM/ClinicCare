@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\MotivoVisita;
 
 class MotivoVisitasController extends Controller
 {
@@ -13,7 +14,8 @@ class MotivoVisitasController extends Controller
      */
     public function index()
     {
-        //
+        $motivos=MotivoVisita::all();
+        return $motivos;
     }
 
     /**
@@ -34,7 +36,7 @@ class MotivoVisitasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        MotivoVisita::create($request->all());
     }
 
     /**
@@ -56,7 +58,7 @@ class MotivoVisitasController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -66,9 +68,12 @@ class MotivoVisitasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update( $id,Request $request)
     {
-        //
+         //Realizamos update
+         $motivo=MotivoVisita::findOrFail($id);     
+         $motivo->update($request->all()); 
+        
     }
 
     /**
@@ -79,6 +84,15 @@ class MotivoVisitasController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        try {
+            $motivo=MotivoVisita::findOrFail($id);
+            $motivo->delete();
+        
+        }catch (\Illuminate\Database\QueryException $e){
+          
+            return response($e,500);
+        }
+        
     }
 }

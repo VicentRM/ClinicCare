@@ -68,6 +68,9 @@
                     <a href="#">Configuración clínica</a>
                 </li>
                 <li>
+                    <a href="{{route('tablas')}}">Configuración tablas generales</a>
+                </li>
+                <li>
                     <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Pruebas Médicas</a>
                     <ul class="sidenav-third-level collapse" id="collapseMulti2">
                     <li>

@@ -26,8 +26,7 @@ class CreatePacientesTable extends Migration
             $table->string('CP',100);
             $table->string('telefono1',100);
             $table->string('telefono2',100);
-            $table->string('email',100);
-            $table->integer('documento_id');          
+            $table->string('email',100);                     
             $table->timestamps();
         });
     }

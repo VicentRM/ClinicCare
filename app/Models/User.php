@@ -71,6 +71,6 @@ class User extends Authenticatable
     }
 
     public function calendario(){
-        return $this->hasOne(Calendario::class);
+        return $this->hasMany(Calendario::class);
     }
 }

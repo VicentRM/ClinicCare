@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Paciente;
 use App\Models\Medico;
 use App\Models\Visita;
+use App\Models\Documento;
+
 use DataTables;
 class PacientesController extends Controller
 {
@@ -47,15 +49,25 @@ class PacientesController extends Controller
      */
     public function store(Request $request)
     {
+     
         $entrada=$request->all();
         $ultPaciente=Paciente::latest('NHC')->first();
-        $entrada['NHC']=($ultPaciente->NHC)+1;    
+        if(is_null($ultPaciente)){  //Comprobamos si la variable es null, sera null si no existen pacientes en la base de datos          
+            $entrada['NHC']=1;
+        }else{
+            $entrada['NHC']=($ultPaciente->NHC)+1;    
+        }
         $p=Paciente::create($entrada);
         $pacienteId=Paciente::findOrFail($p->id);
         $medicoId=User::find(auth()->id())->medico; 
         $pacienteId->medicos()->attach($medicoId);
-        return redirect('/pacientes');
-    }
+
+    
+   
+            return redirect('/pacientes');
+        }        
+        
+    
 
     /**
      * Display the specified resource.
@@ -63,6 +75,7 @@ class PacientesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+   
     public function show($id)
     {
         //
@@ -78,11 +91,12 @@ class PacientesController extends Controller
     {
         $paciente=Paciente::findOrFail($id);
         $visitas=Paciente::find($paciente->id)->visitas;
-
-        $visitas =Visita::with('calendario','tipoVisita','motivoVisita')->get()->whereIn('paciente_id', $paciente->id);
-
-       return view ('pacientes/edit',['paciente'=>$paciente,'visitas'=>$visitas]);
+        $visitas=Visita::with('calendario','tipoVisita','motivoVisita')->get()->whereIn('paciente_id', $paciente->id);
+        $documentos=Paciente::find($paciente->id)->documentos;
+       return view ('pacientes/edit',['paciente'=>$paciente,'visitas'=>$visitas,'documentos'=>$documentos]);
     }
+
+   
 
     /**
      * Update the specified resource in storage.
@@ -93,15 +107,12 @@ class PacientesController extends Controller
      */
     public function update($id,Request $request)
     {
-
         $paciente=Paciente::findOrFail($id);
         $request->validate([
             'nombre' => 'required',
             'apellidos' => 'required'
         ]);       
         $paciente->update($request->all());
-        return view ('pacientes.index');    
-       // return redirect('/pacientes');
     }
 
     /**

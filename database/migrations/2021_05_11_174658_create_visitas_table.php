@@ -15,10 +15,8 @@ class CreateVisitasTable extends Migration
     {
         Schema::create('visitas', function (Blueprint $table) {
             $table->id();
-            $table->integer("paciente_id");
-            $table->integer("calendario_id");
-            $table->date('fecha');    
-            $table->time('hora');               
+            $table->foreign("paciente_id")->references('id')->on('pacientes')->onDelete('cascade');            
+            $table->foreign("calendario_id")->references('id')->on('calendarios')->onDelete('cascade');                  
             $table->integer('tipovisita_id');
             $table->text('comentarios');
             $table->text('observaciones');

@@ -33,5 +33,8 @@ class Paciente extends Model
         return $this->hasMany(Visita::class);    
           
     }
+    public function documentos(){
+        return $this->hasMany(Documento::class);
+    }
 
 }

@@ -18,8 +18,11 @@ class Calendario extends Model
      
     ];
 
+    public function user() {
+        return $this->belongsTo(Calendario::class);
+    }
     public function visita(){
-        return $this->hasMany(Visita::Class);
+        return $this->hasMany(Visita::class);
     }
 
 }

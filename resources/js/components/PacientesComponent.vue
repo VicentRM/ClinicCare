@@ -29,7 +29,7 @@
                                 <td>{{ paciente.telefono2 }}</td>
                                 <td>{{ paciente.email }}</td>
                                 <td>{{ paciente.poblacion }}</td>
-                                <td>   <button type="button" class="btn btn-danger" @click="borrarPaciente(paciente)">Borrar</button>                             
+                                <td><button type="button" class="btn btn-danger btn-sm" @click="borrarPaciente(paciente)"><i class="fa fa-trash" aria-hidden="true"></i></button>                             
                                 </td>
                             </tr>                       
                     </tbody>

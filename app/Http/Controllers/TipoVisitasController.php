@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\TipoVisita;
 class TipoVisitasController extends Controller
 {
     /**
@@ -13,7 +13,8 @@ class TipoVisitasController extends Controller
      */
     public function index()
     {
-        //
+        $tipos=TipoVisita::all();
+        return $tipos;
     }
 
     /**
@@ -34,7 +35,7 @@ class TipoVisitasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        TipoVisita::create($request->all());
     }
 
     /**
@@ -66,9 +67,10 @@ class TipoVisitasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id,Request $request)
     {
-        //
+        $tipo=TipoVisita::findOrFail($id);     
+         $tipo->update($request->all()); 
     }
 
     /**
@@ -79,6 +81,13 @@ class TipoVisitasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $tipo=TipoVisita::findOrFail($id);
+            $tipo->delete();
+        
+        }catch (\Illuminate\Database\QueryException $e){
+          
+            return response($e,500);
+        }
     }
 }

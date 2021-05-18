@@ -41,16 +41,16 @@
                             <select class="form-control" id="motivo_visita_id" name="motivo_visita_id" v-model="c_visita.motivo_visita_id">                                                
                                     <option v-for="motivo in motivosvisita" :key="motivo.id" :value="motivo.id">{{ motivo.descripcion }}</option>                             
                             </select>
-                            </select>
+                           
                         </div>
                         <div class="mb-3">
                             <label for="comentarios" class="form-label">Comentarios</label>
                             <textarea class="form-control" rows="4" name="comentarios"
-                                id="comentarios" v-model="c_visita.comentarios">{{ c_visita.comentarios }}</textarea>
+                                id="comentarios" v-model="c_visita.comentarios"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="observaciones" class="form-label">Observaciones</label>
-                            <textarea class="form-control" rows="4" name="observaciones" id="observaciones" v-model="c_visita.observaciones">{{ c_visita.observaciones }}</textarea>
+                            <textarea class="form-control" rows="4" name="observaciones" id="observaciones" v-model="c_visita.observaciones"></textarea>
                         </div>
 
                     </div>
@@ -64,13 +64,13 @@
                                 <div class="mb-3">
                                     <label for="anamnsesis" class="form-label">Anamnsesis</label>
                                     <textarea class="form-control" rows="4" name="anamnesis"
-                                        id="anamnsesis" v-model="c_visita.anamnesis">{{ c_visita.anamnesis }}</textarea>
+                                        id="anamnsesis" v-model="c_visita.anamnesis"></textarea>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <label for="exploracion" class="form-label">Exploracion</label>
                                 <textarea class="form-control" rows="4" name="exploracion"
-                                    id="anamnsesis" v-model="c_visita.exploracion">{{ c_visita.exploracion }}</textarea>
+                                    id="anamnsesis" v-model="c_visita.exploracion"></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -97,12 +97,12 @@
                         <div class="mb-3">
                             <label for="evolucion" class="form-label">Evolcion</label>
                             <textarea class="form-control" rows="6" name="evolucion"
-                                id="evolucion"  v-model="c_visita.evolucion">{{ c_visita.evolucion }}</textarea>
+                                id="evolucion"  v-model="c_visita.evolucion"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="tratamiento" class="form-label">Tratamiento</label>
                             <textarea class="form-control" rows="6" name="tratamiento"
-                                id="tratamiento"  v-model="c_visita.tratamiento">{{ c_visita.tratamiento }}</textarea>
+                                id="tratamiento"  v-model="c_visita.tratamiento"></textarea>
                         </div>
                     </div>               
                 </div>               

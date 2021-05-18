@@ -72,8 +72,7 @@ class VisitaController extends Controller
         $visita=Visita::findOrFail($id);       
         $tiposvisita=TipoVisita::All();
         $motivosvisita=MotivoVisita::All();
-        $visita=Visita::with('paciente','calendario')->get()->whereIn('paciente_id',$visita->paciente->id)->whereIn('id',$id);
-        //return view ('visitas/edit',compact('visita','tiposVisita','motivosVisita'));
+        $visita =Visita::with('paciente','calendario')->where('paciente_id','=',$visita->paciente->id)->where('id','=',$id)->get();
 
         return view ('visitas/edit',['visita'=>$visita,'tiposvisita'=>$tiposvisita,'motivosvisita'=>$motivosvisita]);
         
@@ -110,6 +109,15 @@ class VisitaController extends Controller
         //
     }
 
+    public function obtenerVisitasPaciente($idPaciente){
+       // $paciente=Paciente::find($idPaciente);
+        //$visitas=Paciente::find($paciente->id)->visitas;
+        $visitas =Visita::with('calendario','tipoVisita','motivoVisita')->get()->whereIn('paciente_id', $idPaciente);
+
+        return response()->json([
+            'visitas' => $visitas,            
+            ], 200);
+    }
     public function crearVisitaPaciente($idPaciente){
         $paciente=Paciente::find($idPaciente);
         $tiposVisita=TipoVisita::All();
@@ -117,7 +125,15 @@ class VisitaController extends Controller
         return view ("visitas.create",compact('paciente','tiposVisita','motivosVisita'));
        // return view ("visitas.create",compact('$paciente'));
     }
-    public function nuevaVisita(Request $request){
-        return $request;
+  
+
+    public function visitaCalendario($calendarioId){
+
+        $visita =Visita::with('calendario','paciente')->where('calendario_id','=',$calendarioId)->get();
+      
+        return response()->json([
+            'visita' => $visita,            
+            ], 200);
+       
     }
 }
