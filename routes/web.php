@@ -10,6 +10,8 @@ use App\Http\Controllers\MotivoVisitasController;
 use App\Http\Controllers\TipoVisitasController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DocumentosController;
+use App\Http\Controllers\PruebasMedicasController;
+use App\Http\Controllers\TipoPruebasController;
 use App\Models\Paciente;
 use App\Models\Medico;
 use App\Models\Visita;
@@ -44,7 +46,7 @@ Route::resource('/admin/users', AdminUsersController::class);
 
 
 
-Route::resource('/pacientes', PacientesController::class)->middleware('auth');
+Route::resource('/pacientes', PacientesController::class);
 Route::get('/obtenerPacientesMedico',[PacientesController::class,'obtenerPacientesMedico']);
 
 
@@ -52,8 +54,8 @@ Route::get('/obtenerPacientesMedico',[PacientesController::class,'obtenerPacient
 
 Route::get('/datosModalEvento',[CalendarioController::class,'datosModalEvento']);
 
-Route::resource('/calendario', CalendarioController::class)->middleware('auth');
-Route::resource('/visitas', VisitaController::class)->middleware('auth');
+Route::resource('/calendario', CalendarioController::class);
+Route::resource('/visitas', VisitaController::class);
 //Para crear una visita necesitamos pasarle el paciente para cuando generamos el insert le pasemos el mismo paciente
 Route::get('/visitas/crearVisitaPaciente/{id}',[VisitaController::class,'crearVisitaPaciente']);
 Route::get('/visitas/visitaCalendario/{id}',[VisitaController::class,'visitaCalendario']);
@@ -61,7 +63,14 @@ Route::get('/visitas/obtenervisitas/{id}',[VisitaController::class,'obtenerVisit
 
 
 //Ruta motivos visita
-Route::resource('/motivovisitas', MotivoVisitasController::class)->middleware('auth');
-Route::resource('/tipovisitas', TipoVisitasController::class)->middleware('auth');
+Route::resource('/motivovisitas', MotivoVisitasController::class);
+Route::resource('/tipovisitas', TipoVisitasController::class);
 
-Route::get('/tablas', [HomeController::class, 'tablas'])->name('tablas');
+Route::get('/config', [HomeController::class, 'config'])->name('config');
+
+//Rutas para pruebas medicas
+Route::resource('/pruebasmedicas', PruebasMedicasController::class);
+Route::get('/pruebasmedicas/obtenerpruebasmedicasvisita/{id}',[PruebasMedicasController::class,'obtenerpruebasmedicasvisita']);
+
+//Rutas para tipo de pruebas medicas
+Route::resource('/tipopruebas', TipoPruebasController::class);

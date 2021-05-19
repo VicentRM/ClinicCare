@@ -18346,6 +18346,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -18356,22 +18370,26 @@ __webpack_require__.r(__webpack_exports__);
   props: {},
   data: function data() {
     return {
-      pacientes: {}
+      pacientes_pag: {},
+      pacientes: [],
+      filtro: ""
     };
   },
-  created: function created() {},
-  mounted: function mounted() {
+  created: function created() {
     this.obtenerPacientes();
   },
+  mounted: function mounted() {},
   methods: {
     obtenerPacientes: function obtenerPacientes() {
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      var promise = axios__WEBPACK_IMPORTED_MODULE_1___default().get('/obtenerPacientesMedico?page=' + page);
+      var promise = axios__WEBPACK_IMPORTED_MODULE_1___default().get("/obtenerPacientesMedico?page=" + page);
       promise.then(function (response) {
         console.log(response.data);
-        _this.pacientes = response.data;
+        _this.pacientes_pag = response.data;
+        _this.pacientes = response.data.data;
+        console.log(response.data.data);
       })["catch"](function (error) {
         console.log("ERROR: " + error);
       });
@@ -18395,8 +18413,8 @@ __webpack_require__.r(__webpack_exports__);
 
       var paciente_id = paciente.id;
 
-      if (confirm('¿Seguro que deseas borrar este paciente?')) {
-        var promise = axios__WEBPACK_IMPORTED_MODULE_1___default().delete('/pacientes/' + paciente_id, paciente);
+      if (confirm("¿Seguro que deseas borrar este paciente?")) {
+        var promise = axios__WEBPACK_IMPORTED_MODULE_1___default().delete("/pacientes/" + paciente_id, paciente);
         promise.then(function (response) {
           // console.log(response.data);
           _this2.obtenerPacientes();
@@ -18406,7 +18424,169 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
-  computed: {}
+  computed: {
+    buscarPaciente: function buscarPaciente() {
+      var _this3 = this;
+
+      return this.pacientes.filter(function (paciente) {
+        var nombre = paciente.nombre.toString().toLowerCase();
+        var apellidos = paciente.apellidos.toLowerCase();
+
+        var busqueda = _this3.filtro.toLowerCase();
+
+        return nombre.includes(busqueda) || apellidos.includes(busqueda);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PruebasMedicasComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PruebasMedicasComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "pruebasmedicas-component",
+  props: {
+    visita: {
+      required: true,
+      type: Object
+    }
+  },
+  data: function data() {
+    return {
+      pruebas: [],
+      tipopruebas: [],
+      pruebaMod: {},
+      modificar: 0,
+      nuevaprueba: {
+        visita_id: null,
+        tipo_prueba_id: null
+      }
+    };
+  },
+  created: function created() {
+    this.obtenerPruebas();
+    this.otenerTipoPruebas();
+  },
+  filters: {},
+  methods: {
+    obtenerPruebas: function obtenerPruebas() {
+      var _this = this;
+
+      var promise = axios.get("/pruebasmedicas/obtenerpruebasmedicasvisita/" + this.visita.id);
+      promise.then(function (response) {
+        console.log("Pruebas visita paciente:", response.data);
+        _this.pruebas = response.data.pruebas;
+      })["catch"](function (error) {
+        console.log("ERROR: " + error);
+      });
+    },
+    cargarValoracion: function cargarValoracion(pruebaModificar) {
+      this.pruebaMod = pruebaModificar;
+      console.log(this.pruebaMod.valoracion);
+      this.modificar = 1;
+    },
+    guardarValoracion: function guardarValoracion() {
+      var _this2 = this;
+
+      var promise = axios.put("/pruebasmedicas/" + this.pruebaMod.id, this.pruebaMod);
+      promise.then(function (response) {
+        console.log(response.data);
+        _this2.c_documentos = response.data;
+      })["catch"](function (error) {
+        console.log("ERROR: " + error.message);
+      });
+    },
+    otenerTipoPruebas: function otenerTipoPruebas() {
+      var _this3 = this;
+
+      var promise = axios.get("/tipopruebas");
+      promise.then(function (response) {
+        _this3.tipopruebas = response.data;
+      })["catch"](function (error) {
+        console.log("ERROR: " + error.message);
+      });
+    },
+    guardarNuevaPrueba: function guardarNuevaPrueba() {
+      var _this4 = this;
+
+      this.nuevaprueba.visita_id = this.visita.id;
+      console.log("Guardar" + this.nuevaprueba.tipo_prueba_id);
+      var promise = axios.post("/pruebasmedicas/", this.nuevaprueba);
+      promise.then(function (response) {
+        _this4.obtenerPruebas();
+
+        console.log(response);
+      })["catch"](function (error) {
+        console.log("ERROR: " + error.message);
+      });
+    },
+    borrarPrueba: function borrarPrueba() {}
+  }
 });
 
 /***/ }),
@@ -18726,6 +18906,232 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "visita-component",
@@ -18752,29 +19158,29 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.c_visita = this.visita[0];
-    this.fecha = moment__WEBPACK_IMPORTED_MODULE_0___default()(this.c_visita.calendario.inicio).format('YYYY-MM-DD');
-    this.hora = moment__WEBPACK_IMPORTED_MODULE_0___default()(this.c_visita.calendario.inicio).format('HH:mm');
+    this.fecha = moment__WEBPACK_IMPORTED_MODULE_0___default()(this.c_visita.calendario.inicio).format("YYYY-MM-DD");
+    this.hora = moment__WEBPACK_IMPORTED_MODULE_0___default()(this.c_visita.calendario.inicio).format("HH:mm");
     console.log(this.c_visita);
     console.log(this.fecha);
   },
   filters: {
     formatFecha: function formatFecha(value) {
-      if (!value) return '';
+      if (!value) return "";
       var fecha = moment__WEBPACK_IMPORTED_MODULE_0___default()(value);
-      fecha = fecha.format('DD-MM-YYYY');
+      fecha = fecha.format("DD-MM-YYYY");
       return fecha;
     },
     formatHora: function formatHora(value) {
-      if (!value) return '';
+      if (!value) return "";
       var hora = moment__WEBPACK_IMPORTED_MODULE_0___default()(value);
-      hora = hora.format('HH:mm');
+      hora = hora.format("HH:mm");
       return hora;
     }
   },
   methods: {
     actualizarVisita: function actualizarVisita() {
       console.log(this.c_visita);
-      var promise = axios.put('/visitas/' + this.c_visita.id, this.c_visita);
+      var promise = axios.put("/visitas/" + this.c_visita.id, this.c_visita);
       promise.then(function (response) {// console.log(response.data);
         //  window.location.href = "/pacientes";
       })["catch"](function (error) {
@@ -18785,7 +19191,7 @@ __webpack_require__.r(__webpack_exports__);
       var peso = this.c_visita.peso;
       var altura = this.c_visita.altura;
 
-      if (peso === null || peso == '' || altura === null || altura == '') {
+      if (peso === null || peso == "" || altura === null || altura == "") {
         this.c_visita.IMC = 0;
       } else {
         var imc = Math.round(peso / (altura * altura), 2);
@@ -18950,6 +19356,7 @@ Vue.component('visitas-component', __webpack_require__(/*! ./components/VisitasC
 Vue.component('motivosvisita-component', __webpack_require__(/*! ./components/MotivosVisitaComponent.vue */ "./resources/js/components/MotivosVisitaComponent.vue").default);
 Vue.component('tiposvisita-component', __webpack_require__(/*! ./components/TiposVisitaComponent.vue */ "./resources/js/components/TiposVisitaComponent.vue").default);
 Vue.component('documentos-component', __webpack_require__(/*! ./components/DocumentosComponent.vue */ "./resources/js/components/DocumentosComponent.vue").default);
+Vue.component('pruebasmedicas-component', __webpack_require__(/*! ./components/PruebasMedicasComponent.vue */ "./resources/js/components/PruebasMedicasComponent.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -23448,9 +23855,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/@fullcalendar/common/main.css":
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/@fullcalendar/common/main.css":
 /*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/@fullcalendar/common/main.css ***!
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/@fullcalendar/common/main.css ***!
   \**************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -23472,9 +23879,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n/* classes attached to <body> */\n\n
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/@fullcalendar/daygrid/main.css":
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/@fullcalendar/daygrid/main.css":
 /*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/@fullcalendar/daygrid/main.css ***!
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/@fullcalendar/daygrid/main.css ***!
   \***************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -23496,9 +23903,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n:root {\n  --fc-daygrid-event-dot-wi
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/@fullcalendar/timegrid/main.css":
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/@fullcalendar/timegrid/main.css":
 /*!****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/@fullcalendar/timegrid/main.css ***!
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/@fullcalendar/timegrid/main.css ***!
   \****************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -23520,9 +23927,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n/*\nA VERTICAL event\n*/\n\n.fc-v-ev
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-select/dist/vue-select.css":
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/vue-select/dist/vue-select.css":
 /*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-select/dist/vue-select.css ***!
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/vue-select/dist/vue-select.css ***!
   \***************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -23544,9 +23951,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".v-select{position:relative;font-famil
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css":
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css":
 /*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css ***!
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css ***!
   \************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -23568,9 +23975,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*\n * The MIT License\n * Copyright (
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true&":
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true& ***!
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true& ***!
   \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -23586,6 +23993,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, ".listaErrores[data-v-423821f7] {\n  list-style: none;\n  color: red;\n  padding: 0;\n  margin: 0;\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".toolbar[data-v-0a36bc26] {\n  display: flex;\n}\n.buscador[data-v-0a36bc26] {\n  width: 50%;\n}\n.botonera[data-v-0a36bc26] {\n  margin-left: auto;\n}\n.botonera .btn[data-v-0a36bc26] {\n  width: 80px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -52390,6 +52821,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/plantilla3.scss":
+/*!****************************************!*\
+  !*** ./resources/sass/plantilla3.scss ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./node_modules/moment/locale/af.js":
 /*!******************************************!*\
   !*** ./node_modules/moment/locale/af.js ***!
@@ -78122,8 +78566,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PacientesComponent.vue?vue&type=template&id=0a36bc26& */ "./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&");
+/* harmony import */ var _PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true& */ "./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true&");
 /* harmony import */ var _PacientesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PacientesComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/PacientesComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _PacientesComponent_vue_vue_type_style_index_0_id_0a36bc26_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true& */ "./resources/js/components/PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__.default)(
+  _PacientesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "0a36bc26",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PacientesComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PruebasMedicasComponent.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/PruebasMedicasComponent.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _PruebasMedicasComponent_vue_vue_type_template_id_b191cfe8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PruebasMedicasComponent.vue?vue&type=template&id=b191cfe8& */ "./resources/js/components/PruebasMedicasComponent.vue?vue&type=template&id=b191cfe8&");
+/* harmony import */ var _PruebasMedicasComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PruebasMedicasComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/PruebasMedicasComponent.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -78133,9 +78618,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
-  _PacientesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__.render,
-  _PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _PruebasMedicasComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _PruebasMedicasComponent_vue_vue_type_template_id_b191cfe8___WEBPACK_IMPORTED_MODULE_0__.render,
+  _PruebasMedicasComponent_vue_vue_type_template_id_b191cfe8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -78145,7 +78630,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/PacientesComponent.vue"
+component.options.__file = "resources/js/components/PruebasMedicasComponent.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -78411,6 +78896,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/PruebasMedicasComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/PruebasMedicasComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PruebasMedicasComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PruebasMedicasComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PruebasMedicasComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PruebasMedicasComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/TiposVisitaComponent.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/TiposVisitaComponent.vue?vue&type=script&lang=js& ***!
@@ -78595,19 +79096,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26& ***!
-  \***************************************************************************************/
+/***/ "./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true& ***!
+  \***************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PacientesComponent.vue?vue&type=template&id=0a36bc26& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PruebasMedicasComponent.vue?vue&type=template&id=b191cfe8&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/PruebasMedicasComponent.vue?vue&type=template&id=b191cfe8& ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PruebasMedicasComponent_vue_vue_type_template_id_b191cfe8___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PruebasMedicasComponent_vue_vue_type_template_id_b191cfe8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PruebasMedicasComponent_vue_vue_type_template_id_b191cfe8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PruebasMedicasComponent.vue?vue&type=template&id=b191cfe8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PruebasMedicasComponent.vue?vue&type=template&id=b191cfe8&");
 
 
 /***/ }),
@@ -78671,10 +79189,27 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalCalendarioComponent_vue_vue_type_style_index_0_id_423821f7_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-style-loader/index.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[2]!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true& */ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true&");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalCalendarioComponent_vue_vue_type_style_index_0_id_423821f7_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalCalendarioComponent_vue_vue_type_style_index_0_id_423821f7_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalCalendarioComponent_vue_vue_type_style_index_0_id_423821f7_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-style-loader/index.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true& */ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalCalendarioComponent_vue_vue_type_style_index_0_id_423821f7_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalCalendarioComponent_vue_vue_type_style_index_0_id_423821f7_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalCalendarioComponent_vue_vue_type_style_index_0_id_423821f7_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_13_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalCalendarioComponent_vue_vue_type_style_index_0_id_423821f7_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalCalendarioComponent_vue_vue_type_style_index_0_id_423821f7_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalCalendarioComponent_vue_vue_type_style_index_0_id_423821f7_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true& ***!
+  \******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_style_index_0_id_0a36bc26_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-style-loader/index.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true& */ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_style_index_0_id_0a36bc26_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_style_index_0_id_0a36bc26_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_style_index_0_id_0a36bc26_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_style_index_0_id_0a36bc26_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
 
 
@@ -80101,10 +80636,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&":
-/*!******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26& ***!
-  \******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -80122,21 +80657,50 @@ var render = function() {
       "div",
       { staticClass: "col-12" },
       [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-dark",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.nuevoPaciente()
+        _c("div", { staticClass: "toolbar" }, [
+          _c("div", { staticClass: "buscador" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.filtro,
+                  expression: "filtro"
+                }
+              ],
+              staticClass: "form-control mb-3",
+              attrs: {
+                type: "text",
+                placeholder: "Filtra por nombre o apellido"
+              },
+              domProps: { value: _vm.filtro },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.filtro = $event.target.value
+                }
               }
-            }
-          },
-          [_vm._v("Nuevo")]
-        ),
-        _vm._v(" "),
-        _c("hr"),
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "botonera" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.nuevoPaciente()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-plus" })]
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-responsive" }, [
           _c(
@@ -80147,7 +80711,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.pacientes.data, function(paciente) {
+                _vm._l(_vm.buscarPaciente, function(paciente) {
                   return _c("tr", { key: paciente.id }, [
                     _c(
                       "td",
@@ -80160,11 +80724,9 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                               " +
-                            _vm._s(paciente.apellidos) +
+                          _vm._s(paciente.apellidos) +
                             "," +
-                            _vm._s(paciente.nombre) +
-                            "\n                            "
+                            _vm._s(paciente.nombre)
                         )
                       ]
                     ),
@@ -80210,7 +80772,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("pagination", {
-          attrs: { data: _vm.pacientes },
+          attrs: { data: _vm.pacientes_pag },
           on: { "pagination-change-page": _vm.obtenerPacientes }
         })
       ],
@@ -80240,6 +80802,246 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Poblacion")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PruebasMedicasComponent.vue?vue&type=template&id=b191cfe8&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PruebasMedicasComponent.vue?vue&type=template&id=b191cfe8& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-6" }, [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.guardarNuevaPrueba($event)
+              }
+            }
+          },
+          [
+            _c(
+              "label",
+              {
+                staticClass: "col-form-label",
+                attrs: { for: "recipient-name" }
+              },
+              [_vm._v("Tipo de prueba")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group mb-3" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.nuevaprueba.tipo_prueba_id,
+                      expression: "nuevaprueba.tipo_prueba_id"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.nuevaprueba,
+                        "tipo_prueba_id",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.tipopruebas, function(prueba) {
+                  return _c(
+                    "option",
+                    { key: prueba.id, domProps: { value: prueba.id } },
+                    [_vm._v(_vm._s(prueba.descripcion))]
+                  )
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "table",
+          { staticClass: "table table-sm table-striped table-bordered" },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              [
+                _vm._l(_vm.pruebas, function(prueba) {
+                  return _c("tr", { key: prueba.id }, [
+                    _c(
+                      "td",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.cargarValoracion(prueba)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(prueba.tipo_prueba.descripcion))]
+                    ),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { width: "20%" } }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-sm",
+                          attrs: { type: "button" }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-trash",
+                            attrs: { "aria-hidden": "true" },
+                            on: {
+                              click: function($event) {
+                                return _vm.borrarPrueba(prueba.id)
+                              }
+                            }
+                          })
+                        ]
+                      )
+                    ])
+                  ])
+                }),
+                _vm._v(" "),
+                _c("tr")
+              ],
+              2
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-6" }, [
+        _c(
+          "form",
+          {
+            attrs: {
+              method: "post",
+              "accept-charset": "UTF-8",
+              enctype: "multipart/form-data"
+            },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.guardarValoracion($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "mb-3" }, [
+              _c(
+                "label",
+                { staticClass: "form-label", attrs: { for: "comentarios" } },
+                [_vm._v("Valoración/conclusión prueba")]
+              ),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.pruebaMod.valoracion,
+                    expression: "pruebaMod.valoracion"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { rows: "4", disabled: _vm.modificar == 0 },
+                domProps: { value: _vm.pruebaMod.valoracion },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.pruebaMod, "valoracion", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-dark",
+                attrs: { type: "submit", disabled: _vm.modificar == 0 }
+              },
+              [
+                _vm._v(
+                  "\n                              Guardar cambios\n              "
+                )
+              ]
+            )
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-dark", attrs: { type: "subbmit" } },
+        [_vm._v("Guardar")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-dark" }, [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo de prueba")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "20%" }, attrs: { scope: "col" } }, [
+          _vm._v("Acciones")
+        ])
       ])
     ])
   }
@@ -80437,354 +81239,261 @@ var render = function() {
     _c("nav", [
       _c("h2", [
         _vm._v(
-          "Visita del paciente: " +
+          "\n            Visita del paciente: " +
             _vm._s(_vm.c_visita.paciente.apellidos) +
-            ", " +
-            _vm._s(_vm.c_visita.paciente.nombre)
+            ",\n            " +
+            _vm._s(_vm.c_visita.paciente.nombre) +
+            "\n        "
         )
       ]),
       _vm._v(" "),
       _vm._m(0)
     ]),
     _vm._v(" "),
-    _c(
-      "form",
-      {
-        attrs: {
-          method: "post",
-          "accept-charset": "UTF-8",
-          enctype: "multipart/form-data"
-        },
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.actualizarVisita($event)
-          }
-        }
-      },
-      [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-12" }, [
         _c(
-          "div",
-          { staticClass: "tab-content", attrs: { id: "nav-tabContent" } },
+          "form",
+          {
+            attrs: {
+              method: "post",
+              "accept-charset": "UTF-8",
+              enctype: "multipart/form-data"
+            },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.actualizarVisita($event)
+              }
+            }
+          },
           [
             _c(
               "div",
-              {
-                staticClass: "tab-pane fade show active",
-                attrs: {
-                  id: "nav-general",
-                  role: "tabpanel",
-                  "aria-labelledby": "nav-geenral-tab"
-                }
-              },
+              { staticClass: "tab-content", attrs: { id: "nav-tabContent" } },
               [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-12" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade show active",
+                    attrs: {
+                      id: "nav-general",
+                      role: "tabpanel",
+                      "aria-labelledby": "nav-geenral-tab"
+                    }
+                  },
+                  [
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-6" }, [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-6" }, [
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "form-label",
+                                  attrs: { for: "fecha" }
+                                },
+                                [_vm._v("Fecha")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.fecha,
+                                    expression: "fecha"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "date",
+                                  id: "fecha",
+                                  name: "fecha",
+                                  disabled: ""
+                                },
+                                domProps: { value: _vm.fecha },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.fecha = $event.target.value
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-6" }, [
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "form-label",
+                                  attrs: { for: "hora" }
+                                },
+                                [_vm._v("Hora")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.hora,
+                                    expression: "hora"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "time",
+                                  id: "hora",
+                                  name: "hora",
+                                  disabled: ""
+                                },
+                                domProps: { value: _vm.hora },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.hora = $event.target.value
+                                  }
+                                }
+                              })
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
                         _c("div", { staticClass: "mb-3" }, [
                           _c(
                             "label",
                             {
                               staticClass: "form-label",
-                              attrs: { for: "fecha" }
+                              attrs: { for: "tipoVisita" }
                             },
-                            [_vm._v("Fecha")]
+                            [_vm._v("Tipo Visita")]
                           ),
                           _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.fecha,
-                                expression: "fecha"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "date",
-                              id: "fecha",
-                              name: "fecha",
-                              disabled: ""
-                            },
-                            domProps: { value: _vm.fecha },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.c_visita.tipo_visita_id,
+                                  expression: "c_visita.tipo_visita_id"
                                 }
-                                _vm.fecha = $event.target.value
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "tipo_visita_id",
+                                name: "tipo_visita_id"
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.c_visita,
+                                    "tipo_visita_id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
                               }
-                            }
-                          })
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-6" }, [
+                            },
+                            _vm._l(_vm.tiposvisita, function(tipo) {
+                              return _c(
+                                "option",
+                                { key: tipo.id, domProps: { value: tipo.id } },
+                                [_vm._v(_vm._s(tipo.descripcion))]
+                              )
+                            }),
+                            0
+                          )
+                        ]),
+                        _vm._v(" "),
                         _c("div", { staticClass: "mb-3" }, [
                           _c(
                             "label",
                             {
                               staticClass: "form-label",
-                              attrs: { for: "hora" }
+                              attrs: { for: "motivoVisita" }
                             },
-                            [_vm._v("Hora")]
+                            [_vm._v("Motivo Visita")]
                           ),
                           _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.hora,
-                                expression: "hora"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "time",
-                              id: "hora",
-                              name: "hora",
-                              disabled: ""
-                            },
-                            domProps: { value: _vm.hora },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.c_visita.motivo_visita_id,
+                                  expression: "c_visita.motivo_visita_id"
                                 }
-                                _vm.hora = $event.target.value
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "motivo_visita_id",
+                                name: "motivo_visita_id"
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.c_visita,
+                                    "motivo_visita_id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
                               }
-                            }
-                          })
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mb-3" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "form-label",
-                          attrs: { for: "tipoVisita" }
-                        },
-                        [_vm._v("Tipo Visita")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.c_visita.tipo_visita_id,
-                              expression: "c_visita.tipo_visita_id"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            id: "tipo_visita_id",
-                            name: "tipo_visita_id"
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.c_visita,
-                                "tipo_visita_id",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
+                            },
+                            _vm._l(_vm.motivosvisita, function(motivo) {
+                              return _c(
+                                "option",
+                                {
+                                  key: motivo.id,
+                                  domProps: { value: motivo.id }
+                                },
+                                [_vm._v(_vm._s(motivo.descripcion))]
                               )
-                            }
-                          }
-                        },
-                        _vm._l(_vm.tiposvisita, function(tipo) {
-                          return _c(
-                            "option",
-                            { key: tipo.id, domProps: { value: tipo.id } },
-                            [_vm._v(_vm._s(tipo.descripcion))]
+                            }),
+                            0
                           )
-                        }),
-                        0
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mb-3" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "form-label",
-                          attrs: { for: "motivoVisita" }
-                        },
-                        [_vm._v("Motivo Visita")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.c_visita.motivo_visita_id,
-                              expression: "c_visita.motivo_visita_id"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            id: "motivo_visita_id",
-                            name: "motivo_visita_id"
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.c_visita,
-                                "motivo_visita_id",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        _vm._l(_vm.motivosvisita, function(motivo) {
-                          return _c(
-                            "option",
-                            { key: motivo.id, domProps: { value: motivo.id } },
-                            [_vm._v(_vm._s(motivo.descripcion))]
-                          )
-                        }),
-                        0
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mb-3" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "form-label",
-                          attrs: { for: "comentarios" }
-                        },
-                        [_vm._v("Comentarios")]
-                      ),
-                      _vm._v(" "),
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.c_visita.comentarios,
-                            expression: "c_visita.comentarios"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          rows: "4",
-                          name: "comentarios",
-                          id: "comentarios"
-                        },
-                        domProps: { value: _vm.c_visita.comentarios },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.c_visita,
-                              "comentarios",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mb-3" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "form-label",
-                          attrs: { for: "observaciones" }
-                        },
-                        [_vm._v("Observaciones")]
-                      ),
-                      _vm._v(" "),
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.c_visita.observaciones,
-                            expression: "c_visita.observaciones"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          rows: "4",
-                          name: "observaciones",
-                          id: "observaciones"
-                        },
-                        domProps: { value: _vm.c_visita.observaciones },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.c_visita,
-                              "observaciones",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ])
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane fade",
-                attrs: {
-                  id: "nav-datos",
-                  role: "tabpanel",
-                  "aria-labelledby": "nav-datos-tab"
-                }
-              },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "row mb-3" }, [
-                      _c("div", { staticClass: "col-6" }, [
+                        ]),
+                        _vm._v(" "),
                         _c("div", { staticClass: "mb-3" }, [
                           _c(
                             "label",
                             {
                               staticClass: "form-label",
-                              attrs: { for: "anamnsesis" }
+                              attrs: { for: "comentarios" }
                             },
-                            [_vm._v("Anamnsesis")]
+                            [_vm._v("Comentarios")]
                           ),
                           _vm._v(" "),
                           _c("textarea", {
@@ -80792,17 +81501,17 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.c_visita.anamnesis,
-                                expression: "c_visita.anamnesis"
+                                value: _vm.c_visita.comentarios,
+                                expression: "c_visita.comentarios"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: {
                               rows: "4",
-                              name: "anamnesis",
-                              id: "anamnsesis"
+                              name: "comentarios",
+                              id: "comentarios"
                             },
-                            domProps: { value: _vm.c_visita.anamnesis },
+                            domProps: { value: _vm.c_visita.comentarios },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
@@ -80810,312 +81519,499 @@ var render = function() {
                                 }
                                 _vm.$set(
                                   _vm.c_visita,
-                                  "anamnesis",
+                                  "comentarios",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mb-3" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "form-label",
+                              attrs: { for: "observaciones" }
+                            },
+                            [_vm._v("Observaciones")]
+                          ),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.c_visita.observaciones,
+                                expression: "c_visita.observaciones"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              rows: "4",
+                              name: "observaciones",
+                              id: "observaciones"
+                            },
+                            domProps: { value: _vm.c_visita.observaciones },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.c_visita,
+                                  "observaciones",
                                   $event.target.value
                                 )
                               }
                             }
                           })
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-6" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-label",
-                            attrs: { for: "exploracion" }
-                          },
-                          [_vm._v("Exploracion")]
-                        ),
-                        _vm._v(" "),
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.c_visita.exploracion,
-                              expression: "c_visita.exploracion"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            rows: "4",
-                            name: "exploracion",
-                            id: "anamnsesis"
-                          },
-                          domProps: { value: _vm.c_visita.exploracion },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.c_visita,
-                                "exploracion",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "row mb-3" }, [
-                      _c("div", { staticClass: "col-3 " }, [
-                        _c(
-                          "label",
-                          { staticClass: "form-label", attrs: { for: "peso" } },
-                          [_vm._v("Peso")]
-                        ),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-dark",
+                        attrs: { type: "submit" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            Guardar cambios\n                        "
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade",
+                    attrs: {
+                      id: "nav-datos",
+                      role: "tabpanel",
+                      "aria-labelledby": "nav-datos-tab"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("div", { staticClass: "row mb-3" }, [
+                          _c("div", { staticClass: "col-6" }, [
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "form-label",
+                                  attrs: { for: "anamnsesis" }
+                                },
+                                [_vm._v("Anamnsesis")]
+                              ),
+                              _vm._v(" "),
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.c_visita.anamnesis,
+                                    expression: "c_visita.anamnesis"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  rows: "4",
+                                  name: "anamnesis",
+                                  id: "anamnsesis"
+                                },
+                                domProps: { value: _vm.c_visita.anamnesis },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.c_visita,
+                                      "anamnesis",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-6" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-label",
+                                attrs: { for: "exploracion" }
+                              },
+                              [_vm._v("Exploracion")]
+                            ),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.c_visita.exploracion,
+                                  expression: "c_visita.exploracion"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                rows: "4",
+                                name: "exploracion",
+                                id: "anamnsesis"
+                              },
+                              domProps: { value: _vm.c_visita.exploracion },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.c_visita,
+                                    "exploracion",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
                         _vm._v(" "),
-                        _c("input", {
-                          directives: [
+                        _c("div", { staticClass: "row mb-3" }, [
+                          _c("div", { staticClass: "col-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-label",
+                                attrs: { for: "peso" }
+                              },
+                              [_vm._v("Peso")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.c_visita.peso,
+                                  expression: "c_visita.peso"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "number",
+                                id: "peso",
+                                name: "peso"
+                              },
+                              domProps: { value: _vm.c_visita.peso },
+                              on: {
+                                change: function($event) {
+                                  return _vm.calculoBMI()
+                                },
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.c_visita,
+                                    "peso",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-label",
+                                attrs: { for: "altura" }
+                              },
+                              [_vm._v("Altura")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.c_visita.altura,
+                                  expression: "c_visita.altura"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "number",
+                                id: "altura",
+                                name: "altura",
+                                step: "any"
+                              },
+                              domProps: { value: _vm.c_visita.altura },
+                              on: {
+                                change: function($event) {
+                                  return _vm.calculoBMI()
+                                },
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.c_visita,
+                                    "altura",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-label",
+                                attrs: { for: "IMC" }
+                              },
+                              [_vm._v("IMC")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.c_visita.IMC,
+                                  expression: "c_visita.IMC"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "number",
+                                id: "IMC",
+                                name: "IMC",
+                                disabled: ""
+                              },
+                              domProps: { value: _vm.c_visita.IMC },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.c_visita,
+                                    "IMC",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-3" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "form-label",
+                                attrs: { for: "tension_arterial" }
+                              },
+                              [_vm._v("Tension Arterial")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.c_visita.tension_arterial,
+                                  expression:
+                                    "\n                                                c_visita.tension_arterial\n                                            "
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "number",
+                                id: "tension_arterial",
+                                name: "tension_arterial"
+                              },
+                              domProps: {
+                                value: _vm.c_visita.tension_arterial
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.c_visita,
+                                    "tension_arterial",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mb-3" }, [
+                          _c(
+                            "label",
                             {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.c_visita.peso,
-                              expression: "c_visita.peso"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "number", id: "peso", name: "peso" },
-                          domProps: { value: _vm.c_visita.peso },
-                          on: {
-                            change: function($event) {
-                              return _vm.calculoBMI()
+                              staticClass: "form-label",
+                              attrs: { for: "evolucion" }
                             },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                            [_vm._v("Evolcion")]
+                          ),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.c_visita.evolucion,
+                                expression: "c_visita.evolucion"
                               }
-                              _vm.$set(
-                                _vm.c_visita,
-                                "peso",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-3" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-label",
-                            attrs: { for: "altura" }
-                          },
-                          [_vm._v("Altura")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.c_visita.altura,
-                              expression: "c_visita.altura"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "number",
-                            id: "altura",
-                            name: "altura",
-                            step: "any"
-                          },
-                          domProps: { value: _vm.c_visita.altura },
-                          on: {
-                            change: function($event) {
-                              return _vm.calculoBMI()
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              rows: "6",
+                              name: "evolucion",
+                              id: "evolucion"
                             },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                            domProps: { value: _vm.c_visita.evolucion },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.c_visita,
+                                  "evolucion",
+                                  $event.target.value
+                                )
                               }
-                              _vm.$set(
-                                _vm.c_visita,
-                                "altura",
-                                $event.target.value
-                              )
                             }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-3" }, [
-                        _c(
-                          "label",
-                          { staticClass: "form-label", attrs: { for: "IMC" } },
-                          [_vm._v("IMC")]
-                        ),
+                          })
+                        ]),
                         _vm._v(" "),
-                        _c("input", {
-                          directives: [
+                        _c("div", { staticClass: "mb-3" }, [
+                          _c(
+                            "label",
                             {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.c_visita.IMC,
-                              expression: "c_visita.IMC"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "number",
-                            id: "IMC",
-                            name: "IMC",
-                            disabled: ""
-                          },
-                          domProps: { value: _vm.c_visita.IMC },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                              staticClass: "form-label",
+                              attrs: { for: "tratamiento" }
+                            },
+                            [_vm._v("Tratamiento")]
+                          ),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.c_visita.tratamiento,
+                                expression: "c_visita.tratamiento"
                               }
-                              _vm.$set(_vm.c_visita, "IMC", $event.target.value)
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-3" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-label",
-                            attrs: { for: "tension_arterial" }
-                          },
-                          [_vm._v("Tension Arterial")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.c_visita.tension_arterial,
-                              expression: "c_visita.tension_arterial"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "number",
-                            id: "tension_arterial",
-                            name: "tension_arterial"
-                          },
-                          domProps: { value: _vm.c_visita.tension_arterial },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              rows: "6",
+                              name: "tratamiento",
+                              id: "tratamiento"
+                            },
+                            domProps: { value: _vm.c_visita.tratamiento },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.c_visita,
+                                  "tratamiento",
+                                  $event.target.value
+                                )
                               }
-                              _vm.$set(
-                                _vm.c_visita,
-                                "tension_arterial",
-                                $event.target.value
-                              )
                             }
-                          }
-                        })
+                          })
+                        ])
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "mb-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-dark",
+                        attrs: { type: "submit" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            Guardar cambios\n                        "
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade",
+                    attrs: {
+                      id: "nav-documentos",
+                      role: "tabpanel",
+                      "aria-labelledby": "nav-documentos-tab"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "row justify-content-center" }, [
                       _c(
-                        "label",
-                        {
-                          staticClass: "form-label",
-                          attrs: { for: "evolucion" }
-                        },
-                        [_vm._v("Evolcion")]
-                      ),
-                      _vm._v(" "),
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.c_visita.evolucion,
-                            expression: "c_visita.evolucion"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          rows: "6",
-                          name: "evolucion",
-                          id: "evolucion"
-                        },
-                        domProps: { value: _vm.c_visita.evolucion },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                        "div",
+                        { staticClass: "col-6" },
+                        [
+                          _c("documentos-component", {
+                            attrs: {
+                              idvinculo: _vm.c_visita.id,
+                              vinculo_doc: "visita_id"
                             }
-                            _vm.$set(
-                              _vm.c_visita,
-                              "evolucion",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mb-3" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "form-label",
-                          attrs: { for: "tratamiento" }
-                        },
-                        [_vm._v("Tratamiento")]
-                      ),
-                      _vm._v(" "),
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.c_visita.tratamiento,
-                            expression: "c_visita.tratamiento"
-                          }
+                          })
                         ],
-                        staticClass: "form-control",
-                        attrs: {
-                          rows: "6",
-                          name: "tratamiento",
-                          id: "tratamiento"
-                        },
-                        domProps: { value: _vm.c_visita.tratamiento },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.c_visita,
-                              "tratamiento",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
+                        1
+                      )
                     ])
-                  ])
-                ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade",
+                    attrs: {
+                      id: "nav-pruebasmedicas",
+                      role: "tabpanel",
+                      "aria-labelledby": "nav-prueasmedicas-tab"
+                    }
+                  },
+                  [
+                    _c("pruebasmedicas-component", {
+                      attrs: { visita: _vm.c_visita }
+                    })
+                  ],
+                  1
+                )
               ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-dark", attrs: { type: "submit" } },
-              [_vm._v("Guardar cambios")]
             )
           ]
         )
-      ]
-    )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -81160,6 +82056,38 @@ var staticRenderFns = [
             }
           },
           [_vm._v("Datos Visita")]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "nav-link",
+            attrs: {
+              id: "nav-documentos-tab",
+              "data-toggle": "tab",
+              href: "#nav-documentos",
+              role: "tab",
+              "aria-controls": "nav-documentos",
+              "aria-selected": "false"
+            }
+          },
+          [_vm._v("Documentos")]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "nav-link",
+            attrs: {
+              id: "nav-pruebasmedicas-tab",
+              "data-toggle": "tab",
+              href: "#nav-pruebasmedicas",
+              role: "tab",
+              "aria-controls": "nav-pruebasmedicas",
+              "aria-selected": "false"
+            }
+          },
+          [_vm._v("Pruebas médicas")]
         )
       ]
     )
@@ -81423,13 +82351,13 @@ function normalizeComponent (
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./main.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/@fullcalendar/common/main.css");
+var content = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./main.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/@fullcalendar/common/main.css");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.id, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(/*! !../../vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
-var update = add("636a8356", content, false, {});
+var update = add("c710aa5a", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -81444,13 +82372,13 @@ if(false) {}
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./main.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/@fullcalendar/daygrid/main.css");
+var content = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./main.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/@fullcalendar/daygrid/main.css");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.id, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(/*! !../../vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
-var update = add("051a1650", content, false, {});
+var update = add("1638cfcc", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -81465,13 +82393,13 @@ if(false) {}
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./main.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/@fullcalendar/timegrid/main.css");
+var content = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./main.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/@fullcalendar/timegrid/main.css");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.id, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(/*! !../../vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
-var update = add("cde7ee26", content, false, {});
+var update = add("e0a0642a", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -81486,13 +82414,13 @@ if(false) {}
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./vue-select.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-select/dist/vue-select.css");
+var content = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./vue-select.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/vue-select/dist/vue-select.css");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.id, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(/*! !../../vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
-var update = add("0eddaf0c", content, false, {});
+var update = add("51d25b88", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -81507,34 +82435,55 @@ if(false) {}
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./vue2Dropzone.min.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css");
+var content = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./vue2Dropzone.min.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-11[0].rules[0].use[2]!./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.id, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(/*! !../../vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
-var update = add("602285ee", content, false, {});
+var update = add("9a67d1f2", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true&":
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true& ***!
+  !*** ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true& ***!
   \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[2]!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-13[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true&");
+var content = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalCalendarioComponent.vue?vue&type=style&index=0&id=423821f7&lang=scss&scoped=true&");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.id, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(/*! !../../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
-var update = add("07fbef83", content, false, {});
+var update = add("0e3fe6e4", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=style&index=0&id=0a36bc26&lang=scss&scoped=true&");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.id, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(/*! !../../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
+var update = add("a8cd35ac", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -95870,6 +96819,7 @@ exports.withParams = withParams;
 /******/ 		var installedChunks = {
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0,
+/******/ 			"css/plantilla3": 0,
 /******/ 			"css/plantilla": 0
 /******/ 		};
 /******/ 		
@@ -95918,9 +96868,10 @@ exports.withParams = withParams;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/plantilla"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/plantilla"], () => (__webpack_require__("./resources/sass/app.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","css/plantilla"], () => (__webpack_require__("./resources/sass/plantilla.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/plantilla3","css/plantilla"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/plantilla3","css/plantilla"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/plantilla3","css/plantilla"], () => (__webpack_require__("./resources/sass/plantilla.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","css/plantilla3","css/plantilla"], () => (__webpack_require__("./resources/sass/plantilla3.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

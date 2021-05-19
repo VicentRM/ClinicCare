@@ -15,9 +15,10 @@ class CreateVisitasTable extends Migration
     {
         Schema::create('visitas', function (Blueprint $table) {
             $table->id();
-            $table->foreign("paciente_id")->references('id')->on('pacientes')->onDelete('cascade');            
-            $table->foreign("calendario_id")->references('id')->on('calendarios')->onDelete('cascade');                  
-            $table->integer('tipovisita_id');
+            $table->unsignedBigInteger("paciente_id");            
+            $table->unsignedBigInteger("calendario_id");                  
+            $table->unsignedBigInteger('tipo_visita_id');
+            $table->unsignedBigInteger('motivo_visita_id');
             $table->text('comentarios');
             $table->text('observaciones');
             $table->text('anamnesis');
@@ -27,8 +28,7 @@ class CreateVisitasTable extends Migration
             $table->double('IMC');
             $table->double('tension_alterial');
             $table->text('evolucion');
-            $table->text('tratamiento');
-            $table->integer('prueba_medica_id');            
+            $table->text('tratamiento');                  
             $table->timestamps();
 
         });

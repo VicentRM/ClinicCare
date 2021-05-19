@@ -3,26 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TipoVisita;
-class TipoVisitasController extends Controller
+
+use App\Models\TipoPrueba;
+
+class TipoPruebasController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-  //comprobamos que se este autenticado
-  public function __construct()
-  {
-      $this->middleware('auth');
-  } 
+       //comprobamos que se este autenticado
+    public function __construct()
+    {
+        $this->middleware('auth');
+    } 
 
 
 
     public function index()
     {
-        $tipos=TipoVisita::all();
+        //
+        $tipos=TipoPrueba::all();
         return $tipos;
+
     }
 
     /**
@@ -43,7 +47,7 @@ class TipoVisitasController extends Controller
      */
     public function store(Request $request)
     {
-        TipoVisita::create($request->all());
+        //
     }
 
     /**
@@ -75,10 +79,9 @@ class TipoVisitasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id,Request $request)
+    public function update(Request $request, $id)
     {
-        $tipo=TipoVisita::findOrFail($id);     
-         $tipo->update($request->all()); 
+        //
     }
 
     /**
@@ -89,13 +92,6 @@ class TipoVisitasController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $tipo=TipoVisita::findOrFail($id);
-            $tipo->delete();
-        
-        }catch (\Illuminate\Database\QueryException $e){
-          
-            return response($e,500);
-        }
+        //
     }
 }

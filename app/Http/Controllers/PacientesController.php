@@ -18,6 +18,14 @@ class PacientesController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
+    //comprobamos que se este autenticado
+    public function __construct()
+    {
+        $this->middleware('auth');
+    } 
+
+
+
     public function index()
     {             
         return view ('pacientes.index');    

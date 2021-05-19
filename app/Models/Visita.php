@@ -22,10 +22,9 @@ class Visita extends Model
         'IMC',
         'tension_arterial',
         'evolucion',
-        'tratamiento',
-        'prueba_medica_id',
+        'tratamiento',     
     ];
-
+ 
     public function tipoVisita()
     {
         return $this->belongsTo(TipoVisita::class);
@@ -45,7 +44,13 @@ class Visita extends Model
         return $this->belongsTo(Calendario::Class);
     }
  
- 
+    public function documentos(){
+        return $this->hasMany(Documento::class);
+    }
+
+    public function pruebasMedicas(){
+        return $this->hasMany(PruebaMedica::class);
+    }
  
 
 }

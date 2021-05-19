@@ -60,7 +60,6 @@ export default {
   created() {
     this.obtenerEventos();
   },
-
   methods: {
     handleDateClick(clickInfo) {
       this.$emit("dateClick", clickInfo);
@@ -68,7 +67,6 @@ export default {
     clickEvento(arg) {
       this.$emit("clickEvento", arg);
     },
-
     obtenerEventos() {
       const promise = axios.get("/calendario");
       promise

@@ -134,6 +134,7 @@ export default {
         });
     },
     borrarMotivo(idMotivo) {
+     
       const promise = axios.delete("motivovisitas/" + idMotivo);
       promise
         .then((response) => {

@@ -26,8 +26,8 @@ class HomeController extends Controller
     {
         return view('home');
     }
-    public function tablas(){
-        return view ('tablas');
+    public function config(){
+        return view ('config');
     }
    
  

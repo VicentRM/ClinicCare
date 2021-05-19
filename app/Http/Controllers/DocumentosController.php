@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Documento;
 use App\Models\Paciente;
+use App\Models\Visita;
 use Illuminate\Support\Facades\Storage;
 
 class DocumentosController extends Controller
@@ -41,8 +42,16 @@ class DocumentosController extends Controller
     }
     
     
-    public function obtenerdocumentos(Request $request){     
-        $documentos=Paciente::find($request->id)->documentos;    
+    public function obtenerdocumentos(Request $request){ 
+        switch ($request->vinculo_doc) {
+            case 'paciente_id':
+                $documentos=Paciente::find($request->id)->documentos; 
+                break;
+            case 'visita_id':
+                $documentos=Visita::find($request->id)->documentos; 
+                break;
+        }
+           
         return $documentos;
     }
     public function abrirdocumento($id){

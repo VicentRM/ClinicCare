@@ -18,6 +18,13 @@ class CalendarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    } 
+
+    
     public function index()
 
     {    
@@ -60,11 +67,11 @@ class CalendarioController extends Controller
         //Creamos un nuevo objeto visita
         $nuevaVisita=new Visita;        
         $nuevaVisita->paciente_id=$entrada['paciente_id'];
-        $nuevaVisita->fechahora=$entrada['inicio'];
+       // $nuevaVisita->fechahora=$entrada['inicio'];
         $nuevaVisita->calendario_id=$calendarioId;
         $nuevaVisita->tipo_visita_id=$entrada['tipo_visita_id'];
         $nuevaVisita->motivo_visita_id=$entrada['motivo_visita_id'];
-        $nuevaVisita->fecha=$entrada['inicio'];
+      //  $nuevaVisita->fecha=$entrada['inicio'];
         //Creamos la nueva visita en base de datos
         $nuevaVisita->save();
  

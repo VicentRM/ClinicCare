@@ -50,7 +50,6 @@ export default {
   }),
   created() {
     console.log("Paciente:" + this.paciente_id_prop);
-
     if (this.paciente_id_prop != null) {
       this.evento.paciente_id = this.paciente_id_prop;
       console.log("asignado");
@@ -62,7 +61,6 @@ export default {
       this.showModal = true;
       this.abrirModalNuevoEvento(arg);
       console.log("recibiendo datos:", arg);
-
       $("#calendarModal").modal();
     },
     clickEvento(arg) {
@@ -100,13 +98,11 @@ export default {
           console.log("ERROR: " + error);
         });
       //this.$data.showModal = true;
-
       // $("#calendarModal").modal();
     },
     mostrarModal() {
       $("#calendarModal").modal();
     },
-
     abrirModalNuevoEvento(obj) {
       const dateAndTime = obj.dateStr.split("T");
       this.evento.fecha = dateAndTime[0];
@@ -125,7 +121,6 @@ export default {
     },
     abrirModalEditarEvento(obj) {
       console.log(obj);
-
       return;
     },
     guardarEvento(evento) {

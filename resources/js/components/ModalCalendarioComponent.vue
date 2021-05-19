@@ -118,7 +118,6 @@ export default {
   data: () => ({
     errores: [],
   }),
-
   methods: {
     abrirvisita() {
       this.$emit("abrirvisita");
