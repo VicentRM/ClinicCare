@@ -25,7 +25,10 @@ class MotivoVisitasController extends Controller
         $motivos=MotivoVisita::all();
         return $motivos;
     }
-
+    public function obtenermotivos(){
+        $motivos=MotivoVisita::all();
+        return $motivos;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -55,7 +58,8 @@ class MotivoVisitasController extends Controller
      */
     public function show($id)
     {
-        //
+        $motivo = MotivoVisita::findOrFail($id);
+       return $motivo;
     }
 
     /**

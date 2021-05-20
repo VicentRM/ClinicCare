@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-6">
-        <form @submit.prevent="guardarNuevaPrueba">  
+      <div class="col-xl-6 col-md-12">
+        <div class="form-group">
           <label for="recipient-name" class="col-form-label">Tipo de prueba</label>
           <div class="input-group mb-3">     
               <select class="form-control" v-model="nuevaprueba.tipo_prueba_id">
@@ -13,10 +13,10 @@
                 >{{ prueba.descripcion }}</option>
               </select>
               <div class="input-group-append">
-                <button class="btn btn-dark" type="subbmit">Guardar</button>
+                <button class="btn btn-dark" type="button" @click="guardarPrueba()">Guardar</button>
               </div>
           </div>
-        </form>       
+        </div>       
         <table class="table table-sm table-striped table-bordered">
           <thead class="thead-dark">
             <tr>         
@@ -26,10 +26,10 @@
           </thead>
           <tbody>
             <tr v-for="prueba in pruebas" :key="prueba.id">
-              <td @click="cargarValoracion(prueba)">{{ prueba.tipo_prueba.descripcion }}</td>            
+              <td @click="cargarPrueba(prueba)">{{ prueba.tipo_prueba.descripcion }}</td>            
               <td style="width: 20%;">         
                 <button type="button" class="btn btn-danger btn-sm">
-                  <i class="fa fa-trash" aria-hidden="true" @click="borrarPrueba(prueba.id)"></i>
+                  <i class="fa fa-trash" aria-hidden="true" @click="borrarPrueba(prueba)"></i>
                 </button>
               </td>
             </tr>
@@ -37,17 +37,16 @@
           </tbody>
         </table>
       </div>
-      <div class=col-6>
-          <form method="post" accept-charset="UTF-8" enctype="multipart/form-data" @submit.prevent="guardarValoracion">
-          <div class="mb-3">
-             <label for="comentarios" class="form-label">Valoración/conclusión prueba</label>
-                <textarea class="form-control" rows="4" v-model="pruebaMod.valoracion" :disabled="modificar == 0"></textarea>
+      <div class="col-xl-6 col-md-12">
+          <div class="form-group">
+              <div class="mb-3">
+                <label for="comentarios" class="form-label">Valoración/conclusión prueba</label>
+                <textarea class="form-control" rows="20" v-model="pruebaEdit.valoracion" :disabled="update == 0"></textarea>
                  </div>
-                <button type="submit" class="btn btn-dark" :disabled="modificar == 0">
+                <button type="button" class="btn btn-dark" :disabled="update == 0" @click="actualizarPrueba()">
                                 Guardar cambios
-                </button>
-         
-          </form>
+                </button>         
+          </div>
       </div>
       </div>
   </div>
@@ -65,8 +64,9 @@ export default {
   data: () => ({
       pruebas:[],
       tipopruebas:[],
-      pruebaMod:{},
+      pruebaEdit:{},
       modificar:0,
+      update:0,
       nuevaprueba:{
           visita_id:null,
           tipo_prueba_id:null,
@@ -85,30 +85,37 @@ export default {
       promise
         .then((response) => {
           console.log("Pruebas visita paciente:", response.data);
-          this.pruebas = response.data.pruebas;
+          this.pruebas = response.data;
         })
         .catch((error) => {
           console.log("ERROR: " + error);
         });
     },
-    cargarValoracion(pruebaModificar){
-       
-        this.pruebaMod=pruebaModificar;
-        console.log(this.pruebaMod.valoracion);
+   
+    cargarPrueba(data){
+            this.update=data.id;                  
+            const promise = axios.get("/pruebasmedicas/buscar/"+this.update);         
+            promise
+                .then((response) => {
+                    console.log(response.data);
+                    this.pruebaEdit = response.data;                    
+                })
+                .catch((error) => {
+                    console.log("ERROR: " + error);
+                });            
+        },
+     actualizarPrueba(){     
+        const promise = axios.put("/pruebasmedicas/"+this.pruebaEdit.id,this.pruebaEdit);         
+        promise
+          .then((response) => {
+              console.log(response.data);      
+              this.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
 
-        this.modificar=1;
-    },
-    guardarValoracion(){    
-      const promise = axios.put("/pruebasmedicas/"+this.pruebaMod.id, this.pruebaMod);
-      promise
-        .then((response) => {
-          console.log(response.data);
-          this.c_documentos = response.data;
-        })
+          })
         .catch((error) => {
-          console.log("ERROR: " + error.message);
+            console.log("ERROR: " + error);
         });
-    },
+      },   
     otenerTipoPruebas(){
       const promise = axios.get("/tipopruebas");
       promise
@@ -119,13 +126,11 @@ export default {
           console.log("ERROR: " + error.message);
         });
     },
-    guardarNuevaPrueba(){
+    guardarPrueba(){
         this.nuevaprueba.visita_id=this.visita.id;
-      console.log("Guardar"+this.nuevaprueba.tipo_prueba_id);
         const promise = axios.post("/pruebasmedicas/",this.nuevaprueba);
         promise
-        .then((response) => {
-          
+        .then((response) => {          
           this.obtenerPruebas();
           console.log(response);
         })
@@ -133,8 +138,27 @@ export default {
           console.log("ERROR: " + error.message);
         });
     },
-    borrarPrueba(){
-
+   
+    borrarPrueba(data){//Esta nos abrirá un alert de javascript y si aceptamos borrará la tarea que hemos elegido
+           
+         if (confirm('¿Seguro que deseas borrar esta prueba?')) {
+                    const promise = axios.delete("/pruebasmedicas/" + data.id);
+                    promise
+                      .then((response) => {       
+                        this.obtenerPruebas();
+                      })
+                      .catch((error) => {
+                        console.log("ERROR: " + error.message);  
+                        if (error.response.data.includes("1451")) {
+                                alert("Hay visitas con este motivo, no es poible eliminarlo");
+                        }       
+                      });
+                }
+      
+    },
+    resetForm(){/*Limpia los campos e inicializa la variable update a 0*/
+            this.pruebaEdit={},
+            this.update = 0;
     },
   },
 }

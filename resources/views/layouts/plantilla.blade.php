@@ -59,21 +59,19 @@
 </div>
   <div class="sidebar">
     <ul>
-      <li><a href="{{route('home')}}"><i class="fa fa-desktop"></i><span>Dashboard</span></a></li>
-      <li><a href="{{route('users.index')}}"><i class="fa fa-user-md"></i><span>Usuarios</span></a></li>
+      <li><a href="{{route('home')}}"><i class="fa fa-desktop"></i><span>Dashboard</span></a></li>      
       <li><a href="{{route('pacientes.index')}}"><i class="fa fa-users"></i><span>Pacientes</span></a></li> 
+      <li><a href="{{route('users.index')}}"><i class="fa fa-user-md"></i><span>Usuarios</span></a></li>
+      <li><a href="{{route('medicos.index')}}"><i class="fa fa-user-md"></i><span>Medicos</span></a></li>
       <li><a href="{{route('config')}}"><i class="fa fa-cog"></i><span>Configuracion</span></a></li> 
     </ul>      
   </div>
   
   <!-- Content -->
-  <div class="main">
-  <div class="content-wrapper">  
+  <div class="main">  
     <div id="app" class="content">
-        @yield("contenido")
-        
+        @yield("contenido")        
     </div>
-</div>
   </div>
   </div>
 </body>

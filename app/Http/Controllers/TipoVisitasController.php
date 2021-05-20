@@ -24,6 +24,10 @@ class TipoVisitasController extends Controller
         $tipos=TipoVisita::all();
         return $tipos;
     }
+    public function obtenertipos(){
+        $tipos=TipoVisita::all();
+        return $tipos;
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -54,8 +58,10 @@ class TipoVisitasController extends Controller
      */
     public function show($id)
     {
-        //
+        $tipo = TipoVisita::findOrFail($id);
+       return $tipo;
     }
+
 
     /**
      * Show the form for editing the specified resource.

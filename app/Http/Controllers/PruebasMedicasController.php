@@ -26,6 +26,7 @@ class PruebasMedicasController extends Controller
         //
     }
 
+
     public function store(Request $request)
     {
 
@@ -40,6 +41,8 @@ class PruebasMedicasController extends Controller
     public function show($id)
     {
         //
+        $prueba = PruebaMedica::findOrFail($id);
+       return $prueba;
     }
    
     public function edit($id)
@@ -57,16 +60,22 @@ class PruebasMedicasController extends Controller
     
     public function destroy($id)
     {
-        //
+        try {
+            //Buscamos la prueba medica a partir del id y la eliminamos
+            $tipo=PruebaMedica::findOrFail($id);
+            $tipo->delete();
+        
+        }catch (\Illuminate\Database\QueryException $e){
+          
+            return response($e,500);
+        }
     }
     public function obtenerPruebasMedicasVisita($idVisita){
          
         //Otemenos las pruebas relacionadas con la visita junto con el array de tipo pruebas para mostrar
         $pruebas =PruebaMedica::with('tipoPrueba')->where('visita_id','=',$idVisita)->get();
         //devolvemos json con el array de pruebas
-        return response()->json([
-             'pruebas' => $pruebas,            
-             ], 200);
+        return $pruebas;
      }
 
    

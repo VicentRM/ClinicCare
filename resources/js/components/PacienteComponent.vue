@@ -9,9 +9,6 @@
             <input
               type="text"
               class="form-control"
-              id="nombre"
-              name="nombre"
-              placeholder
               v-model="c_paciente.nombre"
               :class="{
                     'is-invalid': enviar && $v.c_paciente.nombre.$error
@@ -27,9 +24,6 @@
             <input
               type="text"
               class="form-control"
-              id="apellidos"
-              name="apellidos"
-              placeholder
               v-model="c_paciente.apellidos"
               :class="{
                     'is-invalid': enviar && $v.c_paciente.apellidos.$error
@@ -45,9 +39,6 @@
             <input
               type="text"
               class="form-control"
-              id="NIF"
-              name="NIF"
-              placeholder
               v-model="c_paciente.NIF"
               :class="{
                     'is-invalid': enviar && $v.c_paciente.NIF.$error
@@ -63,8 +54,6 @@
             <input
               type="date"
               class="form-control"
-              id="fecha_nacimiento"
-              name="fecha_nacimiento"
               v-model="c_paciente.fecha_nacimiento"
               :class="{
                     'is-invalid': enviar && $v.c_paciente.fecha_nacimiento.$error
@@ -80,8 +69,6 @@
             <input
               type="date"
               class="form-control"
-              id="fecha_alta"
-              name="fecha_alta"
               v-model="c_paciente.fecha_alta"
               :class="{
                     'is-invalid': enviar && $v.c_paciente.fecha_alta.$error
@@ -103,22 +90,13 @@
         <div class="col-6">
           <div class="mb-3">
             <label for="direccion" class="form-label">Direccion</label>
-            <input
-              type="text"
-              class="form-control"
-              id="direccion"
-              name="direccion"
-              placeholder
-              v-model="c_paciente.direccion"
-            />
+            <input type="text" class="form-control" placeholder v-model="c_paciente.direccion" />
           </div>
           <div class="mb-3">
             <label for="CP" class="form-label">CP</label>
             <input
               type="text"
               class="form-control"
-              id="CP"
-              name="CP"
               placeholder
               v-model="c_paciente.CP"
               :class="{
@@ -132,22 +110,13 @@
           </div>
           <div class="mb-3">
             <label for="poblacion" class="form-label">Poblacion</label>
-            <input
-              type="text"
-              class="form-control"
-              id="poblacion"
-              name="poblacion"
-              placeholder
-              v-model="c_paciente.poblacion"
-            />
+            <input type="text" class="form-control" placeholder v-model="c_paciente.poblacion" />
           </div>
           <div class="mb-3">
             <label for="telefono1" class="form-label">Teléfono</label>
             <input
               type="text"
               class="form-control"
-              id="telefono1"
-              name="telefono1"
               placeholder
               v-model="c_paciente.telefono1"
               :class="{
@@ -161,22 +130,13 @@
           </div>
           <div class="mb-3">
             <label for="telefono2" class="form-label">Teléfono 2</label>
-            <input
-              type="text"
-              class="form-control"
-              id="telefono2"
-              name="telefono2"
-              placeholder
-              v-model="c_paciente.telefono2"
-            />
+            <input type="text" class="form-control" placeholder v-model="c_paciente.telefono2" />
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">email</label>
             <input
               type="email"
               class="form-control"
-              id="email"
-              name="email"
               placeholder
               v-model="c_paciente.email"
               :class="{
@@ -194,8 +154,6 @@
         <button type="submit" class="btn btn-dark">Guardar</button>
       </div>
     </form>
-
-  
   </div>
 </template>
 <script>
@@ -212,9 +170,7 @@ import Vuelidate from "vuelidate";
 Vue.use(Vuelidate);
 
 export default {
-  components: {
-    
-  },
+  components: {},
   props: {
     paciente: { required: false, type: Object },
     nuevopaciente: { required: true, type: Boolean },
@@ -233,7 +189,6 @@ export default {
       telefono2: "",
       email: "",
     },
- 
 
     enviar: false,
     c_documentos: [],
@@ -268,7 +223,6 @@ export default {
     if (!this.nuevopaciente) {
       this.c_paciente = this.paciente;
     }
-   
   },
   filters: {
     formatFecha: function (value) {
@@ -330,7 +284,7 @@ export default {
         .catch((error) => {
           console.log("ERROR: " + error.message);
         });
-    },   
+    },
   },
 };
 </script>

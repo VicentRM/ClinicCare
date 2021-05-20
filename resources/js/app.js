@@ -32,6 +32,7 @@ Vue.component('motivosvisita-component', require('./components/MotivosVisitaComp
 Vue.component('tiposvisita-component', require('./components/TiposVisitaComponent.vue').default);
 Vue.component('documentos-component', require('./components/DocumentosComponent.vue').default);
 Vue.component('pruebasmedicas-component', require('./components/PruebasMedicasComponent.vue').default);
+Vue.component('medicos-component', require('./components/MedicosComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

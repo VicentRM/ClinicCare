@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\Foto;
-
+use DB;
 class AdminUsersController extends Controller
 {
     /**
@@ -19,12 +19,16 @@ class AdminUsersController extends Controller
         $users=User::all();
         return view('admin.users.index',compact('users'));
     }
-
+    public function obtenerUsuarios(){
+        $usuarios=User::all();
+        return $usuarios;
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+   
     public function create()
     {
         return view('admin.users.create');
