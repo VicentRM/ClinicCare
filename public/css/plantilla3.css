@@ -1,6 +1,7 @@
 :root {
   --light:#ffffff;
   --dark:#212529;
+  --header_height:50px;
 }
 
 *:before,
@@ -30,13 +31,12 @@ p {
   left: 0;
   background: var(--dark);
   width: 100%;
-  height: 50px;
+  height: var(--header_height);
   line-height: 50px;
   color: #fff;
   display: flex;
 }
 .header .logo {
-  text-transform: uppercase;
   letter-spacing: 1px;
 }
 .header .usuario {
@@ -153,6 +153,7 @@ p {
   padding: 15px;
   padding-left: 75px;
   width: 90%;
+  height: calc(100vh - var(--header_height));
   transition: all 0.2s ease-in-out;
 }
 .main.active {
@@ -203,4 +204,132 @@ p {
   transform-origin: top center;
   -webkit-animation-name: swing;
   animation-name: swing;
+}
+
+.hex {
+  width: 150px;
+  height: 86px;
+  background-color: #ccc;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: auto 173px;
+  position: absolute;
+  float: left;
+  margin-bottom: 42px;
+  text-align: center;
+  zoom: 1;
+  z-index: -1;
+  bottom: 0;
+  right: 0;
+}
+
+.hex.hex-gap {
+  margin-left: 86px;
+}
+
+.hex a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-indent: -9999em;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.hex .corner-1,
+.hex .corner-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  z-index: -2;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+
+.hex .corner-1 {
+  z-index: -1;
+  transform: rotate(60deg);
+}
+
+.hex .corner-2 {
+  transform: rotate(-60deg);
+}
+
+.hex .corner-1:before,
+.hex .corner-2:before {
+  width: 173px;
+  height: 173px;
+  content: "";
+  position: absolute;
+  background: inherit;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: inherit;
+  background-repeat: no-repeat;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+
+.hex .corner-1:before {
+  transform: rotate(-60deg) translate(-87px, 0px);
+  transform-origin: 0 0;
+}
+
+.hex .corner-2:before {
+  transform: rotate(60deg) translate(-48px, -11px);
+  bottom: 0;
+}
+
+/* Custom styles*/
+.hex .inner {
+  color: #eee;
+}
+
+.hex h4 {
+  font-family: "Josefin Sans", sans-serif;
+  margin: 0;
+}
+
+.hex hr {
+  border: 0;
+  border-top: 1px solid #eee;
+  width: 60%;
+  margin: 15px auto;
+}
+
+.hex p {
+  font-size: 16px;
+  font-family: "Kotta One", serif;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.hex.hex-1 {
+  background: #0a6370;
+}
+
+.hex i {
+  font-size: 80px;
+}
+
+.toolbar {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.buscador {
+  width: 50%;
+}
+
+.botonera {
+  margin-left: auto;
+}
+.botonera .btn {
+  width: 80px;
 }

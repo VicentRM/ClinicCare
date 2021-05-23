@@ -30,6 +30,8 @@ class PacientesController extends Controller
     {             
         return view ('pacientes.index');    
     }
+
+
     public function obtenerPacientesMedico(){
         //Obtenemos primero el medico autenticado como usuario
        $medico=User::find(auth()->id())->medico;     
@@ -68,9 +70,7 @@ class PacientesController extends Controller
         $p=Paciente::create($entrada);
         $pacienteId=Paciente::findOrFail($p->id);
         $medicoId=User::find(auth()->id())->medico; 
-        $pacienteId->medicos()->attach($medicoId);
-
-    
+        $pacienteId->medicos()->attach($medicoId);    
    
             return redirect('/pacientes');
         }        

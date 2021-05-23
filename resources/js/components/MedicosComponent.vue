@@ -1,31 +1,25 @@
 <template>
   <div>
-      <div class="row">
-        <div class="col-xl-6 col-md-12">
-            <div class="table-responsive">
-                <table class="table table-sm table-striped table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                    <th scope="col">Nombre</th>  
-                    <th scope="col">NIF</th>  
-                    <th scope="col">NºColegiado</th>
-                    <th scope="col">Usuario</th>           
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="medico in arrayMedicos" :key="medico.id">
-                    <td @click="cargarMedico(medico)">{{ medico.apellidos }},{{ medico.nombre }}</td>
-                    <td>{{ medico.NIF }}</td>
-                    <td>{{ medico.num_colegiado }}</td>
-                    <td>{{ medico.user_id }}</td>        
-                    </tr>
-                </tbody>
-                </table>
-            </div>
+      <h4>Médicos</h4>
+    <div class="grid-container">
+        <div class="medicos">
+                    <div class="tarjeta" v-for="medico in arrayMedicos" :key="medico.id" @click="cargarMedico(medico)">
+                        <div class="avatar">  
+                            <upload-image-component
+                                    :image="medico.user.avatar"
+                                    :user="medico.user"
+                                    @avatar-change="onAvatarChange"
+                                />  
+                        </div>
+                        <div class="info">
+                            <p>{{ medico.apellidos }},{{ medico.nombre }}</p>
+                            <p>NºColegiado:{{ medico.num_colegiado }}</p>
+                            <p>NIF:{{ medico.NIF }}</p>
+                        </div>
+                    </div>     
         </div>
-        <div class="col-xl-6 col-md-12">
-         
-                <div class="form-group">
+    <div class="form-medico">
+         <div class="form-group">
                     <label>Nombre</label>
                     <input type="text" class="form-control" v-model="medicoEdit.nombre">                    
                 </div>
@@ -39,8 +33,7 @@
                 </div>
                 <div class="form-group">
                     <label>NºColegiado</label>
-                    <input type="text" class="form-control" v-model="medicoEdit.num_colegiado"> 
-                                      
+                    <input type="text" class="form-control" v-model="medicoEdit.num_colegiado">                                       
                 </div>    
                 <div class="form-group">
                     <label>Usuario</label>
@@ -57,11 +50,11 @@
                     <button v-if="update != 0" @click="actualizarMedico()" class="btn btn-warning">Actualizar</button>
                     <!-- Botón que limpia el formulario y inicializa la variable a 0, solo se muestra si la variable update es diferente a 0-->
                     <button v-if="update != 0" @click="resetForm()" class="btn">Atrás</button>
-                </div>            
-                
-           
+                </div>           
         </div>
     </div>
+
+
   </div>
 </template>
 
@@ -83,6 +76,7 @@ export default {
     },
     methods:{
         //Funcion para obtener los medicos
+      
         obtenerMedicos(){
             console.log("Medicos");
             const promise = axios.get("/medicos/obtenermedicos/");         
@@ -172,12 +166,52 @@ export default {
             this.medicoEdit={},
             this.update = 0;
         },
-
+        onAvatarChange() {
+            this.obtenerMedicos();
+        },
         
     },
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import "../../sass/variables";
+.grid-container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 1fr;
+  gap: 50px 50px;
+  grid-template-areas:
+    "medicos form-medico";
+    @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+      "medicos"
+      "form-medico";}
+}
+.medicos { grid-area: medicos; }
+.form-medico { grid-area: form-medico; }
+
+
+.tarjeta {
+  display: grid;
+  width: 320px;
+  border-radius: 5%;
+  background-color: rgb(70, 70, 70);
+  grid-template-columns: 100px 200px;
+  grid-template-rows: 100px;
+  gap: 20px 20px;
+  grid-template-areas:
+    "avatar info";
+  margin-bottom: 20px;
+  color: white;
+  &:hover{
+      cursor: pointer;
+  }
+}
+.avatar { grid-area: avatar; }
+.info { grid-area: info}
+    
 
 </style>

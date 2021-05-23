@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Medico;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use DB;
 class MedicosController extends Controller
 {
@@ -21,7 +22,19 @@ class MedicosController extends Controller
     }
     public function obtenerMedicos() {
         //Este funcion nos devolvera los medicos
-        $medicos=Medico::all();
+       // $medicos=Medico::all()->user;
+
+        $medicos =Medico::with('user')->get();
+        foreach ($medicos as $medico) {     
+         
+           info( $medico->user->avatar);
+          
+            if($medico->user->avatar != null){
+                $medico->user->avatar = "/storage/" . $medico->user->avatar;
+            }      
+            info( $medico->user->avatar);
+        }
+    
         return $medicos;
     }
     public function usuariossinasignar (){

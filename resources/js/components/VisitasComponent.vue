@@ -1,9 +1,13 @@
 <template>
   <div>
-    <h2>Visitas</h2>
+    <h4>Visitas</h4>
     <!--<button type="button" class="btn btn-dark" onclick="location.href='/visitas/crearVisitaPaciente/{{ $paciente->id }}'">Nueva</button>-->
-    <button type="button" class="btn btn-dark" @click="nuevavisita=!nuevavisita">Nueva</button>
-    <hr />
+    <div class=toolbar>
+      <div class="botonera">          
+           <button type="button" class="btn btn-success" @click="nuevavisita=!nuevavisita"><i class="fa fa-plus"></i></button>     
+      </div>
+    </div>
+
     <table class="table table-sm table-striped table-bordered">
       <thead class="thead-dark">
         <tr>
@@ -99,4 +103,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-</style>
+.toolbar {
+  display: flex;
+  //grid-template-columns: repeat(2,1fr);
+}
+.botonera {
+  margin-left:auto;
+  
+  
+}

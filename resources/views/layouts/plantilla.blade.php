@@ -30,7 +30,7 @@
     </a>
     
     <div class="logo">
-      WebClinic
+      ClincCare
     </div>
     <div class="usuario">
         <ul class="nav navbar-top-links navbar-right">           
@@ -38,15 +38,10 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-user fa-fw"></i> 
               </a>
-              <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                </li>
-                <li class="divider"></li>
+              <ul class="dropdown-menu dropdown-user">               
                 <li><a href="{{ route('logout') }}"
                     onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();"> <i class="fa fa-fw fa-sign-out"></i>{{ __('Logout') }}</a>
+                                    document.getElementById('logout-form').submit();"> <i class="fa fa-fw fa-sign-out"></i>{{ __('Salir') }}</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -59,10 +54,10 @@
 </div>
   <div class="sidebar">
     <ul>
-      <li><a href="{{route('home')}}"><i class="fa fa-desktop"></i><span>Dashboard</span></a></li>      
-      <li><a href="{{route('pacientes.index')}}"><i class="fa fa-users"></i><span>Pacientes</span></a></li> 
-      <li><a href="{{route('users.index')}}"><i class="fa fa-user-md"></i><span>Usuarios</span></a></li>
+      <li><a href="{{route('home')}}"><i class="fa fa-desktop"></i><span>Inicio</span></a></li>      
+      <li><a href="{{route('pacientes.index')}}"><i class="fa fa-ambulance"></i><span>Pacientes</span></a></li> 
       <li><a href="{{route('medicos.index')}}"><i class="fa fa-user-md"></i><span>Medicos</span></a></li>
+      <li><a href="{{route('usuarios.index')}}"><i class="fa fa-users"></i><span>Usuarios</span></a></li>    
       <li><a href="{{route('config')}}"><i class="fa fa-cog"></i><span>Configuracion</span></a></li> 
     </ul>      
   </div>

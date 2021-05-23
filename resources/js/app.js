@@ -33,6 +33,10 @@ Vue.component('tiposvisita-component', require('./components/TiposVisitaComponen
 Vue.component('documentos-component', require('./components/DocumentosComponent.vue').default);
 Vue.component('pruebasmedicas-component', require('./components/PruebasMedicasComponent.vue').default);
 Vue.component('medicos-component', require('./components/MedicosComponent.vue').default);
+Vue.component('usuarios-component', require('./components/UsuariosComponent.vue').default);
+Vue.component('usuario-component', require('./components/UsuarioComponent.vue').default);
+Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
+Vue.component('upload-image-component', require('./components/UploadImageComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

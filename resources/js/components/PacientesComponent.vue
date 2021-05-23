@@ -1,4 +1,16 @@
 <template>
+<!--<div>
+  <div class="hex hex-1">		
+	<div class="inner">
+			<i class="fa fa-ambulance"></i>
+	</div>		
+	<a href="#"></a>
+	<div class="corner-1"></div>
+	<div class="corner-2"></div>		
+</div>	
+-->
+<div>
+  <h4>Pacientes</h4>
   <div class="row">
     <div class="col-12">
       <div class="toolbar">
@@ -9,9 +21,8 @@
             placeholder="Filtra por nombre o apellido"
             v-model="filtro"
           />
-        </div>
-        <div class="botonera">
-          
+        </div>     
+        <div class="botonera">          
           <button type="button" class="btn btn-success" @click="nuevoPaciente()"><i class="fa fa-plus"></i></button>
         </div>
       </div>
@@ -52,9 +63,10 @@
           </tbody>
         </table>
       </div>
-      <pagination :data="pacientes_pag" @pagination-change-page="obtenerPacientes"></pagination>
+      <pagination :data="pacientes_pag" @pagination-change-page="obtenerPacientes"></pagination>  
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -139,21 +151,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.toolbar {
-  display: flex;
-  //grid-template-columns: repeat(2,1fr);
-}
-.buscador {
-  width: 50%;
-}
-
-.botonera {
-  margin-left:auto;
-  
-  .btn{
-  width: 80px;
-}
-}
-</style>

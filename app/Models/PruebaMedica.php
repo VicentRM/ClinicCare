@@ -19,6 +19,8 @@ class PruebaMedica extends Model
     public function tipoPrueba()
     {
         return $this->belongsTo(TipoPrueba::class);
-
+    }
+    public function documentos(){
+        return $this->hasMany(Documento::class);
     }
 }

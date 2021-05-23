@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Calendario</h3>
+    <h4>Calendario</h4>
     <calendario-component
       @dateClick="dateClick"
       @clickEvento="clickEvento"

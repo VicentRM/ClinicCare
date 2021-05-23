@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">    
     <div class="row">
       <div class="col-xl-6 col-md-12">
         <div class="form-group">
@@ -41,12 +41,19 @@
           <div class="form-group">
               <div class="mb-3">
                 <label for="comentarios" class="form-label">Valoración/conclusión prueba</label>
-                <textarea class="form-control" rows="20" v-model="pruebaEdit.valoracion" :disabled="update == 0"></textarea>
+                <textarea class="form-control" rows="10" v-model="pruebaEdit.valoracion" :disabled="update == 0"></textarea>
                  </div>
                 <button type="button" class="btn btn-dark" :disabled="update == 0" @click="actualizarPrueba()">
                                 Guardar cambios
                 </button>         
-          </div>
+          </div>          
+           
+          <documentos-component v-if="update != 0"
+                    :idvinculo="update"
+                    :vinculo_doc="'prueba_medica_id'"                  
+          ></documentos-component>
+         
+          
       </div>
       </div>
   </div>
@@ -165,6 +172,25 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss" scoped>
 
+.content{
+  padding-top: 20px;
+}
+.toolbar {
+  display: flex;
+  //grid-template-columns: repeat(2,1fr);
+}
+.buscador {
+  width: 50%;
+}
+
+.botonera {
+  margin-left:auto;
+  
+  .btn{
+  width: 80px;
+}
+
+}
 </style>

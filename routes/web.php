@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\VisitaController;
 use App\Http\Controllers\DatosVisitaController;
@@ -36,6 +36,8 @@ use App\Models\TipoVisita;
 $user=Auth::user();
 Auth::routes();
 
+
+
 //Usamos homecontroller como contrlodor general para funciones 'globales'
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -44,8 +46,16 @@ Route::post('/obtenerdocumentos',[DocumentosController::class,'obtenerdocumentos
 Route::get('/abrirdocumento/{id}',[DocumentosController::class,'abrirdocumento']);
 Route::delete('/eliminardocumento/{id}',[DocumentosController::class,'eliminardocumento']);
 
-Route::resource('/admin/users', AdminUsersController::class);
 
+//Rutas usuarios
+Route::get('/usuarios',[UsuariosController::class,'index'])->name('usuarios.index');
+Route::post('/usuarios',[UsuariosController::class,'store'])->name('usuarios.store');
+Route::put('/usuarios/{id}',[UsuariosController::class,'update'])->name('usuarios.update');
+Route::get('/usuarios/buscar/{id}',[UsuariosController::class,'show'])->name('usuarios.show');
+Route::get('/usuarios/obtenerusuarios', [UsuariosController::class,'obtenerUsuarios']);
+Route::get('/usuarios/obtenerroles', [UsuariosController::class,'obtenerRoles']);
+Route::middleware("auth")
+->post("/usuarios/upload/avatar/{id}", [UsuariosController::class,'updateAvatar'])->name("avatar");
 
 
 //Rutas medico
@@ -58,6 +68,7 @@ Route::get('/medicos/usuariossinasignar', [MedicosController::class,'usuariossin
 Route::get('/medicos/obtenerusuarios', [MedicosController::class,'obtenerUsuarios']);
 
 
+
 //Rutas paciente
 Route::resource('/pacientes', PacientesController::class);
 Route::get('/obtenerPacientesMedico',[PacientesController::class,'obtenerPacientesMedico']);
@@ -66,11 +77,10 @@ Route::get('/obtenerPacientesMedico',[PacientesController::class,'obtenerPacient
 
 
 
-
 Route::get('/datosModalEvento',[CalendarioController::class,'datosModalEvento']);
-
 Route::resource('/calendario', CalendarioController::class);
 Route::resource('/visitas', VisitaController::class);
+
 //Para crear una visita necesitamos pasarle el paciente para cuando generamos el insert le pasemos el mismo paciente
 Route::get('/visitas/crearVisitaPaciente/{id}',[VisitaController::class,'crearVisitaPaciente']);
 Route::get('/visitas/visitaCalendario/{id}',[VisitaController::class,'visitaCalendario']);

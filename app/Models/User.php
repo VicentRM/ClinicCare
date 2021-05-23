@@ -21,7 +21,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
-        'foto_id'
+        'avatar'
     ];
 
 
@@ -45,7 +45,7 @@ class User extends Authenticatable
     ];
 
     public function role() {
-        return $this->belongsTo('App\Models\Role');
+        return $this->belongsTo(Role::class);
     }
     public function rolUsuario() {
        
@@ -72,5 +72,13 @@ class User extends Authenticatable
 
     public function calendario(){
         return $this->hasMany(Calendario::class);
+    }
+
+    public function getAvatarUrl()
+    {
+        if ($this->avatar)
+         return asset($this->avatar);
+
+   
     }
 }

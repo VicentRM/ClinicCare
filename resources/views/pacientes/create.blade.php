@@ -1,4 +1,4 @@
 @extends ("layouts.plantilla")
 @section ("contenido")
-        <paciente-component :nuevopaciente="true"></paciente-component>
+        <paciente-component :update=0></paciente-component>
 @endsection

@@ -15,5 +15,6 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/plantilla3.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css')
+    .sass('resources/sass/loginstyle.scss', 'public/css')
     .sass('resources/sass/plantilla.scss', 'public/css')
     .sass('resources/sass/plantilla3.scss', 'public/css');

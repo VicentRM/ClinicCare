@@ -23,6 +23,7 @@
           </tr>
         </tbody>
       </table>
+      
       <vue-dropzone
         ref="myVueDropzone"
         id="dropzone"
@@ -80,8 +81,15 @@ export default {
     
     this.obtenerdocumentos();
   },
+  watch: {
+    //Realizamos un watch sobre el prop idvinculo para que si en el componente padre cambia este vinculo se actualizen los documentos.
+    idvinculo: function () {
+      this.obtenerdocumentos();
+    },
+  },
   methods: {
     obtenerdocumentos() {
+      console.log("Obteniendo documentos....")
       let formData = new FormData();
       formData.append("id", this.idvinculo);
       formData.append("vinculo_doc", this.vinculo_doc);

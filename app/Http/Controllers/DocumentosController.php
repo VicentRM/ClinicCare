@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Documento;
 use App\Models\Paciente;
 use App\Models\Visita;
+use App\Models\PruebaMedica;
 use Illuminate\Support\Facades\Storage;
 
 class DocumentosController extends Controller
@@ -49,6 +50,9 @@ class DocumentosController extends Controller
                 break;
             case 'visita_id':
                 $documentos=Visita::find($request->id)->documentos; 
+                break;
+            case 'prueba_medica_id':
+                $documentos=PruebaMedica::find($request->id)->documentos; 
                 break;
         }
            
