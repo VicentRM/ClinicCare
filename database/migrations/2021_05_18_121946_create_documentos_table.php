@@ -17,9 +17,9 @@ class CreateDocumentosTable extends Migration
             $table->id();
             $table->string('url');
             $table->string('descripcion')->nullable();
-            $table->unsignedBigInteger('paciente_id');
-            $table->unsignedBigInteger('visita_id');
-            $table->unsignedBigInteger('prueba_medica_id');
+            $table->unsignedBigInteger('paciente_id')->nullable();
+            $table->unsignedBigInteger('visita_id')->nullable();
+            $table->unsignedBigInteger('prueba_medica_id')->nullable();
             $table->timestamps();
         });
     }
