@@ -18,17 +18,17 @@ class CreateVisitasTable extends Migration
             $table->unsignedBigInteger("paciente_id");            
             $table->unsignedBigInteger("calendario_id");                  
             $table->unsignedBigInteger('tipo_visita_id');
-            $table->unsignedBigInteger('motivo_visita_id');
-            $table->text('comentarios');
-            $table->text('observaciones');
-            $table->text('anamnesis');
-            $table->text('exploracion');
-            $table->double('peso');
-            $table->double('altura');
-            $table->double('IMC');
-            $table->double('tension_alterial');
-            $table->text('evolucion');
-            $table->text('tratamiento');                  
+            $table->unsignedBigInteger('motivo_visita_id')->nullable();
+            $table->text('comentarios')->nullable();
+            $table->text('observaciones')->nullable();
+            $table->text('anamnesis')->nullable();
+            $table->text('exploracion')->nullable();
+            $table->double('peso')->nullable();
+            $table->double('altura')->nullable();
+            $table->double('IMC')->nullable();
+            $table->double('tension_alterial')->nullable();
+            $table->text('evolucion')->nullable();
+            $table->text('tratamiento')->nullable();                  
             $table->timestamps();
 
         });

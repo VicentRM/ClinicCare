@@ -16,13 +16,14 @@ class CreateDocumentosTable extends Migration
         Schema::create('documentos', function (Blueprint $table) {
             $table->id();
             $table->string('url');
-            $table->string('descripcion');
-            $table->bigInteger('paciente_id');
-            $table->bigInteger('visita_id');
-            $table->bigInteger('prueba_medica_id');
+            $table->string('descripcion')->nullable();
+            $table->unsignedBigInteger('paciente_id');
+            $table->unsignedBigInteger('visita_id');
+            $table->unsignedBigInteger('prueba_medica_id');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

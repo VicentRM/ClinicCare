@@ -20,10 +20,13 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('role_id');
-            $table->rememberToken();
+            $table->string('avatar',500)->nullable();
+            $table->string('avatar_type',250)->nullable(); 
+            $table->rememberToken()->nullable();
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

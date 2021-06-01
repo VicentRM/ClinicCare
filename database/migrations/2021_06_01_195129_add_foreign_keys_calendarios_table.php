@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMedicosPacientesTable extends Migration
+class AddForeignKeysCalendariosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateMedicosPacientesTable extends Migration
      */
     public function up()
     {
-        Schema::create('medico_paciente', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('medico_id');
-            $table->unsignedBigInteger('paciente_id');
-            $table->timestamps();
+        Schema::table('calendarios', function (Blueprint $table) {
+            $table->foreign("user_id")->references('id')->on('users')->onDelete('cascade');  
         });
     }
 
@@ -28,6 +25,8 @@ class CreateMedicosPacientesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medico_paciente');
+        Schema::table('calendarios', function (Blueprint $table) {
+            $table->dropForeign("user_id"); 
+        });
     }
 }

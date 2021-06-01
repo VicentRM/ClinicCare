@@ -15,11 +15,11 @@ class CreateMedicosTable extends Migration
     {
         Schema::create('medicos', function (Blueprint $table) {
             $table->id();
-            $table->string('NIF',10);
+            $table->string('NIF',10)->unique();
             $table->string('nombre',100);
             $table->string('apellidos',100);
-            $table->string('num_colegiado',10);
-            $table->foreignId('user_id')->constrained();
+            $table->string('num_colegiado',9);
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

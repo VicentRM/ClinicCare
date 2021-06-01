@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignkeyToPruebaMedicas extends Migration
+class AddForeignKeysPruebaMedicasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -27,7 +27,8 @@ class AddForeignkeyToPruebaMedicas extends Migration
     public function down()
     {
         Schema::table('prueba_medicas', function (Blueprint $table) {
-            //
+            $table->dropForeign("visita_id"); 
+            $table->dropForeign("tipo_prueba_id");
         });
     }
 }

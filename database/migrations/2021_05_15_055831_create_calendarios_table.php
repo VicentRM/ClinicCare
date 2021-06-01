@@ -15,11 +15,11 @@ class CreateCalendariosTable extends Migration
     {
         Schema::create('calendarios', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_evento');
-            $table->datetime('inicio');
-            $table->datetime('fin');
-            $table->biginteger('duracion');
-            $table->integer('user_id');     
+            $table->string('nombre_evento')->nullable();
+            $table->datetime('inicio')->nullable();
+            $table->datetime('fin')->nullable();
+            $table->biginteger('duracion')->nullable();
+            $table->unsignedBigInteger('user_id');     
             $table->timestamps();
         });
     }

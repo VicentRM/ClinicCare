@@ -17,7 +17,7 @@ class CreatePruebaMedicasTable extends Migration
             $table->id();     
             $table->unsignedBigInteger("tipo_prueba_id");  
             $table->unsignedBigInteger("visita_id");   
-            $table->text('valoracion');
+            $table->text('valoracion')->nullable();
             $table->timestamps();
         });
     }
