@@ -14,8 +14,10 @@ export default {
   components: {
     FullCalendar,
   },
+
   props: {
     nuevoEventoCalendario: { required: false, type: Boolean },
+
   },
   data() {
     return {
@@ -35,7 +37,7 @@ export default {
         //horario inicio y fin
         slotMinTime: "09:00:00",
         slotMaxTime: "15:00:00",
-        dateClick: this.handleDateClick,
+        dateClick: this.dateClick,
         buttonText: {
           today: "hoy",
           month: "mes",
@@ -59,13 +61,15 @@ export default {
   },
   created() {
     this.obtenerEventos();
+  
   },
+
   methods: {
-    handleDateClick(clickInfo) {
+    dateClick(clickInfo) {
       this.$emit("dateClick", clickInfo);
     },
-    clickEvento(arg) {
-      this.$emit("clickEvento", arg);
+    clickEvento(clickInfo) {
+      this.$emit("clickEvento", clickInfo);
     },
     obtenerEventos() {
       const promise = axios.get("/calendario");

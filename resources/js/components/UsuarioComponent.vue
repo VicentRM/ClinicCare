@@ -84,10 +84,12 @@ export default {
 @import "../../sass/variables";
 .usuario {
   display: grid;
-  grid-template-columns: 1fr;
+  width: 200px;
+  grid-template-columns:1fr;
   grid-template-rows: 0.5fr 1fr;
   gap: 20px 0px;
-   border: 2px solid #0AAFF1;
+  border: 1px solid #ccc;
+  box-shadow: 7px 7px 15px #592A08; box-shadow: 7px 7px 15px #592A08;
   grid-template-areas:
     "avatar"
     "info";
@@ -101,3 +103,4 @@ export default {
    justify-self: center;
   }
 </style>
+

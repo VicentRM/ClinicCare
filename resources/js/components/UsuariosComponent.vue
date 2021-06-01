@@ -28,6 +28,7 @@
                 <div class="form-group d-flex justify-content-center" >                      
                       <upload-image-component
                         :image="usuarioEdit.avatar"
+                        :user="usuarioEdit"
                         @avatar-change="onAvatarChange"
                       />        
                   </div>  
@@ -47,9 +48,11 @@
                           </option>
                       </select>                                      
                   </div> 
-                  <div class="form-group">
-                      <label for="password" class="form-label">Password</label>
-                      <input type="password" class="form-control" v-model="usuarioEdit.password">
+                  <div class="form-group" v-if="update != 0">                    
+                      <button type="button" class="btn btn-dark" @click="resetPassword()">
+                                    Restablecer contraseña
+                      </button>
+                     <!-- <input type="password" class="form-control" v-model="usuarioEdit.password">-->
                   </div>
                               
                   <div class="container-buttons">
@@ -75,6 +78,9 @@ export default {
     components: {
         UsuarioComponent,        
     },
+    props:{
+     
+    },
     data(){
         return{
             arrayUsuarios:[],
@@ -85,6 +91,7 @@ export default {
             enviar: false,
             //avatar:"",
             avatarMiniatura:"",
+          
         }
     },
     validations: {
@@ -95,6 +102,7 @@ export default {
     created(){
         this.obtenerusuarios();
         this.obtenerroles();
+   
         
     },
     computed:{
@@ -233,6 +241,21 @@ export default {
                       });
                 }
       
+        },
+        resetPassword(){
+             let formData= new FormData();
+                 formData.append("email",this.usuarioEdit.email);
+            const promise = axios.post("/forgot-password",formData);     
+            
+
+            promise
+                .then((response) => {
+                    console.log(response);
+
+                })
+                .catch((error) => {
+                    console.log("ERROR: " + error);
+                });
         },
         resetForm(){/*Limpia los campos e inicializa la variable update a 0*/
             this.usuarioEdit={},

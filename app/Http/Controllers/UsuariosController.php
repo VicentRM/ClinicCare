@@ -179,5 +179,8 @@ class UsuariosController extends Controller
 
         return response("Avatar removed", 200);
     }
+   
+
+        
 
 }

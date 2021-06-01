@@ -5,6 +5,9 @@
                 Visita del paciente: {{ c_visita.paciente.apellidos }},
                 {{ c_visita.paciente.nombre }}
             </h2>
+            <div class="alert alert-success" role="alert" v-show="showAlert">
+                Datos guardados correctamente.
+            </div>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a
                     class="nav-link active"
@@ -353,7 +356,8 @@ export default {
     data: () => ({
         c_visita: {},
         fecha: null,
-        hora: null
+        hora: null,
+        showAlert:false,
     }),
     created() {
         this.c_visita = this.visita[0];
@@ -379,6 +383,12 @@ export default {
         }
     },
     methods: {
+        alertGuardar(){
+            this.showAlert = true;
+            setTimeout(() => {
+                this.showAlert = false;
+            }, 2000);
+        },
         actualizarVisita() {
             console.log(this.c_visita);
 
@@ -388,6 +398,7 @@ export default {
             );
             promise
                 .then(response => {
+                    this.alertGuardar();
                     // console.log(response.data);
                     //  window.location.href = "/pacientes";
                 })

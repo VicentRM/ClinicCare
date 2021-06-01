@@ -4,9 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Traits\Encryptable;
 class Paciente extends Model
 {
+    use Encryptable;
+
+    protected $encryptable  = [
+        'nombre',
+        'apellidos',
+        'NIF',    
+
+    ];
     protected $fillable = [
         'nombre',
         'apellidos',

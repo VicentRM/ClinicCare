@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/plantilla3.js') }}" defer></script>
+    <script src="{{ asset('js/plantilla.js') }}" defer></script>
     
 
     <!-- Fonts -->
@@ -21,7 +21,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     
-    <link rel="stylesheet" href="{{ asset('css/plantilla3.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plantilla.css') }}">
 </head>
 <div class="header">
     <a href="#" id="menu-action">
@@ -55,10 +55,14 @@
   <div class="sidebar">
     <ul>
       <li><a href="{{route('home')}}"><i class="fa fa-desktop"></i><span>Inicio</span></a></li>      
-      <li><a href="{{route('pacientes.index')}}"><i class="fa fa-ambulance"></i><span>Pacientes</span></a></li> 
-      <li><a href="{{route('medicos.index')}}"><i class="fa fa-user-md"></i><span>Medicos</span></a></li>
-      <li><a href="{{route('usuarios.index')}}"><i class="fa fa-users"></i><span>Usuarios</span></a></li>    
-      <li><a href="{{route('config')}}"><i class="fa fa-cog"></i><span>Configuracion</span></a></li> 
+      @if(Auth::user()->medico) <!--solo si es medico podra ver el menu de medicos y pacientes-->
+        <li><a href="{{route('pacientes.index')}}"><i class="fa fa-ambulance"></i><span>Pacientes</span></a></li> 
+        <li><a href="{{route('medicos.index')}}"><i class="fa fa-user-md"></i><span>Medicos</span></a></li>
+      @endif
+      @if((Auth::user()->medico) && (Auth::user()->role_id==1))  <!--solo si es medico y administrador podra ver el menu de usuarios y configuración-->
+        <li><a href="{{route('usuarios.index')}}"><i class="fa fa-users"></i><span>Usuarios</span></a></li>         
+        <li><a href="{{route('config')}}"><i class="fa fa-cog"></i><span>Configuracion</span></a></li> 
+      @endif
     </ul>      
   </div>
   

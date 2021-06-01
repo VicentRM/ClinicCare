@@ -12,7 +12,8 @@ $('#menu-action').click(function() {
     }
   });
   
-  // Add hover feedback on menu
+
   $('#menu-action').hover(function() {
       $('.sidebar').toggleClass('hovered');
   });
+  

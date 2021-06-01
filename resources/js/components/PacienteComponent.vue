@@ -202,14 +202,15 @@ export default {
   validations: {
     pacienteEdit: {
       nombre: { required },
-      apellidos: { required },
+      apellidos: { required },     
       NIF: { required },
       fecha_nacimiento: { required },
       fecha_alta: { required },
       CP: { required },
       telefono1: { required },
-      email: { required, email },
+      email: { required, email },      
     },
+    
   },
   created() {
     if (this.update!=0) {
@@ -258,6 +259,9 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
+      if (!this.validarNIF(this.pacienteEdit.NIF)){
+        return;
+      }
       const promise = axios.put(
         "/pacientes/" + this.pacienteEdit.id,
         this.pacienteEdit
@@ -272,6 +276,32 @@ export default {
           console.log("ERROR: " + error.message);
         });
     },
+    validarNIF(dni) {
+      let numero;
+      let letr;
+      let letra;
+      let expresion_regular_dni;
+    
+      expresion_regular_dni = /^\d{8}[a-zA-Z]$/;
+    
+      if(expresion_regular_dni.test (dni) == true){
+        numero = dni.substr(0,dni.length-1);
+        letr = dni.substr(dni.length-1,1);
+        numero = numero % 23;
+        letra='TRWAGMYFPDXBNJZSQVHLCKET';
+        letra=letra.substring(numero,numero+1);
+        if (letra!=letr.toUpperCase()) {
+          alert('Dni erroneo, la letra del NIF no se corresponde');
+          return false;
+        }else{
+          //Dni correcto
+          return true;
+        }
+      }else{
+        alert('Dni erroneo, formato no válido');
+        return false;
+      }
+    }
   },
 };
 </script>

@@ -4,10 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Traits\Encryptable;
 class Visita extends Model
 {
     use HasFactory;
+    use Encryptable;
+    protected $encryptable  = [
+        'comentarios',
+        'observaciones',        
+        'anamnesis',
+        'exploracion',        
+        'evolucion',
+        'tratamiento'  
+
+    ];
     protected $fillable = [       
         'paciente_id',
         'tipo_visita_id',

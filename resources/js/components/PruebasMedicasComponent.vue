@@ -38,6 +38,9 @@
         </table>
       </div>
       <div class="col-xl-6 col-md-12">
+        <div class="alert alert-success" role="alert" v-show="showAlert">
+                Datos guardados correctamente.
+            </div>
           <div class="form-group">
               <div class="mb-3">
                 <label for="comentarios" class="form-label">Valoración/conclusión prueba</label>
@@ -77,7 +80,8 @@ export default {
       nuevaprueba:{
           visita_id:null,
           tipo_prueba_id:null,
-      }
+      },
+      showAlert:false,
   }),
   created() {
       this.obtenerPruebas();
@@ -87,6 +91,13 @@ export default {
     
   },
   methods: {
+    alertGuardar(){
+     
+            this.showAlert = true;
+            setTimeout(() => {
+                this.showAlert = false;
+            }, 2000);
+        },
     obtenerPruebas(){
         const promise = axios.get("/pruebasmedicas/obtenerpruebasmedicasvisita/" + this.visita.id);
       promise
@@ -116,6 +127,7 @@ export default {
         promise
           .then((response) => {
               console.log(response.data);      
+              this.alertGuardar();
               this.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
 
           })

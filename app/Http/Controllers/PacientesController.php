@@ -8,7 +8,7 @@ use App\Models\Paciente;
 use App\Models\Medico;
 use App\Models\Visita;
 use App\Models\Documento;
-
+use Illuminate\Support\Facades\Crypt;
 use DataTables;
 class PacientesController extends Controller
 {
@@ -67,6 +67,24 @@ class PacientesController extends Controller
         }else{
             $entrada['NHC']=($ultPaciente->NHC)+1;    
         }
+    
+     /*   $request->fill([
+            'nombre' => Crypt::encrypt($request->title),
+            'apellidos' => Crypt::encrypt($request->description),
+            'NIF' => Crypt::encrypt($request->NIF),
+            'fecha_nacimiento'=> Crypt::encrypt($request->fecha_nacimiento),
+            'fecha_alta'=> Crypt::encrypt($request->fecha_alta),
+            'NHC'=> Crypt::encrypt(4),
+            'sexo'=> Crypt::encrypt($request->sexo),
+            'direccion'=> Crypt::encrypt($request->direccion),
+            'CP'=> Crypt::encrypt($request->CP),
+            'poblacion'=> Crypt::encrypt($request->poblacion),
+            'telefono1'=> Crypt::encrypt($request->telefono1),
+            'telefono2'=> Crypt::encrypt($request->telefono2),
+            'email'=> Crypt::encrypt($request->email),
+        ])->save();
+*/
+             
         $p=Paciente::create($entrada);
         $pacienteId=Paciente::findOrFail($p->id);
         $medicoId=User::find(auth()->id())->medico; 

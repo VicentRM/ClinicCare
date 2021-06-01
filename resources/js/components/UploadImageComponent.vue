@@ -183,11 +183,11 @@ export default {
   border-radius: 50%;
   overflow:hidden;
   position:relative;
-  border: 2px solid #0AAFF1;
+  border: 2px solid #e9ecec91;
   transition: border .15s ease-in;
  
   &:hover {
-     border: 2px solid #0AAFF1;
+     border: 2px solid #e9ecec91;
      cursor: pointer;
     .edit {
       padding-top: 10px;

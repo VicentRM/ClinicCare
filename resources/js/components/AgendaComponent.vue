@@ -35,7 +35,7 @@ export default {
     nuevoEventoCalendario: false,
     modoAñadir: true,
     event_id: 0,
-    visita_id: 0,
+    visita_id: 0,  
     evento: {
       pacientes: [],
       tipos_visita: null,
@@ -49,22 +49,24 @@ export default {
     },
   }),
   created() {
+
     console.log("Paciente:" + this.paciente_id_prop);
     if (this.paciente_id_prop != null) {
       this.evento.paciente_id = this.paciente_id_prop;
       console.log("asignado");
     }
   },
-  methods: {
-    dateClick(arg) {
+  methods: {   
+    //Recibe datos de calendarioComponent para pasarselos al modal
+    dateClick(clickInfo) {
       this.modoAñadir = true;
       this.showModal = true;
-      this.abrirModalNuevoEvento(arg);
-      console.log("recibiendo datos:", arg);
+      this.abrirModalNuevoEvento(clickInfo);
+      console.log("recibiendo datos:", clickInfo);
       $("#calendarModal").modal();
     },
-    clickEvento(arg) {
-      //Datos para apertur modal
+    clickEvento(clickInfo) {
+      //Datos para apertura modal
       this.modoAñadir = false;
       const promise = axios.get("/datosModalEvento");
       promise
@@ -77,7 +79,7 @@ export default {
           console.log("ERROR: " + error);
         });
       //Datos del evento/visita para dejarlos cargados en modal
-      this.event_id = arg.event.id;
+      this.event_id = clickInfo.event.id;
       console.log(this.event_id);
       const promise2 = axios.get("/visitas/visitaCalendario/" + this.event_id);
       promise2
@@ -96,9 +98,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
-        });
-      //this.$data.showModal = true;
-      // $("#calendarModal").modal();
+        }); 
     },
     mostrarModal() {
       $("#calendarModal").modal();
@@ -165,6 +165,7 @@ export default {
           console.log("ERROR: " + error);
         });
     },
+
     setEvento(form) {
       let fechaHora = form.fecha + "T" + form.hora;
       //console.log(fechaHora);

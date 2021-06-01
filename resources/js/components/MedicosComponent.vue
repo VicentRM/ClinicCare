@@ -1,8 +1,15 @@
 <template>
-  <div>
-      <h4>Médicos</h4>
-    <div class="grid-container">
-        <div class="medicos">
+  <div>     
+        <h4>Médicos</h4>         
+    <div class="row">
+        <div class="col-xl-6 col-md-12">
+            <div class="toolbar">
+            <div class="botonera">
+                    <button type="button" class="btnview btn-outline-dark" @click="viewTable()"><i class="fa fa-table"></i></button> 
+                    <button type="button" class="btnview btn-outline-dark" @click="viewGird()"><i class="fa fa-th-large"></i></button> 
+            </div>
+        </div>
+            <div class="medicos" v-if="view==0">
                     <div class="tarjeta" v-for="medico in arrayMedicos" :key="medico.id" @click="cargarMedico(medico)">
                         <div class="avatar">  
                             <upload-image-component
@@ -17,8 +24,29 @@
                             <p>NIF:{{ medico.NIF }}</p>
                         </div>
                     </div>     
+            </div>
+            <div class="table-responsive"  v-if="view==1">
+                <table class="table table-sm table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                    <th scope="col">Nombre</th>  
+                    <th scope="col">NIF</th>  
+                    <th scope="col">NºColegiado</th>
+                    <th scope="col">Usuario</th>           
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="medico in arrayMedicos" :key="medico.id">
+                    <td @click="cargarMedico(medico)">{{ medico.apellidos }},{{ medico.nombre }}</td>
+                    <td>{{ medico.NIF }}</td>
+                    <td>{{ medico.num_colegiado }}</td>
+                    <td>{{ medico.user_id }}</td>        
+                    </tr>
+                </tbody>
+                </table>
+            </div>
         </div>
-    <div class="form-medico">
+    <div class="col-xl-6 col-md-12">
          <div class="form-group">
                     <label>Nombre</label>
                     <input type="text" class="form-control" v-model="medicoEdit.nombre">                    
@@ -54,7 +82,6 @@
         </div>
     </div>
 
-
   </div>
 </template>
 
@@ -66,8 +93,9 @@ export default {
             arrayMedicos:[],
             arrayUsuarios:[],
             medicoEdit:{},
-             update:0, /*Esta variable contrarolará cuando es un nuevo medico o una modificación, si es 0 significará que no hemos seleccionado
+            update:0, /*Esta variable contrarolará cuando es un nuevo medico o una modificación, si es 0 significará que no hemos seleccionado
                           ningun medico, pero si es diferente de 0 entonces tendrá el id del medico y no mostrará el boton guardar sino el modificar*/
+            view:0,
         }
     },
     created(){
@@ -76,7 +104,12 @@ export default {
     },
     methods:{
         //Funcion para obtener los medicos
-      
+        viewTable() {
+            this.view=1;
+        },
+        viewGird(){
+            this.view=0;
+        },
         obtenerMedicos(){
             console.log("Medicos");
             const promise = axios.get("/medicos/obtenermedicos/");         
@@ -176,36 +209,26 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../sass/variables";
-.grid-container {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-template-rows: 1fr;
-  gap: 50px 50px;
-  grid-template-areas:
-    "medicos form-medico";
-    @media (max-width: 1200px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas:
-      "medicos"
-      "form-medico";}
-}
-.medicos { grid-area: medicos; }
-.form-medico { grid-area: form-medico; }
 
+.medicos { 
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    gap:20px;
+}
 
 .tarjeta {
   display: grid;
+  padding:0.5em;
   width: 320px;
-  border-radius: 5%;
-  background-color: rgb(70, 70, 70);
+  border: 1px solid #ccc;
+  box-shadow: 7px 7px 15px #592A08; box-shadow: 7px 7px 15px #592A08; 
+  background-color: rgb(255, 255, 255); 
   grid-template-columns: 100px 200px;
   grid-template-rows: 100px;
   gap: 20px 20px;
   grid-template-areas:
-    "avatar info";
-  margin-bottom: 20px;
-  color: white;
+    "avatar info"; 
   &:hover{
       cursor: pointer;
   }
