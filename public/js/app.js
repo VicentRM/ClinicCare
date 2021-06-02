@@ -18520,12 +18520,15 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
 
     var promise = axios.post("/pacientes", this.pacienteEdit);
     promise.then(function (response) {
-      //this.obtenerMotivos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
-      //this.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
       window.location.href = "/pacientes";
     })["catch"](function (error) {
       console.log("ERROR: " + error);
-      window.location.href = "/errors/" + error.response.status;
+
+      if (error.response.status = "409") {
+        alert(error.response.data);
+      } else {
+        window.location.href = "/errors/" + error.response.status;
+      }
     });
   },
   actualizarPaciente: function actualizarPaciente() {
@@ -18948,6 +18951,192 @@ __webpack_require__.r(__webpack_exports__);
     resetForm: function resetForm() {
       /*Limpia los campos e inicializa la variable update a 0*/
       this.pruebaEdit = {}, this.update = 0;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/TipoPruebasComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/TipoPruebasComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "tipopruebas-component",
+  data: function data() {
+    return {
+      arrayTipoPruebas: [],
+      tipoEdit: {},
+      update: 0,
+
+      /*Esta variable contrarolará cuando es un nuevo tipo o una modificación, si es 0 significará que no hemos seleccionado
+         ningun medico, pero si es diferente de 0 entonces tendrá el id del medico y no mostrará el boton guardar sino el modificar*/
+      enviar: false
+    };
+  },
+  validations: {
+    tipoEdit: {
+      descripcion: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required
+      }
+    }
+  },
+  created: function created() {
+    this.obtenerTipos();
+  },
+  methods: {
+    //Funcion para obtener los medicos
+    obtenerTipos: function obtenerTipos() {
+      var _this = this;
+
+      var promise = axios.get("/tipopruebas/obtenertipos/");
+      promise.then(function (response) {
+        console.log(response.data);
+        _this.arrayTipoPruebas = response.data;
+      })["catch"](function (error) {
+        console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
+      });
+    },
+    guardarTipo: function guardarTipo() {
+      var _this2 = this;
+
+      //Esta funcion crea un nuevo medico segun lo rellenado en el formualrio
+      this.enviar = true; //parar si el formulario es invalido
+
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        return;
+      }
+
+      var promise = axios.post("/tipopruebas", this.tipoEdit);
+      promise.then(function (response) {
+        _this2.obtenerTipos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
+
+
+        _this2.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
+
+      })["catch"](function (error) {
+        console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
+      });
+    },
+    actualizarTipo: function actualizarTipo() {
+      var _this3 = this;
+
+      var promise = axios.put("/tipopruebas/" + this.tipoEdit.id, this.tipoEdit);
+      promise.then(function (response) {
+        console.log(response.data);
+
+        _this3.obtenerTipos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
+
+
+        _this3.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
+
+      })["catch"](function (error) {
+        console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
+      });
+    },
+    cargarTipo: function cargarTipo(data) {
+      var _this4 = this;
+
+      this.update = data.id;
+      var promise = axios.get("/tipopruebas/buscar/" + this.update);
+      promise.then(function (response) {
+        console.log(response.data);
+        _this4.tipoEdit = response.data;
+      })["catch"](function (error) {
+        console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
+      });
+    },
+    borrarTipo: function borrarTipo(data) {
+      var _this5 = this;
+
+      if (confirm('¿Seguro que deseas borrar este tipo de prueba?')) {
+        var promise = axios["delete"]("/tipopruebas/" + data.id);
+        promise.then(function (response) {
+          _this5.obtenerTipos();
+        })["catch"](function (error) {
+          console.log("ERROR: " + error.message);
+          window.location.href = "/errors/" + error.response.status;
+        });
+      }
+    },
+    resetForm: function resetForm() {
+      /*Limpia los campos e inicializa la variable update a 0*/
+      this.tipoEdit = {}, this.update = 0;
+      this.enviar = false;
     }
   }
 });
@@ -20312,6 +20501,7 @@ Vue.component('visita-component', __webpack_require__(/*! ./components/VisitaCom
 Vue.component('visitas-component', __webpack_require__(/*! ./components/VisitasComponent.vue */ "./resources/js/components/VisitasComponent.vue").default);
 Vue.component('motivosvisita-component', __webpack_require__(/*! ./components/MotivosVisitaComponent.vue */ "./resources/js/components/MotivosVisitaComponent.vue").default);
 Vue.component('tiposvisita-component', __webpack_require__(/*! ./components/TiposVisitaComponent.vue */ "./resources/js/components/TiposVisitaComponent.vue").default);
+Vue.component('tipopruebas-component', __webpack_require__(/*! ./components/TipoPruebasComponent.vue */ "./resources/js/components/TipoPruebasComponent.vue").default);
 Vue.component('documentos-component', __webpack_require__(/*! ./components/DocumentosComponent.vue */ "./resources/js/components/DocumentosComponent.vue").default);
 Vue.component('pruebasmedicas-component', __webpack_require__(/*! ./components/PruebasMedicasComponent.vue */ "./resources/js/components/PruebasMedicasComponent.vue").default);
 Vue.component('medicos-component', __webpack_require__(/*! ./components/MedicosComponent.vue */ "./resources/js/components/MedicosComponent.vue").default);
@@ -79799,6 +79989,45 @@ component.options.__file = "resources/js/components/PruebasMedicasComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/TipoPruebasComponent.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/TipoPruebasComponent.vue ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _TipoPruebasComponent_vue_vue_type_template_id_7c9fe11a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TipoPruebasComponent.vue?vue&type=template&id=7c9fe11a& */ "./resources/js/components/TipoPruebasComponent.vue?vue&type=template&id=7c9fe11a&");
+/* harmony import */ var _TipoPruebasComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TipoPruebasComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/TipoPruebasComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _TipoPruebasComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _TipoPruebasComponent_vue_vue_type_template_id_7c9fe11a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _TipoPruebasComponent_vue_vue_type_template_id_7c9fe11a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/TipoPruebasComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/TiposVisitaComponent.vue":
 /*!**********************************************************!*\
   !*** ./resources/js/components/TiposVisitaComponent.vue ***!
@@ -80231,6 +80460,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/TipoPruebasComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/TipoPruebasComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoPruebasComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TipoPruebasComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/TipoPruebasComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoPruebasComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/TiposVisitaComponent.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/TiposVisitaComponent.vue?vue&type=script&lang=js& ***!
@@ -80527,6 +80772,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PruebasMedicasComponent_vue_vue_type_template_id_b191cfe8_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PruebasMedicasComponent_vue_vue_type_template_id_b191cfe8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PruebasMedicasComponent.vue?vue&type=template&id=b191cfe8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PruebasMedicasComponent.vue?vue&type=template&id=b191cfe8&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/TipoPruebasComponent.vue?vue&type=template&id=7c9fe11a&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/TipoPruebasComponent.vue?vue&type=template&id=7c9fe11a& ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoPruebasComponent_vue_vue_type_template_id_7c9fe11a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoPruebasComponent_vue_vue_type_template_id_7c9fe11a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoPruebasComponent_vue_vue_type_template_id_7c9fe11a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TipoPruebasComponent.vue?vue&type=template&id=7c9fe11a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/TipoPruebasComponent.vue?vue&type=template&id=7c9fe11a&");
 
 
 /***/ }),
@@ -82992,6 +83254,196 @@ var staticRenderFns = [
     return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo de prueba")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "20%" }, attrs: { scope: "col" } }, [
+          _vm._v("Acciones")
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/TipoPruebasComponent.vue?vue&type=template&id=7c9fe11a&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/TipoPruebasComponent.vue?vue&type=template&id=7c9fe11a& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h3", { staticClass: "text-center" }, [_vm._v("Tipo Pruebas")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "input-group mb-3" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.tipoEdit.descripcion,
+              expression: "tipoEdit.descripcion"
+            }
+          ],
+          staticClass: "form-control",
+          class: {
+            "is-invalid": _vm.enviar && _vm.$v.tipoEdit.descripcion.$error
+          },
+          attrs: { type: "text" },
+          domProps: { value: _vm.tipoEdit.descripcion },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.tipoEdit, "descripcion", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group-append" }, [
+          _vm.update == 0
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  on: {
+                    click: function($event) {
+                      return _vm.guardarTipo()
+                    }
+                  }
+                },
+                [_vm._v("Añadir")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.update != 0
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-warning",
+                  on: {
+                    click: function($event) {
+                      return _vm.actualizarTipo()
+                    }
+                  }
+                },
+                [_vm._v("Actualizar")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.update != 0
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn",
+                  on: {
+                    click: function($event) {
+                      return _vm.resetForm()
+                    }
+                  }
+                },
+                [_vm._v("Atrás")]
+              )
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.enviar && !_vm.$v.tipoEdit.descripcion.required
+        ? _c("div", { staticClass: "invalid-feedback" }, [
+            _vm._v("La descripció es obligatoria")
+          ])
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c(
+      "table",
+      { staticClass: "table table-sm table-striped table-bordered" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          [
+            _vm._l(_vm.arrayTipoPruebas, function(tipo) {
+              return _c("tr", { key: tipo.id }, [
+                _c("td", [_vm._v(_vm._s(tipo.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(tipo.descripcion))]),
+                _vm._v(" "),
+                _c("td", { staticStyle: { width: "20%" } }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning btn-sm",
+                      attrs: { type: "button" }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-pencil",
+                        attrs: { "aria-hidden": "true" },
+                        on: {
+                          click: function($event) {
+                            return _vm.cargarTipo(tipo)
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-sm",
+                      attrs: { type: "button" }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-trash",
+                        attrs: { "aria-hidden": "true" },
+                        on: {
+                          click: function($event) {
+                            return _vm.borrarTipo(tipo)
+                          }
+                        }
+                      })
+                    ]
+                  )
+                ])
+              ])
+            }),
+            _vm._v(" "),
+            _c("tr")
+          ],
+          2
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-dark" }, [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Descripción")]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "20%" }, attrs: { scope: "col" } }, [
           _vm._v("Acciones")

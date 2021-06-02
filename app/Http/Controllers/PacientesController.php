@@ -10,6 +10,7 @@ use App\Models\Visita;
 use App\Models\Documento;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
+use DB;
 class PacientesController extends Controller
 {
     /**
@@ -61,36 +62,21 @@ class PacientesController extends Controller
     {
      
         $entrada=$request->all();
+           
+
         $ultPaciente=Paciente::latest('NHC')->first();
         if(is_null($ultPaciente)){  //Comprobamos si la variable es null, sera null si no existen pacientes en la base de datos          
             $entrada['NHC']=1;
         }else{
             $entrada['NHC']=($ultPaciente->NHC)+1;    
         }
-    
-     /*   $request->fill([
-            'nombre' => Crypt::encrypt($request->title),
-            'apellidos' => Crypt::encrypt($request->description),
-            'NIF' => Crypt::encrypt($request->NIF),
-            'fecha_nacimiento'=> Crypt::encrypt($request->fecha_nacimiento),
-            'fecha_alta'=> Crypt::encrypt($request->fecha_alta),
-            'NHC'=> Crypt::encrypt(4),
-            'sexo'=> Crypt::encrypt($request->sexo),
-            'direccion'=> Crypt::encrypt($request->direccion),
-            'CP'=> Crypt::encrypt($request->CP),
-            'poblacion'=> Crypt::encrypt($request->poblacion),
-            'telefono1'=> Crypt::encrypt($request->telefono1),
-            'telefono2'=> Crypt::encrypt($request->telefono2),
-            'email'=> Crypt::encrypt($request->email),
-        ])->save();
-*/
-             
+      
         $p=Paciente::create($entrada);
         $pacienteId=Paciente::findOrFail($p->id);
         $medicoId=User::find(auth()->id())->medico; 
         $pacienteId->medicos()->attach($medicoId);    
    
-            return redirect('/pacientes');
+          //  return redirect('/pacientes');
         }        
         
     
@@ -153,5 +139,6 @@ class PacientesController extends Controller
         $paciente->delete();
        // return redirect('/pacientes');
     }
-   
+    
+
 }

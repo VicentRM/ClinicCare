@@ -17,7 +17,7 @@ class CreatePacientesTable extends Migration
             $table->id();
             $table->string('nombre',250);
             $table->string('apellidos',250);
-            $table->string('NIF',250)->unique();
+            $table->string('NIF',250);
             $table->date('fecha_nacimiento');
             $table->date('fecha_alta');
             $table->string('NHC',100);

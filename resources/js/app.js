@@ -30,6 +30,7 @@ Vue.component('visita-component', require('./components/VisitaComponent.vue').de
 Vue.component('visitas-component', require('./components/VisitasComponent.vue').default);
 Vue.component('motivosvisita-component', require('./components/MotivosVisitaComponent.vue').default);
 Vue.component('tiposvisita-component', require('./components/TiposVisitaComponent.vue').default);
+Vue.component('tipopruebas-component', require('./components/TipoPruebasComponent.vue').default);
 Vue.component('documentos-component', require('./components/DocumentosComponent.vue').default);
 Vue.component('pruebasmedicas-component', require('./components/PruebasMedicasComponent.vue').default);
 Vue.component('medicos-component', require('./components/MedicosComponent.vue').default);

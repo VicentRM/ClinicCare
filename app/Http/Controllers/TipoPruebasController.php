@@ -28,7 +28,10 @@ class TipoPruebasController extends Controller
         return $tipos;
 
     }
-
+    public function obtenertipos(){
+        $tipos=TipoPrueba::all();
+        return $tipos;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -48,6 +51,7 @@ class TipoPruebasController extends Controller
     public function store(Request $request)
     {
         //
+        TipoPrueba::create($request->all());
     }
 
     /**
@@ -58,7 +62,8 @@ class TipoPruebasController extends Controller
      */
     public function show($id)
     {
-        //
+        $tipo = TipoPrueba::findOrFail($id);
+       return $tipo;
     }
 
     /**
@@ -82,6 +87,8 @@ class TipoPruebasController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $tipo=TipoPrueba::findOrFail($id);     
+         $tipo->update($request->all()); 
     }
 
     /**
@@ -93,5 +100,13 @@ class TipoPruebasController extends Controller
     public function destroy($id)
     {
         //
+        try {
+            $tipo=TipoPrueba::findOrFail($id);
+            $tipo->delete();
+        
+        }catch (\Illuminate\Database\QueryException $e){
+          
+            return response($e,500);
+        }
     }
 }

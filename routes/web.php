@@ -75,8 +75,7 @@ Route::get('/medicos/obtenerusuarios', [MedicosController::class,'obtenerUsuario
 //Rutas paciente
 Route::resource('/pacientes', PacientesController::class);
 Route::get('/obtenerPacientesMedico',[PacientesController::class,'obtenerPacientesMedico']);
-
-
+Route::get('/nif/{nif}',[PacientesController::class,'buscarNIF']);
 
 
 
@@ -104,6 +103,15 @@ Route::put('/tipovisitas/{id}',[TipoVisitasController::class,'update'])->name('t
 Route::get('/tipovisitas/buscar/{id}',[TipoVisitasController::class,'show'])->name('tipovisita.show');
 Route::get('/tipovisitas/obtenertipos',[TipoVisitasController::class,'obtenertipos']);
 Route::delete('/tipovisitas/{id}',[TipoVisitasController::class,'destroy'])->name('tipovisita.destroy');
+
+
+//rutas tipo pruebas
+Route::post('/tipopruebas',[TipoPruebasController::class,'store'])->name('tipoprueba.store');
+Route::put('/tipopruebas/{id}',[TipoPruebasController::class,'update'])->name('tipoprueba.update');
+Route::get('/tipopruebas/buscar/{id}',[TipoPruebasController::class,'show'])->name('tipoprueba.show');
+Route::get('/tipopruebas/obtenertipos',[TipoPruebasController::class,'obtenertipos']);
+Route::delete('/tipopruebas/{id}',[TipoPruebasController::class,'destroy'])->name('tipoprueba.destroy');
+
 
 
 

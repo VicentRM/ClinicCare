@@ -242,15 +242,17 @@ export default {
            }
             const promise = axios.post("/pacientes",this.pacienteEdit);         
             promise
-                .then((response) => {
-                    //this.obtenerMotivos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
-                    //this.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
+                .then((response) => {     
                     window.location.href = "/pacientes";
-
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
-                    window.location.href = "/errors/"+error.response.status;
+                   
+                    if(error.response.status="409"){
+                      alert(error.response.data);
+                    }else{
+                      window.location.href = "/errors/"+error.response.status;                    }
+                                  
                 });
     },
     actualizarPaciente() {

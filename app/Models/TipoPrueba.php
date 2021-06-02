@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class TipoPrueba extends Model
 {
     use HasFactory;
+    protected $fillable = [       
+        'descripcion',        
+    ];
     public function pruebasMedicas(){
         return $this->hasMany(PruebaMedica::class);
     }
