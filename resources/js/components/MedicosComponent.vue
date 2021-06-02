@@ -120,6 +120,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
              
         },
@@ -134,6 +135,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
         },
         
@@ -147,6 +149,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
         },
         
@@ -162,6 +165,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
         },
         actualizarMedico(){/* esta funcion es igual que la anterior como estamos modificando el objeto medicoEdit contiene el objeto medico para pasarselo
@@ -178,6 +182,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
         },
         cargarMedico(data){//Esta función rellena los campos y la variable update, con el medico que queremos modificar
@@ -193,6 +198,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });            
         },
         resetForm(){/*Limpia los campos e inicializa la variable update a 0*/

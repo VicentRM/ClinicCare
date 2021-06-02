@@ -137,6 +137,7 @@ export default {
         .catch((error) => {
           this.currentStatus = STATUS_FAILED;
           console.log("ERROR: " + error);
+          window.location.href = "/errors/"+error.response.status;
         });
 
       return promise;

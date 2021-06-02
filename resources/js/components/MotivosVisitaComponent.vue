@@ -90,6 +90,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
              
         },       
@@ -111,6 +112,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
         },
         actualizarMotivo(){
@@ -125,6 +127,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
         },
         cargarMotivo(data){
@@ -138,6 +141,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });            
         },
         borrarMotivo(data){
@@ -149,7 +153,8 @@ export default {
                         this.obtenerMotivos();
                       })
                       .catch((error) => {
-                        console.log("ERROR: " + error.message);         
+                        console.log("ERROR: " + error.message);  
+                        window.location.href = "/errors/"+error.response.status;       
                       });
                 }
       

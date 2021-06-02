@@ -107,6 +107,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
+          window.location.href = "/errors/"+error.response.status;
         });
     },
    
@@ -120,6 +121,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });            
         },
      actualizarPrueba(){     
@@ -133,6 +135,7 @@ export default {
           })
         .catch((error) => {
             console.log("ERROR: " + error);
+            window.location.href = "/errors/"+error.response.status;
         });
       },   
     otenerTipoPruebas(){
@@ -143,6 +146,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error.message);
+          window.location.href = "/errors/"+error.response.status;
         });
     },
     guardarPrueba(){
@@ -155,6 +159,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error.message);
+          window.location.href = "/errors/"+error.response.status;
         });
     },
    

@@ -404,6 +404,7 @@ export default {
                 })
                 .catch(error => {
                     console.log("ERROR: " + error.message);
+                    window.location.href = "/errors/"+error.response.status;
                 });
         },
         calculoBMI() {

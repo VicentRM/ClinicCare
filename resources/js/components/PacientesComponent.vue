@@ -100,7 +100,8 @@ export default {
           console.log(response.data.data);
         })
         .catch((error) => {
-          console.log("ERROR: " + error);
+          console.log("ERROR: " + error.response.status);
+          window.location.href = "/errors/"+error.response.status;
         });
     },
     nuevoPaciente() {
@@ -122,6 +123,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
+          window.location.href = "/errors/"+error.response.status;
         });
     },
     borrarPaciente(paciente) {
@@ -135,6 +137,7 @@ export default {
           })
           .catch((error) => {
             console.log("ERROR: " + error.message);
+            window.location.href = "/errors/"+error.response.status;
           });
       }
     },

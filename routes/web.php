@@ -133,4 +133,28 @@ Route::post('/forgot-password', function (Request $request) {
                 : back()->withErrors(['email' => __($status)]);
 })->name('password.email');
 
+//Rutas para paginas de error, recibimos el error como parametro y mostramos la pagina correspondiente
+Route::get("/errors/{error}", function ($error) {
+    if ($error=='401'){
+        return abort(404);
+    }
+    if ($error=='403'){
+        return abort(403);
+    }
+    if ($error=='404'){
+        return abort(500);
+    }
+    if ($error=='419'){
+        return abort(404);
+    }
+    if ($error=='429'){
+        return abort(403);
+    }
+    if ($error=='500'){
+        return abort(500);
+    }
+    if ($error=='503'){
+        return abort(503);
+    }
+});
 

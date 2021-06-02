@@ -79,6 +79,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
+          window.location.href = "/errors/"+error.response.status;
         });
     },
   },

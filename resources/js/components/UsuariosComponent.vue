@@ -139,6 +139,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
              
         },     
@@ -152,6 +153,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
              
         },     
@@ -184,6 +186,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
         },
         actualizarUsuario(){
@@ -213,6 +216,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
         },
         cargarUsuario(data){
@@ -226,6 +230,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });            
         },
         borrarUsuario(data){
@@ -238,6 +243,7 @@ export default {
                       })
                       .catch((error) => {
                         console.log("ERROR: " + error.message);         
+                        window.location.href = "/errors/"+error.response.status;
                       });
                 }
       
@@ -255,6 +261,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("ERROR: " + error);
+                    window.location.href = "/errors/"+error.response.status;
                 });
         },
         resetForm(){/*Limpia los campos e inicializa la variable update a 0*/

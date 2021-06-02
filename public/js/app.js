@@ -16974,6 +16974,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.evento.motivos_visita = response.data.motivos;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       }); //Datos del evento/visita para dejarlos cargados en modal
 
       this.event_id = clickInfo.event.id;
@@ -16993,6 +16994,7 @@ __webpack_require__.r(__webpack_exports__);
         $("#calendarModal").modal();
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     mostrarModal: function mostrarModal() {
@@ -17011,6 +17013,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.evento.motivos_visita = response.data.motivos;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
       return;
     },
@@ -17040,6 +17043,7 @@ __webpack_require__.r(__webpack_exports__);
         _app__WEBPACK_IMPORTED_MODULE_3__.bus.$emit("actualizarvisitas"); // 2.Emitting
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     actualizarEvento: function actualizarEvento(evento) {
@@ -17058,6 +17062,7 @@ __webpack_require__.r(__webpack_exports__);
         _this4.evento.motivo_visita_id = null;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     setEvento: function setEvento(form) {
@@ -17088,6 +17093,7 @@ __webpack_require__.r(__webpack_exports__);
         window.location.href = "/visitas/" + _this5.visita_id + "/edit";
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     eliminarEvento: function eliminarEvento() {
@@ -17105,6 +17111,7 @@ __webpack_require__.r(__webpack_exports__);
         _this6.evento.motivo_visita_id = null;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     }
   }
@@ -17206,6 +17213,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.$data.calendarOptions.events = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     }
   }
@@ -17379,6 +17387,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.c_datosVisita = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     }
   },
@@ -17521,6 +17530,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this.c_documentos = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error.message);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     abrirdocumento: function abrirdocumento(id, descripcionDocumento) {
@@ -17536,6 +17546,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         fileLink.click();
       })["catch"](function (error) {
         console.log("ERROR: " + error.message);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     eliminardocumento: function eliminardocumento(id) {
@@ -17548,6 +17559,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this2.obtenerdocumentos();
       })["catch"](function (error) {
         console.log("ERROR: " + error.message);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     afterUploadComplete: function () {
@@ -17777,6 +17789,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.arrayMedicos = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     obtenerUsuarios: function obtenerUsuarios() {
@@ -17789,6 +17802,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.arrayUsuarios = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     obtenerUsuariosSinAsignar: function obtenerUsuariosSinAsignar() {
@@ -17800,6 +17814,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.arrayUsuarios = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     guardarMedico: function guardarMedico() {
@@ -17816,6 +17831,7 @@ __webpack_require__.r(__webpack_exports__);
 
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     actualizarMedico: function actualizarMedico() {
@@ -17836,6 +17852,7 @@ __webpack_require__.r(__webpack_exports__);
 
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     cargarMedico: function cargarMedico(data) {
@@ -17852,6 +17869,7 @@ __webpack_require__.r(__webpack_exports__);
         _this6.medicoEdit = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     resetForm: function resetForm() {
@@ -18144,6 +18162,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
         _this.arrayMotivosVisita = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     guardarMotivo: function guardarMotivo() {
@@ -18167,6 +18186,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
 
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     actualizarMotivo: function actualizarMotivo() {
@@ -18183,6 +18203,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
 
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     cargarMotivo: function cargarMotivo(data) {
@@ -18195,6 +18216,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
         _this4.motivoEdit = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     borrarMotivo: function borrarMotivo(data) {
@@ -18206,6 +18228,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
           _this5.obtenerMotivos();
         })["catch"](function (error) {
           console.log("ERROR: " + error.message);
+          window.location.href = "/errors/" + error.response.status;
         });
       }
     },
@@ -18502,6 +18525,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
       window.location.href = "/pacientes";
     })["catch"](function (error) {
       console.log("ERROR: " + error);
+      window.location.href = "/errors/" + error.response.status;
     });
   },
   actualizarPaciente: function actualizarPaciente() {
@@ -18523,6 +18547,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
       window.location.href = "/pacientes";
     })["catch"](function (error) {
       console.log("ERROR: " + error.message);
+      window.location.href = "/errors/" + error.response.status;
     });
   },
   validarNIF: function validarNIF(dni) {
@@ -18672,7 +18697,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.pacientes = response.data.data;
         console.log(response.data.data);
       })["catch"](function (error) {
-        console.log("ERROR: " + error);
+        console.log("ERROR: " + error.response.status);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     nuevoPaciente: function nuevoPaciente() {
@@ -18687,6 +18713,7 @@ __webpack_require__.r(__webpack_exports__);
         window.location.href = "/pacientes/" + idPaciente + "/edit";
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     borrarPaciente: function borrarPaciente(paciente) {
@@ -18701,6 +18728,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.obtenerPacientes();
         })["catch"](function (error) {
           console.log("ERROR: " + error.message);
+          window.location.href = "/errors/" + error.response.status;
         });
       }
     }
@@ -18843,6 +18871,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.pruebas = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     cargarPrueba: function cargarPrueba(data) {
@@ -18855,6 +18884,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.pruebaEdit = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     actualizarPrueba: function actualizarPrueba() {
@@ -18870,6 +18900,7 @@ __webpack_require__.r(__webpack_exports__);
 
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     otenerTipoPruebas: function otenerTipoPruebas() {
@@ -18880,6 +18911,7 @@ __webpack_require__.r(__webpack_exports__);
         _this5.tipopruebas = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error.message);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     guardarPrueba: function guardarPrueba() {
@@ -18893,6 +18925,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response);
       })["catch"](function (error) {
         console.log("ERROR: " + error.message);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     borrarPrueba: function borrarPrueba(data) {
@@ -19028,6 +19061,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
         _this.arrayTiposVisita = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     guardarTipo: function guardarTipo() {
@@ -19051,6 +19085,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
 
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     actualizarTipo: function actualizarTipo() {
@@ -19067,6 +19102,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
 
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     cargarTipo: function cargarTipo(data) {
@@ -19079,6 +19115,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
         _this4.tipoEdit = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     borrarTipo: function borrarTipo(data) {
@@ -19090,6 +19127,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
           _this5.obtenerTipos();
         })["catch"](function (error) {
           console.log("ERROR: " + error.message);
+          window.location.href = "/errors/" + error.response.status;
         });
       }
     },
@@ -19264,6 +19302,7 @@ var STATUS_INITIAL = 0,
       })["catch"](function (error) {
         _this.currentStatus = STATUS_FAILED;
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
       return promise;
     },
@@ -19537,6 +19576,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
         _this2.arrayUsuarios = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     obtenerroles: function obtenerroles() {
@@ -19549,6 +19589,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
         _this3.arrayRoles = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     guardarUsuario: function guardarUsuario() {
@@ -19585,6 +19626,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
 
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     actualizarUsuario: function actualizarUsuario() {
@@ -19618,6 +19660,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
 
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     cargarUsuario: function cargarUsuario(data) {
@@ -19630,6 +19673,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
         _this6.usuarioEdit = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     borrarUsuario: function borrarUsuario(data) {
@@ -19641,6 +19685,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
           _this7.obtenerusuarios();
         })["catch"](function (error) {
           console.log("ERROR: " + error.message);
+          window.location.href = "/errors/" + error.response.status;
         });
       }
     },
@@ -19652,6 +19697,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
         console.log(response);
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     resetForm: function resetForm() {
@@ -20089,6 +20135,7 @@ __webpack_require__.r(__webpack_exports__);
 
       })["catch"](function (error) {
         console.log("ERROR: " + error.message);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     calculoBMI: function calculoBMI() {
@@ -20205,6 +20252,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.visitas = response.data.visitas;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     },
     abrirVisita: function abrirVisita(idVisita) {
@@ -20216,6 +20264,7 @@ __webpack_require__.r(__webpack_exports__);
         window.location.href = "/visitas/" + idVisita + "/edit";
       })["catch"](function (error) {
         console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
       });
     }
   }

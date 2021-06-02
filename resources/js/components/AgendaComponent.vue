@@ -77,6 +77,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
+          window.location.href = "/errors/"+error.response.status;
         });
       //Datos del evento/visita para dejarlos cargados en modal
       this.event_id = clickInfo.event.id;
@@ -98,6 +99,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
+          window.location.href = "/errors/"+error.response.status;
         }); 
     },
     mostrarModal() {
@@ -116,6 +118,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
+          window.location.href = "/errors/"+error.response.status;
         });
       return;
     },
@@ -145,6 +148,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
+          window.location.href = "/errors/"+error.response.status;
         });
     },
     actualizarEvento(evento) {
@@ -163,6 +167,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
+          window.location.href = "/errors/"+error.response.status;
         });
     },
 
@@ -198,6 +203,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
+          window.location.href = "/errors/"+error.response.status;
         });
     },
     eliminarEvento() {
@@ -214,6 +220,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
+          window.location.href = "/errors/"+error.response.status;
         });
     },
   },
