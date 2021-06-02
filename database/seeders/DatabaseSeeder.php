@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('medico1234'),
         ]);
         DB::table('medicos')->insert([
-            'NIF' =>12345678A
+            'NIF' =>'12345678A',
             'nombre' => 'Medico',
             'apellidos' => 'Demo Probando',            
             'num_colegiado' => '12345',
