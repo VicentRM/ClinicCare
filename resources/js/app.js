@@ -35,6 +35,7 @@ Vue.component('documentos-component', require('./components/DocumentosComponent.
 Vue.component('pruebasmedicas-component', require('./components/PruebasMedicasComponent.vue').default);
 Vue.component('medicos-component', require('./components/MedicosComponent.vue').default);
 Vue.component('usuarios-component', require('./components/UsuariosComponent.vue').default);
+Vue.component('changepassword-component', require('./components/ChangePasswordComponent.vue').default);
 Vue.component('usuario-component', require('./components/UsuarioComponent.vue').default);
 Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
 Vue.component('upload-image-component', require('./components/UploadImageComponent.vue').default);

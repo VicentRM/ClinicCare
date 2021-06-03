@@ -9,6 +9,7 @@ import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGrid from "@fullcalendar/timegrid";
+
 export default {
   name: "calendario-component",
   components: {

@@ -47,21 +47,65 @@
             </div>
         </div>
     <div class="col-xl-6 col-md-12">
-         <div class="form-group">
-                    <label>Nombre</label>
-                    <input type="text" class="form-control" v-model="medicoEdit.nombre">                    
+                <div class="form-group">
+                    <label>Nombre</label>                 
+                    <input
+                    type="text"
+                    class="form-control"
+                    v-model="medicoEdit.nombre"
+                    :class="{
+                            'is-invalid': enviar && $v.medicoEdit.nombre.$error
+                        }"
+                    />
+                    <div
+                    v-if="enviar && !$v.medicoEdit.nombre.required"
+                    class="invalid-feedback"
+                    >El nombre es obligatorio</div>                
+                </div>
+                <div class="form-group">                   
+                    <label>Apellidos</label>                 
+                    <input
+                    type="text"
+                    class="form-control"
+                    v-model="medicoEdit.apellidos"
+                    :class="{
+                            'is-invalid': enviar && $v.medicoEdit.apellidos.$error
+                        }"
+                    />
+                    <div
+                    v-if="enviar && !$v.medicoEdit.apellidos.required"
+                    class="invalid-feedback"
+                    >Los apellidos son obligatorios</div>                
+                </div>                 
+                <div class="form-group">
+                    <label for="NIF" class="form-label">NIF</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        v-model="medicoEdit.NIF"
+                        :class="{
+                            'is-invalid': enviar && $v.medicoEdit.NIF.$error
+                        }"
+                    />
+                    <div
+                        v-if="enviar && !$v.medicoEdit.NIF.required"
+                        class="invalid-feedback"
+                        >El NIF es obligatorio</div>
                 </div>
                 <div class="form-group">
-                    <label>Apellidos</label>
-                    <input type="text" class="form-control" v-model="medicoEdit.apellidos">                    
-                </div>
-                <div class="form-group">
-                    <label>NIF</label>
-                    <input type="text" class="form-control" v-model="medicoEdit.NIF">                    
-                </div>
-                <div class="form-group">
-                    <label>NºColegiado</label>
-                    <input type="text" class="form-control" v-model="medicoEdit.num_colegiado">                                       
+                    <label>NºColegiado</label>                      
+                    <input
+                        type="text"
+                        class="form-control"
+                        v-model="medicoEdit.num_colegiado"
+                        :class="{
+                            'is-invalid': enviar && $v.medicoEdit.num_colegiado.$error
+                        }"
+                    />
+                    <div
+                        v-if="enviar && !$v.medicoEdit.num_colegiado.required"
+                        class="invalid-feedback"
+                        >El número de colegiado es obligatorio</div>                                    
                 </div>    
                 <div class="form-group">
                     <label>Usuario</label>
@@ -86,6 +130,16 @@
 </template>
 
 <script>
+import {
+  required,
+  email,
+  maxValue,
+  minLength,
+  sameAs,
+  between,
+} from "vuelidate/lib/validators";
+import Vuelidate from "vuelidate";
+Vue.use(Vuelidate);
 export default {
     name: "medicos-component",
     data(){
@@ -96,7 +150,16 @@ export default {
             update:0, /*Esta variable contrarolará cuando es un nuevo medico o una modificación, si es 0 significará que no hemos seleccionado
                           ningun medico, pero si es diferente de 0 entonces tendrá el id del medico y no mostrará el boton guardar sino el modificar*/
             view:0,
+            enviar: false, 
         }
+    },
+    validations: {
+        medicoEdit: {
+            nombre: { required },
+            apellidos: { required },     
+            NIF: { required }, 
+            num_colegiado: {required},              
+        },
     },
     created(){
         this.obtenerMedicos();
@@ -125,8 +188,7 @@ export default {
              
         },
         
-        obtenerUsuarios() {
-            console.log("usssssssss");
+        obtenerUsuarios() {            
             const promise = axios.get("/medicos/obtenerusuarios");         
             promise
                 .then((response) => {
@@ -155,6 +217,7 @@ export default {
         
 
         guardarMedico(){//Esta funcion crea un nuevo medico segun lo rellenado en el formualrio
+            this.enviar=true;
             console.log("Medico alta:"+this.medicoEdit)
             const promise = axios.post("/medicos",this.medicoEdit);        
             promise
@@ -170,6 +233,13 @@ export default {
         },
         actualizarMedico(){/* esta funcion es igual que la anterior como estamos modificando el objeto medicoEdit contiene el objeto medico para pasarselo
                                 con las modificaciones que hemos realizado*/
+            this.enviar=true;
+            console.log("Estamos enviando:"+this.enviar)
+            //parar si el formulario es invalido
+            this.$v.$touch();
+            if (this.$v.$invalid) {
+                return;
+            }
             console.log("Acualizar medico");
             console.log("Obejto a actualizar"+this.medicoEdit.id);
             const promise = axios.put("/medicos/{id}"+this.medicoEdit.id,this.medicoEdit);         
@@ -204,6 +274,7 @@ export default {
         resetForm(){/*Limpia los campos e inicializa la variable update a 0*/
             this.medicoEdit={},
             this.update = 0;
+            this.enviar=false;
         },
         onAvatarChange() {
             this.obtenerMedicos();

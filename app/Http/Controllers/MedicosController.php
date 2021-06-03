@@ -60,7 +60,12 @@ class MedicosController extends Controller
     {
         //Esta función guardará los medicos que enviemos mediante vuejs
         $entrada=$request->all();
-      
+        $validated = $request->validate([
+            'nombre' => 'required',
+            'apellidos' => 'required',
+            'NIF' => 'required',
+            'num_colegiado' => 'required',            
+        ]);
         $medico=Medico::create($entrada);
         return $medico;
     }
@@ -82,6 +87,12 @@ class MedicosController extends Controller
     public function update(Request $request,$id)
     {
           //Esta función actualizará el medico que hayamos seleccionado
+        $validated = $request->validate([
+            'nombre' => 'required',
+            'apellidos' => 'required',
+            'NIF' => 'required',
+            'num_colegiado' => 'required',            
+        ]);
         $medico = Medico::findOrFail($request->id);   
         $medico->update($request->all());
         return $medico;    

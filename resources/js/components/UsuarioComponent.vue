@@ -7,15 +7,18 @@
           @avatar-change="onAvatarChange"
         />
       </div>
-         <div class="info">
+         <div class="info" v-if="medicoAsignado">  
            <p>{{ user.medico.apellidos }},{{ user.medico.nombre }}</p>
-           <p>NºColegiado: {{ user.medico.num_colegiado }}</p>
-          </div>        
+           <p >NºColegiado: {{ user.medico.num_colegiado }}</p>
+        </div>        
+        <div class="info" v-else><p>No hay medico asignado al usuario. Hable con administrador</p></div>
   </div>
   
 </template>
 
+
 <script>
+
 import UploadImageComponent from "./UploadImageComponent";
 
 
@@ -29,7 +32,7 @@ export default {
     avatar: { required: true, type: String },   
   },
   data: () => ({
-    
+      medicoAsignado:true,
   }),  
   watch: {
       validacionAct(newValue, oldValue) {    
@@ -40,7 +43,15 @@ export default {
     console.log("UsuarioComponent montado.");
     console.log("Usuario medico:"+this.user.medico.nombre);
   },
+  created() {
+    this.comprobarMedicoAsingado();
+  },
   methods: {
+    comprobarMedicoAsingado(){
+       if (this.user.medico===null){
+           this.medicoAsignado=false;
+       }
+    },
     onAvatarChange(image) {
       this.$emit("avatar-change", image);
     },

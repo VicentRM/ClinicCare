@@ -17221,6 +17221,155 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChangePasswordComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChangePasswordComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "changepassword-component",
+  props: {
+    usuario: {
+      required: true,
+      type: Object
+    }
+  },
+  data: function data() {
+    return {
+      userEdit: {
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: ""
+      }
+    };
+  },
+  validations: {
+    userEdit: {
+      oldPassword: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required
+      },
+      newPassword: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required,
+        minLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.minLength)(6)
+      },
+      confirmPassword: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required,
+        sameAsPassword: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.sameAs)('newPassword')
+      }
+    }
+  },
+  serverValidation: {},
+  methods: {
+    updatePassword: function updatePassword() {
+      //parar si el formulario es invalido
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        return;
+      }
+
+      var promise = axios.put("/usuarios/updatepassword/" + this.usuario.id, this.userEdit);
+      promise.then(function (response) {
+        console.log("Datos de usuario:", response);
+        setTimeout(function () {
+          window.location.replace("/login");
+        }, 2000);
+      })["catch"](function (error) {
+        //this.$v[oldPassword] && errors.push("La contraseña es incorrecta");
+        console.log("ERROR: " + error);
+        console.log("ERROR: " + error.response.status);
+        console.log("ERROR: " + error.response.statusText);
+        console.log("ERROR: " + error.response.data);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/DashboardComponent.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/DashboardComponent.vue?vue&type=script&lang=js& ***!
@@ -17666,6 +17815,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
 //
 //
 //
@@ -17753,6 +17904,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "medicos-component",
   data: function data() {
@@ -17764,8 +17962,25 @@ __webpack_require__.r(__webpack_exports__);
 
       /*Esta variable contrarolará cuando es un nuevo medico o una modificación, si es 0 significará que no hemos seleccionado
           ningun medico, pero si es diferente de 0 entonces tendrá el id del medico y no mostrará el boton guardar sino el modificar*/
-      view: 0
+      view: 0,
+      enviar: false
     };
+  },
+  validations: {
+    medicoEdit: {
+      nombre: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required
+      },
+      apellidos: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required
+      },
+      NIF: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required
+      },
+      num_colegiado: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required
+      }
+    }
   },
   created: function created() {
     this.obtenerMedicos();
@@ -17795,7 +18010,6 @@ __webpack_require__.r(__webpack_exports__);
     obtenerUsuarios: function obtenerUsuarios() {
       var _this2 = this;
 
-      console.log("usssssssss");
       var promise = axios.get("/medicos/obtenerusuarios");
       promise.then(function (response) {
         console.log("users:" + response.data);
@@ -17821,6 +18035,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       //Esta funcion crea un nuevo medico segun lo rellenado en el formualrio
+      this.enviar = true;
       console.log("Medico alta:" + this.medicoEdit);
       var promise = axios.post("/medicos", this.medicoEdit);
       promise.then(function (response) {
@@ -17839,6 +18054,15 @@ __webpack_require__.r(__webpack_exports__);
 
       /* esta funcion es igual que la anterior como estamos modificando el objeto medicoEdit contiene el objeto medico para pasarselo
            con las modificaciones que hemos realizado*/
+      this.enviar = true;
+      console.log("Estamos enviando:" + this.enviar); //parar si el formulario es invalido
+
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        return;
+      }
+
       console.log("Acualizar medico");
       console.log("Obejto a actualizar" + this.medicoEdit.id);
       var promise = axios.put("/medicos/{id}" + this.medicoEdit.id, this.medicoEdit);
@@ -17875,6 +18099,7 @@ __webpack_require__.r(__webpack_exports__);
     resetForm: function resetForm() {
       /*Limpia los campos e inicializa la variable update a 0*/
       this.medicoEdit = {}, this.update = 0;
+      this.enviar = false;
     },
     onAvatarChange: function onAvatarChange() {
       this.obtenerMedicos();
@@ -18124,6 +18349,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
@@ -18137,7 +18365,9 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
 
       /*Esta variable contrarolará cuando es un nuevo motivo o una modificación, si es 0 significará que no hemos seleccionado
          ningun medico, pero si es diferente de 0 entonces tendrá el id del medico y no mostrará el boton guardar sino el modificar*/
-      enviar: false
+      enviar: false,
+      msgError: "",
+      showAlert: false
     };
   },
   validations: {
@@ -18151,22 +18381,32 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
     this.obtenerMotivos();
   },
   methods: {
+    alertError: function alertError($msgError) {
+      var _this = this;
+
+      this.showAlert = true;
+      this.msgError = $msgError;
+      setTimeout(function () {
+        _this.showAlert = false;
+        _this.msgError = "";
+      }, 3000);
+    },
     //Funcion para obtener los medicos
     obtenerMotivos: function obtenerMotivos() {
-      var _this = this;
+      var _this2 = this;
 
       console.log("Medicos");
       var promise = axios.get("/motivovisitas/obtenermotivos/");
       promise.then(function (response) {
         console.log(response.data);
-        _this.arrayMotivosVisita = response.data;
+        _this2.arrayMotivosVisita = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
         window.location.href = "/errors/" + error.response.status;
       });
     },
     guardarMotivo: function guardarMotivo() {
-      var _this2 = this;
+      var _this3 = this;
 
       //Esta funcion crea un nuevo medico segun lo rellenado en el formualrio
       this.enviar = true; //parar si el formulario es invalido
@@ -18179,23 +18419,6 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
 
       var promise = axios.post("/motivovisitas", this.motivoEdit);
       promise.then(function (response) {
-        _this2.obtenerMotivos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
-
-
-        _this2.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
-
-      })["catch"](function (error) {
-        console.log("ERROR: " + error);
-        window.location.href = "/errors/" + error.response.status;
-      });
-    },
-    actualizarMotivo: function actualizarMotivo() {
-      var _this3 = this;
-
-      var promise = axios.put("/motivovisitas/" + this.motivoEdit.id, this.motivoEdit);
-      promise.then(function (response) {
-        console.log(response.data);
-
         _this3.obtenerMotivos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
 
 
@@ -18206,29 +18429,48 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
         window.location.href = "/errors/" + error.response.status;
       });
     },
-    cargarMotivo: function cargarMotivo(data) {
+    actualizarMotivo: function actualizarMotivo() {
       var _this4 = this;
+
+      var promise = axios.put("/motivovisitas/" + this.motivoEdit.id, this.motivoEdit);
+      promise.then(function (response) {
+        console.log(response.data);
+
+        _this4.obtenerMotivos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
+
+
+        _this4.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
+
+      })["catch"](function (error) {
+        console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
+      });
+    },
+    cargarMotivo: function cargarMotivo(data) {
+      var _this5 = this;
 
       this.update = data.id;
       var promise = axios.get("/motivovisitas/buscar/" + this.update);
       promise.then(function (response) {
         console.log(response.data);
-        _this4.motivoEdit = response.data;
+        _this5.motivoEdit = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
         window.location.href = "/errors/" + error.response.status;
       });
     },
     borrarMotivo: function borrarMotivo(data) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (confirm('¿Seguro que deseas borrar este motivo?')) {
         var promise = axios["delete"]("/motivovisitas/" + data.id);
         promise.then(function (response) {
-          _this5.obtenerMotivos();
+          _this6.obtenerMotivos();
         })["catch"](function (error) {
           console.log("ERROR: " + error.message);
-          window.location.href = "/errors/" + error.response.status;
+
+          _this6.alertError(error.response.data.msg); //window.location.href = "/errors/"+error.response.status;       
+
         });
       }
     },
@@ -18474,6 +18716,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
       fecha_nacimiento: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.required
       },
+      //fecha_alta: { required,maxValue: maxValue(new Date()) },
       fecha_alta: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.required
       },
@@ -18523,12 +18766,7 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
       window.location.href = "/pacientes";
     })["catch"](function (error) {
       console.log("ERROR: " + error);
-
-      if (error.response.status = "409") {
-        alert(error.response.data);
-      } else {
-        window.location.href = "/errors/" + error.response.status;
-      }
+      window.location.href = "/errors/" + error.response.status;
     });
   },
   actualizarPaciente: function actualizarPaciente() {
@@ -18598,8 +18836,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-//
-//
 //
 //
 //
@@ -18743,10 +18979,11 @@ __webpack_require__.r(__webpack_exports__);
       return this.pacientes.filter(function (paciente) {
         var nombre = paciente.nombre.toString().toLowerCase();
         var apellidos = paciente.apellidos.toLowerCase();
+        var NIF = paciente.NIF.toLowerCase();
 
         var busqueda = _this3.filtro.toLowerCase();
 
-        return nombre.includes(busqueda) || apellidos.includes(busqueda);
+        return nombre.includes(busqueda) || apellidos.includes(busqueda) || NIF.includes(busqueda);
       });
     }
   }
@@ -19026,6 +19263,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
@@ -19039,7 +19279,9 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
 
       /*Esta variable contrarolará cuando es un nuevo tipo o una modificación, si es 0 significará que no hemos seleccionado
          ningun medico, pero si es diferente de 0 entonces tendrá el id del medico y no mostrará el boton guardar sino el modificar*/
-      enviar: false
+      enviar: false,
+      msgError: "",
+      showAlert: false
     };
   },
   validations: {
@@ -19053,21 +19295,31 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
     this.obtenerTipos();
   },
   methods: {
-    //Funcion para obtener los medicos
-    obtenerTipos: function obtenerTipos() {
+    alertError: function alertError($msgError) {
       var _this = this;
+
+      this.showAlert = true;
+      this.msgError = $msgError;
+      setTimeout(function () {
+        _this.showAlert = false;
+        _this.msgError = "";
+      }, 3000);
+    },
+    //Funcion para obtener los tipos
+    obtenerTipos: function obtenerTipos() {
+      var _this2 = this;
 
       var promise = axios.get("/tipopruebas/obtenertipos/");
       promise.then(function (response) {
         console.log(response.data);
-        _this.arrayTipoPruebas = response.data;
+        _this2.arrayTipoPruebas = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
         window.location.href = "/errors/" + error.response.status;
       });
     },
     guardarTipo: function guardarTipo() {
-      var _this2 = this;
+      var _this3 = this;
 
       //Esta funcion crea un nuevo medico segun lo rellenado en el formualrio
       this.enviar = true; //parar si el formulario es invalido
@@ -19080,23 +19332,6 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
 
       var promise = axios.post("/tipopruebas", this.tipoEdit);
       promise.then(function (response) {
-        _this2.obtenerTipos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
-
-
-        _this2.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
-
-      })["catch"](function (error) {
-        console.log("ERROR: " + error);
-        window.location.href = "/errors/" + error.response.status;
-      });
-    },
-    actualizarTipo: function actualizarTipo() {
-      var _this3 = this;
-
-      var promise = axios.put("/tipopruebas/" + this.tipoEdit.id, this.tipoEdit);
-      promise.then(function (response) {
-        console.log(response.data);
-
         _this3.obtenerTipos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
 
 
@@ -19107,29 +19342,48 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
         window.location.href = "/errors/" + error.response.status;
       });
     },
-    cargarTipo: function cargarTipo(data) {
+    actualizarTipo: function actualizarTipo() {
       var _this4 = this;
+
+      var promise = axios.put("/tipopruebas/" + this.tipoEdit.id, this.tipoEdit);
+      promise.then(function (response) {
+        console.log(response.data);
+
+        _this4.obtenerTipos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
+
+
+        _this4.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
+
+      })["catch"](function (error) {
+        console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
+      });
+    },
+    cargarTipo: function cargarTipo(data) {
+      var _this5 = this;
 
       this.update = data.id;
       var promise = axios.get("/tipopruebas/buscar/" + this.update);
       promise.then(function (response) {
         console.log(response.data);
-        _this4.tipoEdit = response.data;
+        _this5.tipoEdit = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
         window.location.href = "/errors/" + error.response.status;
       });
     },
     borrarTipo: function borrarTipo(data) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (confirm('¿Seguro que deseas borrar este tipo de prueba?')) {
         var promise = axios["delete"]("/tipopruebas/" + data.id);
         promise.then(function (response) {
-          _this5.obtenerTipos();
+          _this6.obtenerTipos();
         })["catch"](function (error) {
           console.log("ERROR: " + error.message);
-          window.location.href = "/errors/" + error.response.status;
+
+          _this6.alertError(error.response.data.msg); //window.location.href = "/errors/"+error.response.status;        
+
         });
       }
     },
@@ -19212,6 +19466,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
@@ -19225,7 +19482,9 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
 
       /*Esta variable contrarolará cuando es un nuevo tipo o una modificación, si es 0 significará que no hemos seleccionado
          ningun medico, pero si es diferente de 0 entonces tendrá el id del medico y no mostrará el boton guardar sino el modificar*/
-      enviar: false
+      enviar: false,
+      msgError: "",
+      showAlert: false
     };
   },
   validations: {
@@ -19239,22 +19498,32 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
     this.obtenerTipos();
   },
   methods: {
+    alertError: function alertError($msgError) {
+      var _this = this;
+
+      this.showAlert = true;
+      this.msgError = $msgError;
+      setTimeout(function () {
+        _this.showAlert = false;
+        _this.msgError = "";
+      }, 3000);
+    },
     //Funcion para obtener los medicos
     obtenerTipos: function obtenerTipos() {
-      var _this = this;
+      var _this2 = this;
 
       console.log("Medicos");
       var promise = axios.get("/tipovisitas/obtenertipos/");
       promise.then(function (response) {
         console.log(response.data);
-        _this.arrayTiposVisita = response.data;
+        _this2.arrayTiposVisita = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
         window.location.href = "/errors/" + error.response.status;
       });
     },
     guardarTipo: function guardarTipo() {
-      var _this2 = this;
+      var _this3 = this;
 
       //Esta funcion crea un nuevo medico segun lo rellenado en el formualrio
       this.enviar = true; //parar si el formulario es invalido
@@ -19267,23 +19536,6 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
 
       var promise = axios.post("/tipovisitas", this.tipoEdit);
       promise.then(function (response) {
-        _this2.obtenerTipos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
-
-
-        _this2.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
-
-      })["catch"](function (error) {
-        console.log("ERROR: " + error);
-        window.location.href = "/errors/" + error.response.status;
-      });
-    },
-    actualizarTipo: function actualizarTipo() {
-      var _this3 = this;
-
-      var promise = axios.put("/tipovisitas/" + this.tipoEdit.id, this.tipoEdit);
-      promise.then(function (response) {
-        console.log(response.data);
-
         _this3.obtenerTipos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
 
 
@@ -19294,29 +19546,52 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0__.default);
         window.location.href = "/errors/" + error.response.status;
       });
     },
-    cargarTipo: function cargarTipo(data) {
+    actualizarTipo: function actualizarTipo() {
       var _this4 = this;
+
+      var promise = axios.put("/tipovisitas/" + this.tipoEdit.id, this.tipoEdit);
+      promise.then(function (response) {
+        console.log(response.data);
+
+        _this4.obtenerTipos(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
+
+
+        _this4.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
+
+      })["catch"](function (error) {
+        console.log("ERROR: " + error);
+        window.location.href = "/errors/" + error.response.status;
+      });
+    },
+    cargarTipo: function cargarTipo(data) {
+      var _this5 = this;
 
       this.update = data.id;
       var promise = axios.get("/tipovisitas/buscar/" + this.update);
       promise.then(function (response) {
         console.log(response.data);
-        _this4.tipoEdit = response.data;
+        _this5.tipoEdit = response.data;
       })["catch"](function (error) {
         console.log("ERROR: " + error);
         window.location.href = "/errors/" + error.response.status;
       });
     },
     borrarTipo: function borrarTipo(data) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (confirm('¿Seguro que deseas borrar este tipo?')) {
         var promise = axios["delete"]("/tipovisitas/" + data.id);
         promise.then(function (response) {
-          _this5.obtenerTipos();
+          _this6.obtenerTipos();
         })["catch"](function (error) {
           console.log("ERROR: " + error.message);
-          window.location.href = "/errors/" + error.response.status;
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          console.log(error.response.data.msg);
+
+          _this6.alertError(error.response.data.msg); // window.location.href = "/errors/"+error.response.status;        
+
         });
       }
     },
@@ -19364,59 +19639,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* La manera más natural de realizar la actualización de la imagen del avatar sería 
-   la de modificar la propiedad image de dentro del método upload/post/then
-        vm.image = response.data.path;
- El problema es que esto no es aconsejable. Cambiar una propiedad (es decir, un dato que 
- viene del padre) en el hijo, es posible ya que las propiedades son objetos mutables,
- pero, realizar el cambio de esta manera puede ser muy confuso. 
- Es por tanto una mala práctica (incluso salta un warning en la consola)
- La solucion radica en que todo los cambios se realicen en el mismo componente, 
- es decir, en este caso la eliminación del avatar debería lanzarse desde 
- este componente. 
- En nuestro caso vamos a seguir manteniendo la separación para aprender más cosas.
- La solución obvia sería crea una variable interna, por ejemplo imageToRender, que inicializariamos
- con el valor de image yque seria la que renderizariamos. A la hora de actualizar en upload/post/then 
- hariamos algo como 
-    vm.imageToRender = response.data.path;
- En este caso el problema vendria al eliminar el avatar desde el menú. ya que necesitamos actualizar el 
- valor de imageToRender a null cuando esto ocurra, es decir, cuando la variable image valga null de nuevo.
- Para eso podemos usar los métodos watch.
- Los métodos watch se utilizan para cambiar el valor de un dato o propiedad porque haya cambiado otro. 
- El nombre de la función es el nombre de la propiedad que quiero vigilar si ha cambiado
- Desgraciadamente, en este caso es sólo una solución parcial, ya que si el componente se monta con 
- image=null cuando se borra el avatar desde el padre se envia image=null.. es decir, no cambia, así que 
- no salta la función. (sólo se detectan cambios de valor)
- Sólo saltría en el caso de que al montar el componente SI tenga avatar, es decir image!=null
- Para solicionar este caso problemático la única solución que tenemos es que image pase a no ser
- null cuando se le asigna, es decir que la propiedad image cambie si cambia la imagen... parece que volvemos
- al principio
- La solución, y esta vez es definitiva, consiste en mandar un evento al abuelo (al dashboard), a través
- del padre (UserData) indicándole que la imagen ha cambiado y con que nuevo valor y que sea el dashboard
- el que cambie la propiedad y, por lo tanto, se actualice de manera automática en el componente UploadImage
-*/
 
 var STATUS_INITIAL = 0,
     STATUS_SAVING = 1,
@@ -19429,7 +19651,7 @@ var STATUS_INITIAL = 0,
     image: {
       required: false,
       type: String,
-      "default": ""
+      "default": "/storage/avatars/avatarDefecto.jpg"
     },
     user: {
       required: true,
@@ -19440,7 +19662,8 @@ var STATUS_INITIAL = 0,
   data: function data() {
     return {
       currentStatus: null,
-      uploadFieldName: "avatar"
+      uploadFieldName: "avatar",
+      avatar: ""
     };
   },
   computed: {
@@ -19551,6 +19774,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "usuario-component",
@@ -19568,7 +19793,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   data: function data() {
-    return {};
+    return {
+      medicoAsignado: true
+    };
   },
   watch: {
     validacionAct: function validacionAct(newValue, oldValue) {
@@ -19579,7 +19806,15 @@ __webpack_require__.r(__webpack_exports__);
     console.log("UsuarioComponent montado.");
     console.log("Usuario medico:" + this.user.medico.nombre);
   },
+  created: function created() {
+    this.comprobarMedicoAsingado();
+  },
   methods: {
+    comprobarMedicoAsingado: function comprobarMedicoAsingado() {
+      if (this.user.medico === null) {
+        this.medicoAsignado = false;
+      }
+    },
     onAvatarChange: function onAvatarChange(image) {
       this.$emit("avatar-change", image);
     },
@@ -19625,7 +19860,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _UsuarioComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UsuarioComponent */ "./resources/js/components/UsuarioComponent.vue");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -19717,11 +19983,20 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
          ningun medico, pero si es diferente de 0 entonces tendrá el id del medico y no mostrará el boton guardar sino el modificar*/
       enviar: false,
       //avatar:"",
-      avatarMiniatura: ""
+      avatarMiniatura: "",
+      emailDuplicado: false
     };
   },
   validations: {
-    usuarioEdit: {}
+    usuarioEdit: {
+      name: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.required
+      },
+      email: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.required,
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.email
+      }
+    }
   },
   created: function created() {
     this.obtenerusuarios();
@@ -19794,51 +20069,37 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
       }
 
       console.log("Usuario nuevo");
-      var formData = new FormData();
-
-      for (var key in this.usuarioEdit) {
-        if (key == "avatar") {
-          formData.append(key, this.usuarioEdit.avatar);
-          console.log(key + ":" + this.usuarioEdit.avatar);
-        } else {
-          formData.append(key, this.usuarioEdit[key]);
-          console.log(key + ":" + this.usuarioEdit[key]);
-        }
-      }
-
-      var promise = axios.post("/usuarios", formData);
+      var promise = axios.post("/usuarios", this.usuarioEdit);
       promise.then(function (response) {
-        _this4.obtenerusuarios(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
+        _this4.obtenerusuarios(); //llamamos al metodo obtenerUsuarios para que refresque nuestro arrayy
 
 
         _this4.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
 
       })["catch"](function (error) {
-        console.log("ERROR: " + error);
-        window.location.href = "/errors/" + error.response.status;
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        console.log(error.response.data.msg);
+
+        if (error.response.status == '422') {
+          _this4.emailDuplicado = true;
+        } else {//  window.location.href = "/errors/"+error.response.status;
+        }
       });
     },
     actualizarUsuario: function actualizarUsuario() {
       var _this5 = this;
 
-      console.log("Usuario a acutlizar" + this.usuarioEdit.role_id);
-      var formData = new FormData();
+      this.enviar = true; //parar si el formulario es invalido             
 
-      for (var key in this.usuarioEdit) {
-        if (key == "avatar") {
-          formData.append(key, this.usuarioEdit.avatar);
-          console.log(key + ":" + this.usuarioEdit.avatar);
-        } else {
-          formData.append(key, this.usuarioEdit[key]);
-          console.log(key + ":" + this.usuarioEdit[key]);
-        }
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        return;
       }
 
-      formData.append("_method", "put");
-      console.log(formData); //Laravel no acepta el envio por put del mutliplatform data, tenemos que usar post añadiendo como metodo PUT.
-
-      formData.append('_method', 'PUT');
-      var promise = axios.post('/usuarios/' + this.usuarioEdit.id, formData);
+      var promise = axios.put('/usuarios/' + this.usuarioEdit.id, this.usuarioEdit);
       promise.then(function (response) {
         console.log(response.data);
 
@@ -20394,6 +20655,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -20506,6 +20771,7 @@ Vue.component('documentos-component', __webpack_require__(/*! ./components/Docum
 Vue.component('pruebasmedicas-component', __webpack_require__(/*! ./components/PruebasMedicasComponent.vue */ "./resources/js/components/PruebasMedicasComponent.vue").default);
 Vue.component('medicos-component', __webpack_require__(/*! ./components/MedicosComponent.vue */ "./resources/js/components/MedicosComponent.vue").default);
 Vue.component('usuarios-component', __webpack_require__(/*! ./components/UsuariosComponent.vue */ "./resources/js/components/UsuariosComponent.vue").default);
+Vue.component('changepassword-component', __webpack_require__(/*! ./components/ChangePasswordComponent.vue */ "./resources/js/components/ChangePasswordComponent.vue").default);
 Vue.component('usuario-component', __webpack_require__(/*! ./components/UsuarioComponent.vue */ "./resources/js/components/UsuarioComponent.vue").default);
 Vue.component('dashboard-component', __webpack_require__(/*! ./components/DashboardComponent.vue */ "./resources/js/components/DashboardComponent.vue").default);
 Vue.component('upload-image-component', __webpack_require__(/*! ./components/UploadImageComponent.vue */ "./resources/js/components/UploadImageComponent.vue").default);
@@ -25169,30 +25435,6 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, ".listaErrores[data-v-423821f7] {\n  list-style: none;\n  color: red;\n  padding: 0;\n  margin: 0;\n}", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true&":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true& ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".toolbar[data-v-7c701fb1] {\n  display: flex;\n}\n.botonera[data-v-7c701fb1] {\n  margin-left: auto;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -79591,6 +79833,45 @@ component.options.__file = "resources/js/components/CalendarioComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/ChangePasswordComponent.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/ChangePasswordComponent.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ChangePasswordComponent_vue_vue_type_template_id_c7810d92___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChangePasswordComponent.vue?vue&type=template&id=c7810d92& */ "./resources/js/components/ChangePasswordComponent.vue?vue&type=template&id=c7810d92&");
+/* harmony import */ var _ChangePasswordComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChangePasswordComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ChangePasswordComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _ChangePasswordComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _ChangePasswordComponent_vue_vue_type_template_id_c7810d92___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ChangePasswordComponent_vue_vue_type_template_id_c7810d92___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ChangePasswordComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/DashboardComponent.vue":
 /*!********************************************************!*\
   !*** ./resources/js/components/DashboardComponent.vue ***!
@@ -79881,17 +80162,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _PacienteComponent_vue_vue_type_template_id_7c701fb1_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PacienteComponent.vue?vue&type=template&id=7c701fb1&scoped=true& */ "./resources/js/components/PacienteComponent.vue?vue&type=template&id=7c701fb1&scoped=true&");
 /* harmony import */ var _PacienteComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PacienteComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/PacienteComponent.vue?vue&type=script&lang=js&");
-/* harmony import */ var _PacienteComponent_vue_vue_type_style_index_0_id_7c701fb1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true& */ "./resources/js/components/PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
-;
 
 
 /* normalize component */
-
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__.default)(
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
   _PacienteComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
   _PacienteComponent_vue_vue_type_template_id_7c701fb1_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
   _PacienteComponent_vue_vue_type_template_id_7c701fb1_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
@@ -79920,7 +80199,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PacientesComponent.vue?vue&type=template&id=0a36bc26& */ "./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&");
+/* harmony import */ var _PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true& */ "./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true&");
 /* harmony import */ var _PacientesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PacientesComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/PacientesComponent.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -79932,11 +80211,11 @@ __webpack_require__.r(__webpack_exports__);
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
   _PacientesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__.render,
-  _PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  null,
+  "0a36bc26",
   null
   
 )
@@ -80300,6 +80579,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ChangePasswordComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/ChangePasswordComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChangePasswordComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChangePasswordComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/DashboardComponent.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/DashboardComponent.vue?vue&type=script&lang=js& ***!
@@ -80606,6 +80901,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ChangePasswordComponent.vue?vue&type=template&id=c7810d92&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/ChangePasswordComponent.vue?vue&type=template&id=c7810d92& ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordComponent_vue_vue_type_template_id_c7810d92___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordComponent_vue_vue_type_template_id_c7810d92___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordComponent_vue_vue_type_template_id_c7810d92___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChangePasswordComponent.vue?vue&type=template&id=c7810d92& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChangePasswordComponent.vue?vue&type=template&id=c7810d92&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/DashboardComponent.vue?vue&type=template&id=01ab55f4&":
 /*!***************************************************************************************!*\
   !*** ./resources/js/components/DashboardComponent.vue?vue&type=template&id=01ab55f4& ***!
@@ -80742,19 +81054,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26& ***!
-  \***************************************************************************************/
+/***/ "./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true& ***!
+  \***************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PacientesComponent.vue?vue&type=template&id=0a36bc26& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PacientesComponent_vue_vue_type_template_id_0a36bc26_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true&");
 
 
 /***/ }),
@@ -80929,23 +81241,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true&":
-/*!*****************************************************************************************************************!*\
-  !*** ./resources/js/components/PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true& ***!
-  \*****************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PacienteComponent_vue_vue_type_style_index_0_id_7c701fb1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-style-loader/index.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true& */ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true&");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PacienteComponent_vue_vue_type_style_index_0_id_7c701fb1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PacienteComponent_vue_vue_type_style_index_0_id_7c701fb1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PacienteComponent_vue_vue_type_style_index_0_id_7c701fb1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_14_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PacienteComponent_vue_vue_type_style_index_0_id_7c701fb1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-
-
-/***/ }),
-
 /***/ "./resources/js/components/PruebasMedicasComponent.vue?vue&type=style&index=0&id=b191cfe8&lang=scss&scoped=true&":
 /*!***********************************************************************************************************************!*\
   !*** ./resources/js/components/PruebasMedicasComponent.vue?vue&type=style&index=0&id=b191cfe8&lang=scss&scoped=true& ***!
@@ -81088,6 +81383,189 @@ var render = function() {
     [_c("FullCalendar", { attrs: { options: _vm.calendarOptions } })],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChangePasswordComponent.vue?vue&type=template&id=c7810d92&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChangePasswordComponent.vue?vue&type=template&id=c7810d92& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Cambio de contraseña primer inicio de sesión")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Contraseña antigua")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.userEdit.oldPassword,
+                    expression: "userEdit.oldPassword"
+                  }
+                ],
+                staticClass: "form-control",
+                class: {
+                  "is-invalid": _vm.$v.userEdit.oldPassword.$error
+                },
+                attrs: { type: "password" },
+                domProps: { value: _vm.userEdit.oldPassword },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.userEdit, "oldPassword", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              !_vm.$v.userEdit.confirmPassword.required
+                ? _c("div", { staticClass: "invalid-feedback" }, [
+                    _vm._v("La antogia contraseña es obligatoria")
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Nueva contraseña")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.userEdit.newPassword,
+                    expression: "userEdit.newPassword"
+                  }
+                ],
+                staticClass: "form-control",
+                class: {
+                  "is-invalid": _vm.$v.userEdit.newPassword.$error
+                },
+                attrs: { type: "password" },
+                domProps: { value: _vm.userEdit.newPassword },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.userEdit, "newPassword", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              !_vm.$v.userEdit.newPassword.required
+                ? _c("div", { staticClass: "invalid-feedback" }, [
+                    _vm._v("La nueva contraseña es obligatoria")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.userEdit.newPassword && !_vm.$v.userEdit.newPassword.minLength
+                ? _c("div", { staticClass: "invalid-feedback" }, [
+                    _vm._v(
+                      "\n                        La contraseña debe tener un mínimo de 6 caracteres\n                    "
+                    )
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Comfirmar contraseña")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.userEdit.confirmPassword,
+                    expression: "userEdit.confirmPassword"
+                  }
+                ],
+                staticClass: "form-control",
+                class: {
+                  "is-invalid": _vm.$v.userEdit.confirmPassword.$error
+                },
+                attrs: { type: "password" },
+                domProps: { value: _vm.userEdit.confirmPassword },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.userEdit,
+                      "confirmPassword",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              !_vm.$v.userEdit.confirmPassword.required
+                ? _c("div", { staticClass: "invalid-feedback" }, [
+                    _vm._v("La confirmación de contraseñaa es obligatoria")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.$v.userEdit.confirmPassword &&
+              !_vm.$v.userEdit.confirmPassword.sameAsPassword
+                ? _c("div", { staticClass: "invalid-feedback" }, [
+                    _vm._v(
+                      "\n                        La contraseña y la contraseña de confirmación deben coincidir\n                        "
+                    )
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-dark",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.updatePassword()
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                                    Guardar\n                      "
+                  )
+                ]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -81495,6 +81973,9 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: {
+              "is-invalid": _vm.enviar && _vm.$v.medicoEdit.nombre.$error
+            },
             attrs: { type: "text" },
             domProps: { value: _vm.medicoEdit.nombre },
             on: {
@@ -81505,7 +81986,13 @@ var render = function() {
                 _vm.$set(_vm.medicoEdit, "nombre", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.enviar && !_vm.$v.medicoEdit.nombre.required
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v("El nombre es obligatorio")
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
@@ -81521,6 +82008,9 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: {
+              "is-invalid": _vm.enviar && _vm.$v.medicoEdit.apellidos.$error
+            },
             attrs: { type: "text" },
             domProps: { value: _vm.medicoEdit.apellidos },
             on: {
@@ -81531,11 +82021,19 @@ var render = function() {
                 _vm.$set(_vm.medicoEdit, "apellidos", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.enviar && !_vm.$v.medicoEdit.apellidos.required
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v("Los apellidos son obligatorios")
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _c("label", [_vm._v("NIF")]),
+          _c("label", { staticClass: "form-label", attrs: { for: "NIF" } }, [
+            _vm._v("NIF")
+          ]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -81547,6 +82045,9 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: {
+              "is-invalid": _vm.enviar && _vm.$v.medicoEdit.NIF.$error
+            },
             attrs: { type: "text" },
             domProps: { value: _vm.medicoEdit.NIF },
             on: {
@@ -81557,7 +82058,13 @@ var render = function() {
                 _vm.$set(_vm.medicoEdit, "NIF", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.enviar && !_vm.$v.medicoEdit.NIF.required
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v("El NIF es obligatorio")
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
@@ -81573,6 +82080,9 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: {
+              "is-invalid": _vm.enviar && _vm.$v.medicoEdit.num_colegiado.$error
+            },
             attrs: { type: "text" },
             domProps: { value: _vm.medicoEdit.num_colegiado },
             on: {
@@ -81583,7 +82093,13 @@ var render = function() {
                 _vm.$set(_vm.medicoEdit, "num_colegiado", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.enviar && !_vm.$v.medicoEdit.num_colegiado.required
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v("El número de colegiado es obligatorio")
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
@@ -82146,6 +82662,23 @@ var render = function() {
   return _c("div", [
     _c("h3", { staticClass: "text-center" }, [_vm._v("Motivos Visita")]),
     _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.showAlert,
+            expression: "showAlert"
+          }
+        ],
+        staticClass: "alert alert-danger",
+        attrs: { role: "alert" }
+      },
+      [_vm._v("\n              " + _vm._s(_vm.msgError) + "\n    ")]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c("div", { staticClass: "input-group mb-3" }, [
         _c("input", {
@@ -82493,7 +83026,9 @@ var render = function() {
             _vm._v(" "),
             _vm.enviar && !_vm.$v.pacienteEdit.fecha_nacimiento.required
               ? _c("div", { staticClass: "invalid-feedback" }, [
-                  _vm._v("La fecha de nacimiento es obligatoria")
+                  _vm._v(
+                    "La fecha de nacimiento es obligatoria o no es correcta"
+                  )
                 ])
               : _vm._e()
           ]),
@@ -82533,7 +83068,7 @@ var render = function() {
             _vm._v(" "),
             _vm.enviar && !_vm.$v.pacienteEdit.fecha_alta.required
               ? _c("div", { staticClass: "invalid-feedback" }, [
-                  _vm._v("La fecha de alta es obligatoria")
+                  _vm._v("La fecha de alta es obligatoria o no es correcta")
                 ])
               : _vm._e()
           ]),
@@ -82823,7 +83358,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Actualizar")]
+                [_vm._v("Guardar")]
               )
             : _vm._e()
         ])
@@ -82838,10 +83373,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&":
-/*!******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26& ***!
-  \******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacientesComponent.vue?vue&type=template&id=0a36bc26&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -82876,7 +83411,7 @@ var render = function() {
                 staticClass: "form-control mb-3",
                 attrs: {
                   type: "text",
-                  placeholder: "Filtra por nombre o apellido"
+                  placeholder: "Filtra por nombre, apellido o NIF"
                 },
                 domProps: { value: _vm.filtro },
                 on: {
@@ -82949,6 +83484,25 @@ var render = function() {
                       _c("td", [_vm._v(_vm._s(paciente.poblacion))]),
                       _vm._v(" "),
                       _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning btn-sm",
+                            attrs: { type: "button" }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "fa fa-pencil",
+                              attrs: { "aria-hidden": "true" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.abrirPaciente(paciente.id)
+                                }
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
                         _c(
                           "button",
                           {
@@ -83287,6 +83841,23 @@ var render = function() {
   return _c("div", [
     _c("h3", { staticClass: "text-center" }, [_vm._v("Tipo Pruebas")]),
     _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.showAlert,
+            expression: "showAlert"
+          }
+        ],
+        staticClass: "alert alert-danger",
+        attrs: { role: "alert" }
+      },
+      [_vm._v("\n              " + _vm._s(_vm.msgError) + "\n    ")]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c("div", { staticClass: "input-group mb-3" }, [
         _c("input", {
@@ -83476,6 +84047,23 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("h3", { staticClass: "text-center" }, [_vm._v("Tipos Visita")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.showAlert,
+            expression: "showAlert"
+          }
+        ],
+        staticClass: "alert alert-danger",
+        attrs: { role: "alert" }
+      },
+      [_vm._v("\n              " + _vm._s(_vm.msgError) + "\n    ")]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c("div", { staticClass: "input-group mb-3" }, [
@@ -83725,17 +84313,25 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "info" }, [
-      _c("p", [
-        _vm._v(
-          _vm._s(_vm.user.medico.apellidos) +
-            "," +
-            _vm._s(_vm.user.medico.nombre)
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [_vm._v("NºColegiado: " + _vm._s(_vm.user.medico.num_colegiado))])
-    ])
+    _vm.medicoAsignado
+      ? _c("div", { staticClass: "info" }, [
+          _c("p", [
+            _vm._v(
+              _vm._s(_vm.user.medico.apellidos) +
+                "," +
+                _vm._s(_vm.user.medico.nombre)
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("NºColegiado: " + _vm._s(_vm.user.medico.num_colegiado))
+          ])
+        ])
+      : _c("div", { staticClass: "info" }, [
+          _c("p", [
+            _vm._v("No hay medico asignado al usuario. Hable con administrador")
+          ])
+        ])
   ])
 }
 var staticRenderFns = []
@@ -83802,17 +84398,22 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-4 col-md-12" }, [
-        _c(
-          "div",
-          { staticClass: "form-group d-flex justify-content-center" },
-          [
-            _c("upload-image-component", {
-              attrs: { image: _vm.usuarioEdit.avatar, user: _vm.usuarioEdit },
-              on: { "avatar-change": _vm.onAvatarChange }
-            })
-          ],
-          1
-        ),
+        _vm.update != 0
+          ? _c(
+              "div",
+              { staticClass: "form-group d-flex justify-content-center" },
+              [
+                _c("upload-image-component", {
+                  attrs: {
+                    image: _vm.usuarioEdit.avatar,
+                    user: _vm.usuarioEdit
+                  },
+                  on: { "avatar-change": _vm.onAvatarChange }
+                })
+              ],
+              1
+            )
+          : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
           _c("label", [_vm._v("Nombre")]),
@@ -83827,6 +84428,9 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: {
+              "is-invalid": _vm.enviar && _vm.$v.usuarioEdit.name.$error
+            },
             attrs: { type: "text" },
             domProps: { value: _vm.usuarioEdit.name },
             on: {
@@ -83837,7 +84441,13 @@ var render = function() {
                 _vm.$set(_vm.usuarioEdit, "name", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.enviar && !_vm.$v.usuarioEdit.name.required
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v("El nombre es obligatorio")
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
@@ -83853,7 +84463,10 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text" },
+            class: {
+              "is-invalid": _vm.enviar && _vm.$v.usuarioEdit.email.$error
+            },
+            attrs: { type: "email" },
             domProps: { value: _vm.usuarioEdit.email },
             on: {
               input: function($event) {
@@ -83863,7 +84476,17 @@ var render = function() {
                 _vm.$set(_vm.usuarioEdit, "email", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.enviar && !_vm.$v.usuarioEdit.email.required
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v("El email es obligatorio")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.enviar && _vm.emailDuplicado
+            ? _c("div", [_vm._v("El email ya existe")])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
@@ -84956,23 +85579,6 @@ var render = function() {
             "tbody",
             _vm._l(_vm.visitas, function(visita) {
               return _c("tr", { key: visita.id }, [
-                _c(
-                  "td",
-                  {
-                    on: {
-                      click: function($event) {
-                        return _vm.abrirVisita(visita.id)
-                      }
-                    }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-sign-in",
-                      attrs: { "aria-hidden": "true" }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
                 _c("td", [
                   _vm._v(
                     _vm._s(_vm._f("formatFecha")(visita.calendario.inicio))
@@ -84985,7 +85591,28 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(visita.tipo_visita.descripcion))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(visita.motivo_visita.descripcion))])
+                _c("td", [_vm._v(_vm._s(visita.motivo_visita.descripcion))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning btn-sm",
+                      attrs: { type: "button" }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-pencil",
+                        attrs: { "aria-hidden": "true" },
+                        on: {
+                          click: function($event) {
+                            return _vm.abrirVisita(visita.id)
+                          }
+                        }
+                      })
+                    ]
+                  )
+                ])
               ])
             }),
             0
@@ -85009,15 +85636,15 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
-        _c("th"),
-        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Hora")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo Visita")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Motivo Visita")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Motivo Visita")]),
+        _vm._v(" "),
+        _c("th")
       ])
     ])
   }
@@ -85294,27 +85921,6 @@ if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(/*! !../../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
 var update = add("0e3fe6e4", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true&":
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true& ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-14[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PacienteComponent.vue?vue&type=style&index=0&id=7c701fb1&lang=scss&scoped=true&");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.id, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(/*! !../../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
-var update = add("5ff78b52", content, false, {});
 // Hot Module Replacement
 if(false) {}
 

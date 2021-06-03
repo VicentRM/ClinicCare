@@ -2,31 +2,35 @@
   <div>
     <h4>Visitas</h4>
     <!--<button type="button" class="btn btn-dark" onclick="location.href='/visitas/crearVisitaPaciente/{{ $paciente->id }}'">Nueva</button>-->
-    <div class=toolbar>
-      <div class="botonera">          
-           <button type="button" class="btn btn-success" @click="nuevavisita=!nuevavisita"><i class="fa fa-plus"></i></button>     
+    <div class="toolbar">
+      <div class="botonera">
+        <button type="button" class="btn btn-success" @click="nuevavisita=!nuevavisita">
+          <i class="fa fa-plus"></i>
+        </button>
       </div>
     </div>
 
     <table class="table table-sm table-striped table-bordered">
       <thead class="thead-dark">
         <tr>
-          <th></th>
           <th scope="col">Fecha</th>
           <th scope="col">Hora</th>
           <th scope="col">Tipo Visita</th>
           <th scope="col">Motivo Visita</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="visita in visitas" :key="visita.id">
-          <td @click="abrirVisita(visita.id)">
-            <i class="fa fa-sign-in" aria-hidden="true"></i>
-          </td>
+        <tr v-for="visita in visitas" :key="visita.id">          
           <td>{{ visita.calendario.inicio | formatFecha }}</td>
           <td>{{ visita.calendario.inicio | formatHora }}</td>
           <td>{{ visita.tipo_visita.descripcion }}</td>
           <td>{{ visita.motivo_visita.descripcion }}</td>
+          <td >
+            <button type="button" class="btn btn-warning btn-sm">
+                    <i class="fa fa-pencil" aria-hidden="true" @click="abrirVisita(visita.id)"></i>
+            </button>            
+          </td>
         </tr>
       </tbody>
     </table>
@@ -78,7 +82,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
     },
     abrirVisita(idVisita) {
@@ -97,7 +101,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
     },
   },
@@ -110,7 +114,5 @@ export default {
   //grid-template-columns: repeat(2,1fr);
 }
 .botonera {
-  margin-left:auto;
-  
-  
+  margin-left: auto;
 }

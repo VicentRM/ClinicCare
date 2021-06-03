@@ -7,6 +7,10 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NuevoUsuario;
+use DB;
+use Hash;
 class UsuariosController extends Controller
 {
     /**
@@ -53,19 +57,25 @@ class UsuariosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        /*User::create($request->all());
-        return redirect('/admin/users');*/
-        $entrada=$request->all();
-        if($file=$request->file('avatar')){            
-            $filename = $file->getClientOriginalName();
-            $filename= str_replace(' ', '', $filename);                
-            $path=$file->storeAs('', $filename);
-            $entrada['avatar']=$path;
-        }
-        $entrada['password']=bcrypt($request->passord);
-        User::create($entrada);
+    {   
       
+            $validated = $request->validate([
+                'name' => 'required',
+                'email' => ['required','unique:users'],            
+            ]);
+            $caracteres = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.#!';
+            $passwordGenerico='';
+            for($x = 0; $x < 10; $x++){
+                $passwordGenerico = substr(str_shuffle($caracteres), 0, 10);            
+            }        
+
+            $entrada=$request->all();   
+            $entrada['password']=bcrypt($passwordGenerico);
+            $user=User::create($entrada);
+            //enviamos correo
+            $entrada['passwordGenerico']=$passwordGenerico;
+            Mail::to($request->email)->queue(new NuevoUsuario($entrada));          
+        
     }
 
     /**
@@ -110,19 +120,16 @@ class UsuariosController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $usuario=User::findOrFail($id);
-        $entrada=$request->all();        
-        info($entrada);
-        if($file=$request->file('avatar')){            
-            $filename = $file->getClientOriginalName();
-            $filename= str_replace(' ', '', $filename); 
-            $file->move('images',$filename);               
-            $path=$file->storeAs('', $filename);
-            $entrada['avatar']=$path;
-        }
-        $entrada['password']=bcrypt($request->password);
-        $usuario->update($entrada);
-
+        $usuario=User::findOrFail($id);         
+        $usuario = DB::table('users')
+              ->where('id', $id)
+              ->update(
+                  ['name' => $request->name],
+                  ['email' => $request->email],     
+                  ['role_id' => $request->role_id]   
+            );
+        //$entrada['password']=bcrypt($request->password);
+        //$usuario->update($entrada);
         return $usuario;
     }
 
@@ -138,6 +145,7 @@ class UsuariosController extends Controller
         $user->delete();
         return redirect('/admin/users');
     }
+
 
     public function updateAvatar(Request $request,$id)
     {
@@ -179,6 +187,22 @@ class UsuariosController extends Controller
 
         return response("Avatar removed", 200);
     }
+    public function updatePassword(Request $request,$id){
+         // El password antiguo coincide con el hash en la base de datos
+         if (Hash::check($request["oldPassword"], Auth::user()->password)) {
+            //$profile->password = bcrypt($request["new_password"]);
+            $user = Auth::user();
+            $user->password = Hash::make($request->get('newPassword'));
+            $user->password_change_at = \Carbon\Carbon::now(); //add new line of code
+            $user->save();
+            // fuerzo salir
+            Auth::logout();
+        } else {
+            return response("Password incorrect", 401);
+        }
+    }
+
+
    
 
         

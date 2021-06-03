@@ -62,7 +62,7 @@
             <div
               v-if="enviar && !$v.pacienteEdit.fecha_nacimiento.required"
               class="invalid-feedback"
-            >La fecha de nacimiento es obligatoria</div>
+            >La fecha de nacimiento es obligatoria o no es correcta</div>
           </div>
           <div class="mb-3">
             <label for="fecha_alta" class="form-label">Fecha alta</label>
@@ -77,7 +77,7 @@
             <div
               v-if="enviar && !$v.pacienteEdit.fecha_alta.required"
               class="invalid-feedback"
-            >La fecha de alta es obligatoria</div>
+            >La fecha de alta es obligatoria o no es correcta</div>
           </div>
           <div class="mb-3">
             <label for="sexo" class="form-label">Sexo</label>
@@ -155,7 +155,7 @@
            <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
            <button v-if="update == 0" @click="guardarPaciente()" class="btn btn-success">Añadir</button>
            <!-- Botón que modifica el medico que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
-           <button v-if="update != 0" @click="actualizarPaciente()" class="btn btn-warning">Actualizar</button>    
+           <button v-if="update != 0" @click="actualizarPaciente()" class="btn btn-warning">Guardar</button>    
       </div>
       </div>
     </div>
@@ -167,6 +167,7 @@ import moment from "moment";
 import {
   required,
   email,
+ maxValue,
   minLength,
   sameAs,
   between,
@@ -205,6 +206,7 @@ export default {
       apellidos: { required },     
       NIF: { required },
       fecha_nacimiento: { required },
+      //fecha_alta: { required,maxValue: maxValue(new Date()) },
       fecha_alta: { required },
       CP: { required },
       telefono1: { required },
@@ -246,13 +248,8 @@ export default {
                     window.location.href = "/pacientes";
                 })
                 .catch((error) => {
-                    console.log("ERROR: " + error);
-                   
-                    if(error.response.status="409"){
-                      alert(error.response.data);
-                    }else{
-                      window.location.href = "/errors/"+error.response.status;                    }
-                                  
+                    console.log("ERROR: " + error);                   
+                    window.location.href = "/errors/"+error.response.status;                                                
                 });
     },
     actualizarPaciente() {
@@ -311,13 +308,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toolbar {
-  display: flex;
-  //grid-template-columns: repeat(2,1fr);
-}
-.botonera {
-  margin-left:auto;
-  
-  
-}
+
+
 </style>

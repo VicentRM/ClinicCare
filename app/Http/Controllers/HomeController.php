@@ -26,7 +26,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $usuario = Auth::user();
+        if (($usuario->password_change_at == null)) {          
+            return view ('auth.passwords.changepassword',['usuario'=>$usuario]);
+         }
+       
 
         $usuario->avatar =
             $usuario->avatar != null ? Storage::url($usuario->avatar) :"";
@@ -40,6 +45,8 @@ class HomeController extends Controller
     public function config(){
         return view ('config');
     }
+
+
    
  
 }

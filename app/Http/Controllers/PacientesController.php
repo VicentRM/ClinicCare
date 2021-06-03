@@ -60,7 +60,8 @@ class PacientesController extends Controller
      */
     public function store(Request $request)
     {
-     
+       
+    
         $entrada=$request->all();
            
 
@@ -70,6 +71,19 @@ class PacientesController extends Controller
         }else{
             $entrada['NHC']=($ultPaciente->NHC)+1;    
         }
+
+         //Validamos los datos requeridos
+         $validated = $request->validate([
+            'nombre' => 'required',
+            'apellidos' => 'required',
+            'NIF' => 'required',
+            'fecha_nacimiento' => 'required',
+            'fecha_alta' => 'required',            
+            'CP' => 'required',
+            'telefono1' => 'required',
+            'email' => 'required',
+        ]);
+        
       
         $p=Paciente::create($entrada);
         $pacienteId=Paciente::findOrFail($p->id);
@@ -120,10 +134,19 @@ class PacientesController extends Controller
     public function update($id,Request $request)
     {
         $paciente=Paciente::findOrFail($id);
-        $request->validate([
+        
+        //Validamos los datos requeridos
+        $validated = $request->validate([
             'nombre' => 'required',
-            'apellidos' => 'required'
-        ]);       
+            'apellidos' => 'required',
+            'NIF' => 'required',
+            'fecha_nacimiento' => 'required',
+            'fecha_alta' => 'required',            
+            'CP' => 'required',
+            'telefono1' => 'required',
+            'email' => 'required',
+        ]);
+
         $paciente->update($request->all());
     }
 

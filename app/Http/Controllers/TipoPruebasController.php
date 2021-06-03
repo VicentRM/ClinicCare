@@ -104,9 +104,12 @@ class TipoPruebasController extends Controller
             $tipo=TipoPrueba::findOrFail($id);
             $tipo->delete();
         
-        }catch (\Illuminate\Database\QueryException $e){
-          
-            return response($e,500);
-        }
+        }catch (\Illuminate\Database\QueryException $e){          
+            // return response($e,500);
+             return response()->json([
+                 'status' => 'Ocurrio un error!',
+                 'msg' => 'Hay pruebas médicas con este tipo de prueba.',
+             ],400);
+         }
     }
 }

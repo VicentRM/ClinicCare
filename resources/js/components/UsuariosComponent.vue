@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-md-12">    
-                <div class="form-group d-flex justify-content-center" >                      
+                <div v-if="update != 0" class="form-group d-flex justify-content-center" >                      
                       <upload-image-component
                         :image="usuarioEdit.avatar"
                         :user="usuarioEdit"
@@ -33,20 +33,50 @@
                       />        
                   </div>  
                   <div class="form-group">
-                      <label>Nombre</label>
-                      <input type="text" class="form-control" v-model="usuarioEdit.name">                    
+                      <label>Nombre</label>                      
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="usuarioEdit.name"
+                        :class="{
+                              'is-invalid': enviar && $v.usuarioEdit.name.$error
+                            }"
+                      />
+                      <div
+                        v-if="enviar && !$v.usuarioEdit.name.required"
+                        class="invalid-feedback"
+                      >El nombre es obligatorio</div>     
+                                 
                   </div>
                   <div class="form-group">
                       <label>email</label>
-                      <input type="text" class="form-control" v-model="usuarioEdit.email">                    
+                      <input 
+                      type="email" 
+                      class="form-control" 
+                      v-model="usuarioEdit.email"
+                      :class="{
+                              'is-invalid': enviar && $v.usuarioEdit.email.$error
+                            }"
+                      />
+                      <div
+                        v-if="enviar && !$v.usuarioEdit.email.required"
+                        class="invalid-feedback"
+                      >El email es obligatorio</div>   
+                      <div 
+                      v-if="enviar && emailDuplicado"
+                      >El email ya existe</div>                       
                   </div>     
                   <div class="form-group">
                       <label>Rol</label>
-                      <select class="form-control" v-model="usuarioEdit.role_id">              
+                      <select 
+                      class="form-control" 
+                      v-model="usuarioEdit.role_id"                    
+                      >              
                           <option v-for="role in arrayRoles" :key="role.id" :value="role.id">
                               {{role.nombre_rol}}
                           </option>
-                      </select>                                      
+                      </select>    
+                                                        
                   </div> 
                   <div class="form-group" v-if="update != 0">                    
                       <button type="button" class="btn btn-dark" @click="resetPassword()">
@@ -70,9 +100,14 @@
 
 <script>
 import UsuarioComponent from "./UsuarioComponent";
-import { required } from "vuelidate/lib/validators";
+
+import {
+  required,
+  email,
+} from "vuelidate/lib/validators";
 import Vuelidate from "vuelidate";
 Vue.use(Vuelidate);
+
 export default {
     name: "usuarios-component",
     components: {
@@ -91,12 +126,15 @@ export default {
             enviar: false,
             //avatar:"",
             avatarMiniatura:"",
+            emailDuplicado:false,
           
         }
     },
     validations: {
         usuarioEdit: {
-           
+             name: { required },
+             email : { required, email},
+                        
         },
     },
     created(){
@@ -165,48 +203,36 @@ export default {
             if (this.$v.$invalid) {
                return;
            }
-            console.log("Usuario nuevo");
-            let formData= new FormData();
-            for (let key in this.usuarioEdit) {
-                
-                if(key=="avatar"){
-                    formData.append(key,this.usuarioEdit.avatar);
-                    console.log(key+":"+this.usuarioEdit.avatar);
-                }else{
-                    formData.append(key,this.usuarioEdit[key]);
-                    console.log(key+":"+this.usuarioEdit[key]);
-                }
-            }   
-            const promise = axios.post("/usuarios",formData);         
+            console.log("Usuario nuevo");         
+            const promise = axios.post("/usuarios",this.usuarioEdit);         
             promise
                 .then((response) => {
-                    this.obtenerusuarios(); //llamamos al metodo obtenerMedicos para que refresque nuestro arrayy
+                    this.obtenerusuarios(); //llamamos al metodo obtenerUsuarios para que refresque nuestro arrayy
                     this.resetForm(); //Limìamos los campos e inicializamos la variable update a 0
 
                 })
                 .catch((error) => {
-                    console.log("ERROR: " + error);
-                    window.location.href = "/errors/"+error.response.status;
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                    console.log(error.response.data.msg);
+                    if(error.response.status=='422'){                      
+                      this.emailDuplicado=true;                  
+                    }else{
+                      //  window.location.href = "/errors/"+error.response.status;
+                    }
+                    
+                   
                 });
         },
-        actualizarUsuario(){
-            console.log("Usuario a acutlizar"+this.usuarioEdit.role_id)
-            let formData= new FormData();
-            for (let key in this.usuarioEdit) {
-                
-                if(key=="avatar"){
-                    formData.append(key,this.usuarioEdit.avatar);
-                    console.log(key+":"+this.usuarioEdit.avatar);
-                }else{
-                    formData.append(key,this.usuarioEdit[key]);
-                    console.log(key+":"+this.usuarioEdit[key]);
-                }
-            }   
-            formData.append("_method", "put");     
-            console.log(formData);
-          //Laravel no acepta el envio por put del mutliplatform data, tenemos que usar post añadiendo como metodo PUT.
-            formData.append('_method', 'PUT');
-            const promise =axios.post('/usuarios/'+this.usuarioEdit.id , formData );
+        actualizarUsuario(){    
+            this.enviar = true;
+            //parar si el formulario es invalido             
+            this.$v.$touch();
+            if (this.$v.$invalid) {            
+               return;
+           }              
+            const promise =axios.put('/usuarios/'+this.usuarioEdit.id , this.usuarioEdit );
             promise
                 .then((response) => {
                     console.log(response.data);

@@ -14,64 +14,13 @@
         />
   </div>
 </div>
-<!--
-  <div class="upload-image">
-    <img v-if="image" :src="image" />
-   
-    <form v-if="isInitial || isSaving" enctype="multipart/form-data" novalidate>
-      <div class="dropbox" :class="{ opacityon: image }">
-        <input
-          type="file"
-          :name="uploadFieldName"
-          :disabled="isSaving"
-          accept="image/*"
-          class="input-file"
-          @change="filesChange($event)"
-        />
-        <p v-if="isInitial">
-          Arrastra tu imagen aquí<br />o pincha para buscarla
-        </p>
-        <p v-if="isSaving">Subiendo imagen...</p>
-      </div>
-    </form>
 
-  </div>-->
 
 
 </template>
 
 <script>
-/* La manera más natural de realizar la actualización de la imagen del avatar sería 
-   la de modificar la propiedad image de dentro del método upload/post/then
-        vm.image = response.data.path;
- El problema es que esto no es aconsejable. Cambiar una propiedad (es decir, un dato que 
- viene del padre) en el hijo, es posible ya que las propiedades son objetos mutables,
- pero, realizar el cambio de esta manera puede ser muy confuso. 
- Es por tanto una mala práctica (incluso salta un warning en la consola)
- La solucion radica en que todo los cambios se realicen en el mismo componente, 
- es decir, en este caso la eliminación del avatar debería lanzarse desde 
- este componente. 
- En nuestro caso vamos a seguir manteniendo la separación para aprender más cosas.
- La solución obvia sería crea una variable interna, por ejemplo imageToRender, que inicializariamos
- con el valor de image yque seria la que renderizariamos. A la hora de actualizar en upload/post/then 
- hariamos algo como 
-    vm.imageToRender = response.data.path;
- En este caso el problema vendria al eliminar el avatar desde el menú. ya que necesitamos actualizar el 
- valor de imageToRender a null cuando esto ocurra, es decir, cuando la variable image valga null de nuevo.
- Para eso podemos usar los métodos watch.
- Los métodos watch se utilizan para cambiar el valor de un dato o propiedad porque haya cambiado otro. 
- El nombre de la función es el nombre de la propiedad que quiero vigilar si ha cambiado
- Desgraciadamente, en este caso es sólo una solución parcial, ya que si el componente se monta con 
- image=null cuando se borra el avatar desde el padre se envia image=null.. es decir, no cambia, así que 
- no salta la función. (sólo se detectan cambios de valor)
- Sólo saltría en el caso de que al montar el componente SI tenga avatar, es decir image!=null
- Para solicionar este caso problemático la única solución que tenemos es que image pase a no ser
- null cuando se le asigna, es decir que la propiedad image cambie si cambia la imagen... parece que volvemos
- al principio
- La solución, y esta vez es definitiva, consiste en mandar un evento al abuelo (al dashboard), a través
- del padre (UserData) indicándole que la imagen ha cambiado y con que nuevo valor y que sea el dashboard
- el que cambie la propiedad y, por lo tanto, se actualice de manera automática en el componente UploadImage
-*/
+
 
 import axios from "axios";
 
@@ -83,12 +32,13 @@ const STATUS_INITIAL = 0,
 export default {
   name: "UploadImageComponent", // que sea siempre compuesto con - para evitar colisiones con otros tag HTML5
   props: {
-    image: { required: false, type: String, default: "" },
+    image: { required: false, type: String, default: "/storage/avatars/avatarDefecto.jpg"},
     user: {required:true, type:Object},
   }, // imagen por defecto
   data: () => ({
     currentStatus: null,
     uploadFieldName: "avatar",
+    avatar:"",
   }),
   computed: {
     isInitial() {
@@ -106,6 +56,7 @@ export default {
   },
   created() {
    this.reset();
+  
     console.log("Avatar por defecto:", this.image);
   },
   mounted() {
@@ -120,8 +71,9 @@ export default {
   methods: {
     reset() {
       // reset form to initial state
-      this.currentStatus = STATUS_INITIAL;
-    },
+      this.currentStatus = STATUS_INITIAL;      
+    },  
+   
     upload(formData) {
       console.log("Upload");
       const promise = axios.post("/usuarios/upload/avatar/"+this.user.id, formData);
@@ -139,7 +91,7 @@ export default {
           console.log("ERROR: " + error);
           window.location.href = "/errors/"+error.response.status;
         });
-
+    
       return promise;
     },
     save(formData) {
@@ -166,6 +118,7 @@ export default {
       formData.append('user',this.user);
       // se graba
       this.save(formData);
+    
     },
   },
 };

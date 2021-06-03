@@ -100,9 +100,13 @@ class TipoVisitasController extends Controller
             $tipo=TipoVisita::findOrFail($id);
             $tipo->delete();
         
-        }catch (\Illuminate\Database\QueryException $e){
-          
-            return response($e,500);
+        }catch (\Illuminate\Database\QueryException $e){          
+           // return response($e,500);
+            return response()->json([
+                'status' => 'Ocurrio un error!',
+                'msg' => 'Hay visitas con este tipo de visita.',
+            ],400);
         }
     }
 }
+

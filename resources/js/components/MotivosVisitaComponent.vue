@@ -1,6 +1,9 @@
 <template>
   <div>
       <h3 class="text-center">Motivos Visita</h3>
+      <div class="alert alert-danger" role="alert" v-show="showAlert">
+                {{msgError}}
+      </div>
     <div class="form-group">
       <div class="input-group mb-3">
         <input
@@ -67,6 +70,8 @@ export default {
              update:0, /*Esta variable contrarolará cuando es un nuevo motivo o una modificación, si es 0 significará que no hemos seleccionado
                           ningun medico, pero si es diferente de 0 entonces tendrá el id del medico y no mostrará el boton guardar sino el modificar*/
             enviar: false,
+            msgError:"",
+            showAlert : false,
         }
     },
     validations: {
@@ -79,6 +84,14 @@ export default {
         
     },
     methods:{
+      alertError($msgError){
+            this.showAlert = true;
+            this.msgError=$msgError;
+            setTimeout(() => {
+                this.showAlert = false;
+                this.msgError="";
+            }, 3000);
+        },
         //Funcion para obtener los medicos
         obtenerMotivos(){
             console.log("Medicos");
@@ -154,7 +167,8 @@ export default {
                       })
                       .catch((error) => {
                         console.log("ERROR: " + error.message);  
-                        window.location.href = "/errors/"+error.response.status;       
+                        this.alertError(error.response.data.msg);
+                        //window.location.href = "/errors/"+error.response.status;       
                       });
                 }
       
