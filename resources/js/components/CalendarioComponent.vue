@@ -1,6 +1,7 @@
 <template>
   <div>
-    <FullCalendar :options="calendarOptions" />
+    <FullCalendar :options="calendarOptions" ref="fullCalendar"/>
+    {{texto}}
   </div>
 </template>
 
@@ -22,6 +23,7 @@ export default {
   },
   data() {
     return {
+      texto:"",
       calendarOptions: {
         plugins: [dayGridPlugin, interactionPlugin, timeGrid],
         events: "",
@@ -30,7 +32,7 @@ export default {
         locale: "es",
         headerToolbar: {
           left: "prev,next,today",
-          center: "title",
+          //center:"title",
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         },
         height: "auto",
@@ -39,6 +41,7 @@ export default {
         slotMinTime: "09:00:00",
         slotMaxTime: "15:00:00",
         dateClick: this.dateClick,
+        dayHeaders:true,
         buttonText: {
           today: "hoy",
           month: "mes",
@@ -47,6 +50,15 @@ export default {
           list: "lista",
         },
         eventClick: this.clickEvento,
+        dayHeaderFormat: {
+           weekday: 'short', month: 'numeric', day: 'numeric', omitCommas: true
+        },
+        views: {       
+            day: {
+                  titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' }
+            }
+        }
+
       },
       datosEvento: {
         event_name: "",
@@ -62,10 +74,26 @@ export default {
   },
   created() {
     this.obtenerEventos();
-  
+    //Detectamos ancho de pantalla y inicializamos opcion de vista calendario segun ancho
+    if (window.innerWidth < 800) {
+      this.calendarOptions.initialView="timeGridDay";
+    }
+    //activara myEventHandler cuando se cambie el tamaño de pantalla
+    window.addEventListener("resize", this.myEventHandler);
+    
   },
-
+  destroyed() {
+    window.removeEventListener("resize", this.myEventHandler);
+  },
   methods: {
+    //Detectamos ancho de pantalla y segun mostramos el calendario en dia o semana
+    myEventHandler(e) {  
+      if (window.innerWidth < 800) {    
+          this.$refs.fullCalendar.getApi().changeView('timeGridDay');
+      }else{
+          this.$refs.fullCalendar.getApi().changeView('timeGridWeek');
+      }  
+  },
     dateClick(clickInfo) {
       this.$emit("dateClick", clickInfo);
     },

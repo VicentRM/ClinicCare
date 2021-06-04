@@ -17140,6 +17140,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -17157,6 +17158,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      texto: "",
       calendarOptions: {
         plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_1__.default, _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_2__.default, _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_3__.default],
         events: "",
@@ -17165,7 +17167,7 @@ __webpack_require__.r(__webpack_exports__);
         locale: "es",
         headerToolbar: {
           left: "prev,next,today",
-          center: "title",
+          //center:"title",
           right: "dayGridMonth,timeGridWeek,timeGridDay"
         },
         height: "auto",
@@ -17174,6 +17176,7 @@ __webpack_require__.r(__webpack_exports__);
         slotMinTime: "09:00:00",
         slotMaxTime: "15:00:00",
         dateClick: this.dateClick,
+        dayHeaders: true,
         buttonText: {
           today: "hoy",
           month: "mes",
@@ -17181,7 +17184,22 @@ __webpack_require__.r(__webpack_exports__);
           day: "dia",
           list: "lista"
         },
-        eventClick: this.clickEvento
+        eventClick: this.clickEvento,
+        dayHeaderFormat: {
+          weekday: 'short',
+          month: 'numeric',
+          day: 'numeric',
+          omitCommas: true
+        },
+        views: {
+          day: {
+            titleFormat: {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit'
+            }
+          }
+        }
       },
       datosEvento: {
         event_name: "",
@@ -17196,9 +17214,27 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.obtenerEventos();
+    this.obtenerEventos(); //Detectamos ancho de pantalla y inicializamos opcion de vista calendario segun ancho
+
+    if (window.innerWidth < 800) {
+      this.calendarOptions.initialView = "timeGridDay";
+    } //activara myEventHandler cuando se cambie el tamaño de pantalla
+
+
+    window.addEventListener("resize", this.myEventHandler);
+  },
+  destroyed: function destroyed() {
+    window.removeEventListener("resize", this.myEventHandler);
   },
   methods: {
+    //Detectamos ancho de pantalla y segun mostramos el calendario en dia o semana
+    myEventHandler: function myEventHandler(e) {
+      if (window.innerWidth < 800) {
+        this.$refs.fullCalendar.getApi().changeView('timeGridDay');
+      } else {
+        this.$refs.fullCalendar.getApi().changeView('timeGridWeek');
+      }
+    },
     dateClick: function dateClick(clickInfo) {
       this.$emit("dateClick", clickInfo);
     },
@@ -81380,7 +81416,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    [_c("FullCalendar", { attrs: { options: _vm.calendarOptions } })],
+    [
+      _c("FullCalendar", {
+        ref: "fullCalendar",
+        attrs: { options: _vm.calendarOptions }
+      }),
+      _vm._v("\n  " + _vm._s(_vm.texto) + "\n")
+    ],
     1
   )
 }
