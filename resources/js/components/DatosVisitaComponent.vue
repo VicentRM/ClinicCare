@@ -1,6 +1,6 @@
 <template>
-<div>
-<!--
+  <div>
+    <!--
     
           <form method="post" name="datos" action="{{ route('datosvisita.update', $datosVisita->id) }}"
                         accept-charset="UTF-8" enctype="multipart/form-data">
@@ -54,9 +54,9 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar cambios</button>
                     </form>
-                    -->
+    -->
     {{ c_datosVisita.exploracion }}
-    </div>
+  </div>
 </template>
 
 <script>
@@ -78,18 +78,18 @@ export default {
       console.log("hola");
       this.c_datosVisita = null;
       let url = "/datosvisitavue/1";
-      const promise = axios.get(url);    
+      const promise = axios.get(url);
       promise
-        .then(response => {
+        .then((response) => {
           console.log("Datos visita:", response.data);
           this.c_datosVisita = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log("ERROR: " + error);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
-    }
+    },
   },
-  computed: {}
+  computed: {},
 };
 </script>

@@ -63,6 +63,10 @@
               v-if="enviar && !$v.pacienteEdit.fecha_nacimiento.required"
               class="invalid-feedback"
             >La fecha de nacimiento es obligatoria o no es correcta</div>
+            <div
+              v-if="enviar && !$v.pacienteEdit.fecha_nacimiento.isDate"
+              class="invalid-feedback"
+            >Introduzca una fecha correcta</div>
           </div>
           <div class="mb-3">
             <label for="fecha_alta" class="form-label">Fecha alta</label>
@@ -78,6 +82,10 @@
               v-if="enviar && !$v.pacienteEdit.fecha_alta.required"
               class="invalid-feedback"
             >La fecha de alta es obligatoria o no es correcta</div>
+            <div
+              v-if="enviar && !$v.pacienteEdit.fecha_alta.isDate"
+              class="invalid-feedback"
+            >Introduzca una fecha correcta</div>
           </div>
           <div class="mb-3">
             <label for="sexo" class="form-label">Sexo</label>
@@ -149,14 +157,14 @@
             >El email es obligatorio</div>
           </div>
         </div>
-      </div>   
-      <div class=toolbar>
-      <div class="botonera">
-           <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
-           <button v-if="update == 0" @click="guardarPaciente()" class="btn btn-success">Añadir</button>
-           <!-- Botón que modifica el medico que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
-           <button v-if="update != 0" @click="actualizarPaciente()" class="btn btn-warning">Guardar</button>    
       </div>
+      <div class="toolbar">
+        <div class="botonera">
+          <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
+          <button v-if="update == 0" @click="guardarPaciente()" class="btn btn-success">Añadir</button>
+          <!-- Botón que modifica el medico que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
+          <button v-if="update != 0" @click="actualizarPaciente()" class="btn btn-warning">Guardar</button>
+        </div>
       </div>
     </div>
   </div>
@@ -167,24 +175,24 @@ import moment from "moment";
 import {
   required,
   email,
- maxValue,
+  maxValue,
   minLength,
   sameAs,
   between,
 } from "vuelidate/lib/validators";
 import Vuelidate from "vuelidate";
 Vue.use(Vuelidate);
-
+const isDate = (value) => moment(value, "YYYY-MM-DD", true).isValid();
 export default {
   components: {},
   props: {
     paciente: { required: false, type: Object },
-    update: {required:true,type: Number},
+    update: { required: true, type: Number },
   },
 
   data: () => ({
-    pacienteEdit:{},   
-    enviar: false, 
+    pacienteEdit: {},
+    enviar: false,
   }),
   filters: {
     formatFecha: function (value) {
@@ -203,19 +211,27 @@ export default {
   validations: {
     pacienteEdit: {
       nombre: { required },
-      apellidos: { required },     
+      apellidos: { required },
       NIF: { required },
-      fecha_nacimiento: { required },
-      //fecha_alta: { required,maxValue: maxValue(new Date()) },
-      fecha_alta: { required },
+      fecha_nacimiento: {
+        required,
+        isDate(value) {
+          return isDate(value);
+        },
+      },
+      fecha_alta: {
+        required,
+        isDate(value) {
+          return isDate(value);
+        },
+      },     
       CP: { required },
       telefono1: { required },
-      email: { required, email },      
+      email: { required, email },
     },
-    
   },
   created() {
-    if (this.update!=0) {
+    if (this.update != 0) {
       this.pacienteEdit = this.paciente;
     }
   },
@@ -234,32 +250,34 @@ export default {
     },
   },
 
-  methods: {    
-    guardarPaciente(){//Esta funcion crea un nuevo paciente segun lo rellenado en el formualrio
-            this.enviar = true;
-            //parar si el formulario es invalido
-            this.$v.$touch();
-            if (this.$v.$invalid) {
-               return;
-           }
-            const promise = axios.post("/pacientes",this.pacienteEdit);         
-            promise
-                .then((response) => {     
-                    window.location.href = "/pacientes";
-                })
-                .catch((error) => {
-                    console.log("ERROR: " + error);                   
-                    window.location.href = "/errors/"+error.response.status;                                                
-                });
-    },
-    actualizarPaciente() {
+  methods: {
+    guardarPaciente() {
+      //Esta funcion crea un nuevo paciente segun lo rellenado en el formualrio
       this.enviar = true;
       //parar si el formulario es invalido
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
-      if (!this.validarNIF(this.pacienteEdit.NIF)){
+      const promise = axios.post("/pacientes", this.pacienteEdit);
+      promise
+        .then((response) => {
+          window.location.href = "/pacientes";
+        })
+        .catch((error) => {
+          console.log("ERROR: " + error);
+          window.location.href = "/errors/" + error.response.status;
+        });
+    },
+    actualizarPaciente() {
+      console.log(this.pacienteEdit.fecha_alta);
+      this.enviar = true;
+      //parar si el formulario es invalido
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+      if (!this.validarNIF(this.pacienteEdit.NIF)) {
         return;
       }
       const promise = axios.put(
@@ -274,7 +292,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error.message);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
     },
     validarNIF(dni) {
@@ -282,32 +300,30 @@ export default {
       let letr;
       let letra;
       let expresion_regular_dni;
-    
+
       expresion_regular_dni = /^\d{8}[a-zA-Z]$/;
-    
-      if(expresion_regular_dni.test (dni) == true){
-        numero = dni.substr(0,dni.length-1);
-        letr = dni.substr(dni.length-1,1);
+
+      if (expresion_regular_dni.test(dni) == true) {
+        numero = dni.substr(0, dni.length - 1);
+        letr = dni.substr(dni.length - 1, 1);
         numero = numero % 23;
-        letra='TRWAGMYFPDXBNJZSQVHLCKET';
-        letra=letra.substring(numero,numero+1);
-        if (letra!=letr.toUpperCase()) {
-          alert('Dni erroneo, la letra del NIF no se corresponde');
+        letra = "TRWAGMYFPDXBNJZSQVHLCKET";
+        letra = letra.substring(numero, numero + 1);
+        if (letra != letr.toUpperCase()) {
+          alert("Dni erroneo, la letra del NIF no se corresponde");
           return false;
-        }else{
+        } else {
           //Dni correcto
           return true;
         }
-      }else{
-        alert('Dni erroneo, formato no válido');
+      } else {
+        alert("Dni erroneo, formato no válido");
         return false;
       }
-    }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
-
 </style>

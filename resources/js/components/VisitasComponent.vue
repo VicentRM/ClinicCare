@@ -21,15 +21,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="visita in visitas" :key="visita.id">          
+        <tr v-for="visita in visitas" :key="visita.id">
           <td>{{ visita.calendario.inicio | formatFecha }}</td>
           <td>{{ visita.calendario.inicio | formatHora }}</td>
           <td>{{ visita.tipo_visita.descripcion }}</td>
           <td>{{ visita.motivo_visita.descripcion }}</td>
-          <td >
+          <td>
             <button type="button" class="btn btn-warning btn-sm">
-                    <i class="fa fa-pencil" aria-hidden="true" @click="abrirVisita(visita.id)"></i>
-            </button>            
+              <i class="fa fa-pencil" aria-hidden="true" @click="abrirVisita(visita.id)"></i>
+            </button>
           </td>
         </tr>
       </tbody>

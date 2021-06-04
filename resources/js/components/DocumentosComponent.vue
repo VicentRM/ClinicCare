@@ -23,7 +23,7 @@
           </tr>
         </tbody>
       </table>
-      
+
       <vue-dropzone
         ref="myVueDropzone"
         id="dropzone"
@@ -76,9 +76,7 @@ export default {
       return hora;
     },
   },
-  created() {    
-
-    
+  created() {
     this.obtenerdocumentos();
   },
   watch: {
@@ -89,7 +87,7 @@ export default {
   },
   methods: {
     obtenerdocumentos() {
-      console.log("Obteniendo documentos....")
+      console.log("Obteniendo documentos....");
       let formData = new FormData();
       formData.append("id", this.idvinculo);
       formData.append("vinculo_doc", this.vinculo_doc);
@@ -102,7 +100,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error.message);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
     },
     abrirdocumento(id, descripcionDocumento) {
@@ -120,7 +118,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error.message);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
     },
     eliminardocumento(id) {
@@ -132,7 +130,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error.message);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
     },
 

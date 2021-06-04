@@ -1,56 +1,51 @@
 <template>
-  <div class="usuario">    
-      <div class="avatar">
-        <upload-image-component
-          :image="avatar"
-          :user="user"
-          @avatar-change="onAvatarChange"
-        />
-      </div>
-         <div class="info" v-if="medicoAsignado">  
-           <p>{{ user.medico.apellidos }},{{ user.medico.nombre }}</p>
-           <p >NºColegiado: {{ user.medico.num_colegiado }}</p>
-        </div>        
-        <div class="info" v-else><p>No hay medico asignado al usuario. Hable con administrador</p></div>
+  <div class="usuario">
+    <div class="avatar">
+      <upload-image-component :image="avatar" :user="user" @avatar-change="onAvatarChange" />
+    </div>
+    <div class="info" v-if="medicoAsignado">
+      <p>{{ user.medico.apellidos }},{{ user.medico.nombre }}</p>
+      <p>NºColegiado: {{ user.medico.num_colegiado }}</p>
+    </div>
+    <div class="info" v-else>
+      <p>No hay medico asignado al usuario. Hable con administrador</p>
+    </div>
   </div>
-  
 </template>
 
 
 <script>
-
 import UploadImageComponent from "./UploadImageComponent";
-
 
 export default {
   name: "usuario-component",
   components: {
-    UploadImageComponent,   
+    UploadImageComponent,
   },
   props: {
     user: { required: true, type: Object },
-    avatar: { required: true, type: String },   
+    avatar: { required: true, type: String },
   },
   data: () => ({
-      medicoAsignado:true,
-  }),  
+    medicoAsignado: true,
+  }),
   watch: {
-      validacionAct(newValue, oldValue) {    
-          this.showAlert=true;    
-      }
+    validacionAct(newValue, oldValue) {
+      this.showAlert = true;
+    },
   },
   mounted() {
     console.log("UsuarioComponent montado.");
-    console.log("Usuario medico:"+this.user.medico.nombre);
+    console.log("Usuario medico:" + this.user.medico.nombre);
   },
   created() {
     this.comprobarMedicoAsingado();
   },
   methods: {
-    comprobarMedicoAsingado(){
-       if (this.user.medico===null){
-           this.medicoAsignado=false;
-       }
+    comprobarMedicoAsingado() {
+      if (this.user.medico === null) {
+        this.medicoAsignado = false;
+      }
     },
     onAvatarChange(image) {
       this.$emit("avatar-change", image);
@@ -60,30 +55,31 @@ export default {
       this.modificarPassword = !this.modificarPassword;
       this.cambiarIdioma = !this.cambiarIdioma;
     },
-    borrarCuentaAlert(){
+    borrarCuentaAlert() {
       var mensaje;
       var opcion = confirm("Estas seguro/a de borrar la cuenta?");
-        if (opcion == true) {
-            this.$emit('borrar-cuenta');
-      } else {   
+      if (opcion == true) {
+        this.$emit("borrar-cuenta");
+      } else {
       }
     },
-    ocultaAlert(){
-        this.showAlert=false;
-    },  
-    cambiaNick(){
-        this.$emit('modifica-nick', this.nick);
-        
+    ocultaAlert() {
+      this.showAlert = false;
     },
-    cambiaPassword(){
-        this.$emit('modifica-password', this.oldPassword, this.password, this.passwordConfirm);
-      
+    cambiaNick() {
+      this.$emit("modifica-nick", this.nick);
     },
-    cambiaIdioma(){
-      this.$emit('cambiar-idioma', this.idiomaPreferido);
-   
+    cambiaPassword() {
+      this.$emit(
+        "modifica-password",
+        this.oldPassword,
+        this.password,
+        this.passwordConfirm
+      );
     },
- 
+    cambiaIdioma() {
+      this.$emit("cambiar-idioma", this.idiomaPreferido);
+    },
   },
 };
 </script>
@@ -94,24 +90,28 @@ export default {
 <style lang="scss" scoped>
 @import "../../sass/variables";
 .usuario {
+  @media (max-width: 1197px) {
+    display: none;
+  }
   display: grid;
   width: 200px;
-  grid-template-columns:1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: 0.5fr 1fr;
   gap: 20px 0px;
   border: 1px solid #ccc;
-  box-shadow: 7px 7px 15px #592A08; box-shadow: 7px 7px 15px #592A08;
+  box-shadow: 7px 7px 15px #592a08;
+  box-shadow: 7px 7px 15px #592a08;
   grid-template-areas:
     "avatar"
     "info";
 }
-.avatar { 
-  grid-area: avatar;   
+.avatar {
+  grid-area: avatar;
   justify-self: center;
 }
-.info { 
-  grid-area: info; 
-   justify-self: center;
-  }
+.info {
+  grid-area: info;
+  justify-self: center;
+}
 </style>
 

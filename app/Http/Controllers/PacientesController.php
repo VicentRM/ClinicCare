@@ -37,7 +37,8 @@ class PacientesController extends Controller
         //Obtenemos primero el medico autenticado como usuario
        $medico=User::find(auth()->id())->medico;     
        //Llenamos el array de pacientes que le pasamos a la vista y paginamos de 20 en 20    
-        $pacientes=$medico->pacientes()->paginate(20);   
+       // $pacientes=$medico->pacientes()->paginate(20);   
+       $pacientes=$medico->pacientes()->get();  
         return $pacientes;
     }
 

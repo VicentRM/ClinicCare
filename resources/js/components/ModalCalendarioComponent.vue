@@ -84,6 +84,7 @@
               <i class="fa fa-trash" @click="eliminarEvento()"></i>
             </button>
             <button
+              v-if="update==1"
               type="button"
               class="btn btn-dark"
               data-dismiss="modal"
@@ -114,6 +115,7 @@ export default {
       type: Object,
       default: () => {},
     },
+    update: { required: true, type: Number },
   },
   data: () => ({
     errores: [],

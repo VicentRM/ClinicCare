@@ -1,27 +1,23 @@
 <template>
-
-<div class="upload-image">
-  <div class="avatar" >
-    <div class="edit">Cambiar</div>
-    <div class="avatar-img"> <img v-if="image" :src="image" /></div>
-       <input
-          type="file"
-          :name="uploadFieldName"
-          :disabled="isSaving"
-          accept="image/*"
-          class="input-file"
-          @change="filesChange($event)"
-        />
+  <div class="upload-image">
+    <div class="avatar">
+      <div class="edit">Cambiar</div>
+      <div class="avatar-img">
+        <img v-if="image" :src="image" />
+      </div>
+      <input
+        type="file"
+        :name="uploadFieldName"
+        :disabled="isSaving"
+        accept="image/*"
+        class="input-file"
+        @change="filesChange($event)"
+      />
+    </div>
   </div>
-</div>
-
-
-
 </template>
 
 <script>
-
-
 import axios from "axios";
 
 const STATUS_INITIAL = 0,
@@ -32,13 +28,17 @@ const STATUS_INITIAL = 0,
 export default {
   name: "UploadImageComponent", // que sea siempre compuesto con - para evitar colisiones con otros tag HTML5
   props: {
-    image: { required: false, type: String, default: "/storage/avatars/avatarDefecto.jpg"},
-    user: {required:true, type:Object},
+    image: {
+      required: false,
+      type: String,
+      default: "/storage/avatars/avatarDefecto.jpg",
+    },
+    user: { required: true, type: Object },
   }, // imagen por defecto
   data: () => ({
     currentStatus: null,
     uploadFieldName: "avatar",
-    avatar:"",
+    avatar: "",
   }),
   computed: {
     isInitial() {
@@ -55,8 +55,8 @@ export default {
     },
   },
   created() {
-   this.reset();
-  
+    this.reset();
+
     console.log("Avatar por defecto:", this.image);
   },
   mounted() {
@@ -71,12 +71,15 @@ export default {
   methods: {
     reset() {
       // reset form to initial state
-      this.currentStatus = STATUS_INITIAL;      
-    },  
-   
+      this.currentStatus = STATUS_INITIAL;
+    },
+
     upload(formData) {
       console.log("Upload");
-      const promise = axios.post("/usuarios/upload/avatar/"+this.user.id, formData);
+      const promise = axios.post(
+        "/usuarios/upload/avatar/" + this.user.id,
+        formData
+      );
 
       promise
         .then((response) => {
@@ -89,9 +92,9 @@ export default {
         .catch((error) => {
           this.currentStatus = STATUS_FAILED;
           console.log("ERROR: " + error);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
-    
+
       return promise;
     },
     save(formData) {
@@ -103,7 +106,6 @@ export default {
       return ev.target.files[0];
     },
     filesChange(ev) {
-
       const formData = new FormData();
       const file = this.takeFile(ev);
 
@@ -112,77 +114,72 @@ export default {
       // se adjuntan los ficheros a formData
       //Array.from(Array(fileList.length).keys()).map((x) => {
       // formData.append(fieldName,fileList[x],FileList[x].name)
-            //});
-      console.log("Usuario a acttualizar avatar:"+this.user.id);
+      //});
+      console.log("Usuario a acttualizar avatar:" + this.user.id);
       formData.append(ev.target.name, file, file.name);
-      formData.append('user',this.user);
+      formData.append("user", this.user);
       // se graba
       this.save(formData);
-    
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
-.upload-image{
-  box-sizing:border-box;
+.upload-image {
+  box-sizing: border-box;
 }
-.avatar{
-  font-family: 'Lato', sans-serif;
+.avatar {
+  font-family: "Lato", sans-serif;
   width: 100px;
   height: 100px;
-  display:block;
+  display: block;
   border-radius: 50%;
-  overflow:hidden;
-  position:relative;
+  overflow: hidden;
+  position: relative;
   border: 2px solid #e9ecec91;
-  transition: border .15s ease-in;
- 
+  transition: border 0.15s ease-in;
+
   &:hover {
-     border: 2px solid #e9ecec91;
-     cursor: pointer;
+    border: 2px solid #e9ecec91;
+    cursor: pointer;
     .edit {
       padding-top: 10px;
       height: 40px;
     }
-  } 
- 
-  .avatar-img,.edit{
-    position:absolute;
-  };
-  
-  img{
-   width:100%;
-   height: 100%;
-   object-fit: cover;
   }
-  
-  .edit{
-   width:100%;
-   height: 0px;
-   z-index:1;
-   bottom:0;
-   font-weight: bold;
-   color:white;
-   background-color: rgba(10, 175, 241, 0.781);
-   transition: all 1s;
-   padding-top: 0px;
+
+  .avatar-img,
+  .edit {
+    position: absolute;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .edit {
+    width: 100%;
+    height: 0px;
+    z-index: 1;
+    bottom: 0;
+    font-weight: bold;
+    color: white;
+    background-color: rgba(10, 175, 241, 0.781);
+    transition: all 1s;
+    padding-top: 0px;
     text-align: center;
   }
   .input-file {
-  opacity: 0; 
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: pointer;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+  }
 }
-
-} 
-
-
-
 </style>

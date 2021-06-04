@@ -9,6 +9,7 @@
     <modalcalendario-component
       v-show="showModal"
       :form="evento"
+      :update="update"
       @guardarEvento="guardarEvento"
       @abrirvisita="abrirvisita"
       @eliminarevento="eliminarEvento"
@@ -34,8 +35,9 @@ export default {
     showModal: false,
     nuevoEventoCalendario: false,
     modoAñadir: true,
+    update: 0,
     event_id: 0,
-    visita_id: 0,  
+    visita_id: 0,
     evento: {
       pacientes: [],
       tipos_visita: null,
@@ -49,14 +51,13 @@ export default {
     },
   }),
   created() {
-
     console.log("Paciente:" + this.paciente_id_prop);
     if (this.paciente_id_prop != null) {
       this.evento.paciente_id = this.paciente_id_prop;
       console.log("asignado");
     }
   },
-  methods: {   
+  methods: {
     //Recibe datos de calendarioComponent para pasarselos al modal
     dateClick(clickInfo) {
       this.modoAñadir = true;
@@ -77,7 +78,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
       //Datos del evento/visita para dejarlos cargados en modal
       this.event_id = clickInfo.event.id;
@@ -86,6 +87,7 @@ export default {
       promise2
         .then((response) => {
           let visita = {};
+          this.update = 1;
           visita = response.data.visita[0];
           const dateAndTime = visita.calendario.inicio.split(" ");
           this.visita_id = visita.id;
@@ -99,13 +101,14 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
-          window.location.href = "/errors/"+error.response.status;
-        }); 
+          window.location.href = "/errors/" + error.response.status;
+        });
     },
     mostrarModal() {
       $("#calendarModal").modal();
     },
     abrirModalNuevoEvento(obj) {
+      this.update = 0;
       const dateAndTime = obj.dateStr.split("T");
       this.evento.fecha = dateAndTime[0];
       this.evento.hora = dateAndTime[1].substr(0, 8);
@@ -118,7 +121,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
       return;
     },
@@ -148,7 +151,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
     },
     actualizarEvento(evento) {
@@ -167,7 +170,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
     },
 
@@ -203,7 +206,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
     },
     eliminarEvento() {
@@ -220,7 +223,7 @@ export default {
         })
         .catch((error) => {
           console.log("ERROR: " + error);
-          window.location.href = "/errors/"+error.response.status;
+          window.location.href = "/errors/" + error.response.status;
         });
     },
   },

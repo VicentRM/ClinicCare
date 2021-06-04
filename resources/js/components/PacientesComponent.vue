@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <h4>Pacientes</h4>
     <div class="row">
@@ -20,7 +19,7 @@
           </div>
         </div>
 
-        <div class="table-responsive">
+        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
           <table class="table table-sm table-striped table-bordered">
             <thead class="thead-dark">
               <tr>
@@ -88,18 +87,18 @@ export default {
 
   mounted() {},
   methods: {
-    obtenerPacientes(page = 1) {
-      const promise = axios.get("/obtenerPacientesMedico?page=" + page);
+    obtenerPacientes() {
+      const promise = axios.get("/obtenerPacientesMedico");
       promise
         .then((response) => {
           console.log(response.data);
-          this.pacientes_pag = response.data;
-          this.pacientes = response.data.data;
-          console.log(response.data.data);
+          // this.pacientes_pag = response.data;
+          this.pacientes = response.data;
+          console.log(response.data);
         })
         .catch((error) => {
           console.log("ERROR: " + error.response.status);
-          window.location.href = "/errors/" + error.response.status;
+          // window.location.href = "/errors/" + error.response.status;
         });
     },
     nuevoPaciente() {
@@ -145,15 +144,25 @@ export default {
       return this.pacientes.filter((paciente) => {
         const nombre = paciente.nombre.toString().toLowerCase();
         const apellidos = paciente.apellidos.toLowerCase();
-        const NIF=paciente.NIF.toLowerCase();
+        const NIF = paciente.NIF.toLowerCase();
         const busqueda = this.filtro.toLowerCase();
-        return nombre.includes(busqueda) || apellidos.includes(busqueda) || NIF.includes(busqueda);
+        return (
+          nombre.includes(busqueda) ||
+          apellidos.includes(busqueda) ||
+          NIF.includes(busqueda)
+        );
       });
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-
-
+.my-custom-scrollbar {
+  position: relative;
+  height: 90%;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
+}
 </style>
