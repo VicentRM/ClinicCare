@@ -37,9 +37,9 @@ use Illuminate\Support\Facades\Password;
 });*/
 
 $user=Auth::user();
-Auth::routes();
 
 
+Auth::routes(["register" => false]);
 
         //Usamos homecontroller como contrlodor general para funciones 'globales'
         Route::get('/', [HomeController::class, 'index'])->name('home');
