@@ -44,6 +44,9 @@ Auth::routes(["register" => false]);
         //Usamos homecontroller como contrlodor general para funciones 'globales'
         Route::get('/', [HomeController::class, 'index'])->name('home');
         Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => 'medico'], function () {         //Si es medico podrá acceder a las rutas del grupo
+
         Route::post('/subirdocumentos',[DocumentosController::class,'subirdocumentos']);
         Route::post('/obtenerdocumentos',[DocumentosController::class,'obtenerdocumentos']);
         Route::get('/abrirdocumento/{id}',[DocumentosController::class,'abrirdocumento']);
@@ -129,6 +132,8 @@ Auth::routes(["register" => false]);
         Route::delete('/pruebasmedicas/{id}',[PruebasMedicasController::class,'destroy'])->name('pruebasmedicas.destroy');
         //Rutas para tipo de pruebas medicas
         Route::resource('/tipopruebas', TipoPruebasController::class);
+});
+
 
         Route::post('/forgot-password', function (Request $request) {
 
@@ -143,6 +148,8 @@ Auth::routes(["register" => false]);
                         : back()->withErrors(['email' => __($status)]);
         })->name('password.email');
 
+
+        
         //Rutas para paginas de error, recibimos el error como parametro y mostramos la pagina correspondiente
         Route::get("/errors/{error}", function ($error) {
             if ($error=='401'){
