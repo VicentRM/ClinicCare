@@ -79,7 +79,7 @@
           </div>
 
           <div class="modal-footer justify-content-between">
-            <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-dark" @click="resetEvento()" data-dismiss="modal" >Cerrar</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">
               <i class="fa fa-trash" @click="eliminarEvento()"></i>
             </button>
@@ -102,6 +102,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import "vue-select/dist/vue-select.css";
@@ -146,6 +147,9 @@ export default {
         this.guardar(form);
       }
     },
+    resetEvento(){
+      this.$emit("resetEvento");
+    }
   },
 };
 </script>

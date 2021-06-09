@@ -16910,6 +16910,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -17109,14 +17110,18 @@ __webpack_require__.r(__webpack_exports__);
         _this6.nuevoEventoCalendario = !_this6.nuevoEventoCalendario;
         _app__WEBPACK_IMPORTED_MODULE_3__.bus.$emit("actualizarvisitas"); // 2.Emitting
 
-        _this6.event_id = 0;
-        _this6.evento.paciente_id = null;
-        _this6.evento.tipo_visita_id = null;
-        _this6.evento.motivo_visita_id = null;
+        _this6.resetEvento();
       })["catch"](function (error) {
         console.log("ERROR: " + error);
         window.location.href = "/errors/" + error.response.status;
       });
+    },
+    resetEvento: function resetEvento() {
+      console.log("resetando");
+      this.event_id = 0;
+      this.evento.paciente_id = null;
+      this.evento.tipo_visita_id = null;
+      this.evento.motivo_visita_id = null;
     }
   }
 });
@@ -18273,6 +18278,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 Vue.component("v-select", (vue_select__WEBPACK_IMPORTED_MODULE_1___default()));
@@ -18323,6 +18329,9 @@ Vue.component("v-select", (vue_select__WEBPACK_IMPORTED_MODULE_1___default()));
       if (this.errores.length == 0) {
         this.guardar(form);
       }
+    },
+    resetEvento: function resetEvento() {
+      this.$emit("resetEvento");
     }
   }
 });
@@ -19061,6 +19070,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
 //
 //
 //
@@ -81387,7 +81399,8 @@ var render = function() {
         on: {
           guardarEvento: _vm.guardarEvento,
           abrirvisita: _vm.abrirvisita,
-          eliminarevento: _vm.eliminarEvento
+          eliminarevento: _vm.eliminarEvento,
+          resetEvento: _vm.resetEvento
         }
       })
     ],
@@ -82598,7 +82611,12 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-dark",
-                  attrs: { type: "button", "data-dismiss": "modal" }
+                  attrs: { type: "button", "data-dismiss": "modal" },
+                  on: {
+                    click: function($event) {
+                      return _vm.resetEvento()
+                    }
+                  }
                 },
                 [_vm._v("Cerrar")]
               ),
@@ -83717,19 +83735,28 @@ var render = function() {
               [
                 _vm._l(_vm.pruebas, function(prueba) {
                   return _c("tr", { key: prueba.id }, [
-                    _c(
-                      "td",
-                      {
-                        on: {
-                          click: function($event) {
-                            return _vm.cargarPrueba(prueba)
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(prueba.tipo_prueba.descripcion))]
-                    ),
+                    _c("td", [_vm._v(_vm._s(prueba.tipo_prueba.descripcion))]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { width: "20%" } }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning btn-sm",
+                          attrs: { type: "button" }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-pencil",
+                            attrs: { "aria-hidden": "true" },
+                            on: {
+                              click: function($event) {
+                                return _vm.cargarPrueba(prueba)
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
                       _c(
                         "button",
                         {

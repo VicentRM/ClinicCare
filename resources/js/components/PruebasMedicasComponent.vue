@@ -26,8 +26,11 @@
           </thead>
           <tbody>
             <tr v-for="prueba in pruebas" :key="prueba.id">
-              <td @click="cargarPrueba(prueba)">{{ prueba.tipo_prueba.descripcion }}</td>
+              <td>{{ prueba.tipo_prueba.descripcion }}</td>
               <td style="width: 20%;">
+                <button type="button" class="btn btn-warning btn-sm">
+                    <i class="fa fa-pencil" aria-hidden="true" @click="cargarPrueba(prueba)"></i>
+                </button>
                 <button type="button" class="btn btn-danger btn-sm">
                   <i class="fa fa-trash" aria-hidden="true" @click="borrarPrueba(prueba)"></i>
                 </button>

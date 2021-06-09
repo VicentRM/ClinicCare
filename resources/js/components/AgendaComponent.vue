@@ -3,7 +3,7 @@
     <h4>Calendario</h4>
     <calendario-component
       @dateClick="dateClick"
-      @clickEvento="clickEvento"
+      @clickEvento="clickEvento"      
       :nuevoEventoCalendario="nuevoEventoCalendario"
     ></calendario-component>
     <modalcalendario-component
@@ -13,6 +13,7 @@
       @guardarEvento="guardarEvento"
       @abrirvisita="abrirvisita"
       @eliminarevento="eliminarEvento"
+      @resetEvento="resetEvento"
     ></modalcalendario-component>
   </div>
 </template>
@@ -216,16 +217,20 @@ export default {
           console.log("Evento eliminado", response.statusText);
           this.nuevoEventoCalendario = !this.nuevoEventoCalendario;
           bus.$emit("actualizarvisitas"); // 2.Emitting
-          this.event_id = 0;
-          this.evento.paciente_id = null;
-          this.evento.tipo_visita_id = null;
-          this.evento.motivo_visita_id = null;
+          this.resetEvento();
         })
         .catch((error) => {
           console.log("ERROR: " + error);
           window.location.href = "/errors/" + error.response.status;
         });
     },
+    resetEvento(){
+      console.log("resetando");
+          this.event_id = 0;
+          this.evento.paciente_id = null;
+          this.evento.tipo_visita_id = null;
+          this.evento.motivo_visita_id = null;
+    }
   },
 };
 </script>
